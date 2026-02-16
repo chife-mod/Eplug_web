@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eplug Wireframes — Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #F7F7F8;
+            color: #111118;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 32px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #6C5CE7;
+            background: rgba(108, 92, 231, 0.08);
+            border: 1px solid rgba(108, 92, 231, 0.15);
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #55555E;
+            margin-bottom: 48px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            max-width: 720px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #DDDDE0;
+            border-radius: 14px;
+            padding: 28px 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: #6C5CE7;
+            box-shadow: 0 4px 20px rgba(108, 92, 231, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: #6C5CE7;
+            margin-bottom: 10px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.2px;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: #8E8E99;
+            line-height: 1.5;
+        }
+
+        .card-sections {
+            margin-top: 12px;
+            font-size: 11px;
+            color: #8E8E99;
+            font-weight: 500;
+        }
+
+        .footer-link {
+            margin-top: 48px;
+            font-size: 13px;
+            color: #8E8E99;
+        }
+
+        .footer-link a {
+            color: #6C5CE7;
+            text-decoration: none;
+        }
+
+        .footer-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+    <div class="badge">Wireframes</div>
+    <h1>Eplug Website</h1>
+    <p class="subtitle">Page wireframes — click to view</p>
+
+    <div class="grid">
+        <a href="home.html" class="card">
+            <div class="card-num">01</div>
+            <div class="card-title">Home</div>
+            <div class="card-desc">Main landing page with hero, value proposition, DC Fast, app preview, 2026 launch
+            </div>
+            <div class="card-sections">7 sections</div>
+        </a>
+        <a href="about.html" class="card">
+            <div class="card-num">02</div>
+            <div class="card-title">About</div>
+            <div class="card-desc">Mission, principles, team. Urban-first positioning and company story</div>
+            <div class="card-sections">4 sections</div>
+        </a>
+        <a href="network.html" class="card">
+            <div class="card-num">03</div>
+            <div class="card-title">Network</div>
+            <div class="card-desc">Interactive map, flagship locations, expansion strategy & timeline</div>
+            <div class="card-sections">4 sections</div>
+        </a>
+        <a href="app-rewards.html" class="card">
+            <div class="card-num">04</div>
+            <div class="card-title">App & Rewards</div>
+            <div class="card-desc">App features, loyalty program, fleet tools, community integration</div>
+            <div class="card-sections">7 sections</div>
+        </a>
+        <a href="partners.html" class="card">
+            <div class="card-num">05</div>
+            <div class="card-title">Partners</div>
+            <div class="card-desc">Fleet operators, property owners, retail businesses, municipalities</div>
+            <div class="card-sections">5 sections</div>
+        </a>
+        <a href="contact.html" class="card">
+            <div class="card-num">06</div>
+            <div class="card-title">Contact</div>
+            <div class="card-desc">Contact form with type selector, office information, email addresses</div>
+            <div class="card-sections">3 sections</div>
+        </a>
+    </div>
+
+    <p class="footer-link">
+        <a href="../sitemap.html">← Back to Sitemap</a>
+    </p>
+
+</body>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eplug — Project Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0a0613;
+            --bg-surface: #110d1f;
+            --accent-fuchsia: #FF00C5;
+            --accent-purple: #a882ff;
+            --text-primary: #f0ecf7;
+            --text-secondary: rgba(240, 236, 247, 0.55);
+            --text-tertiary: rgba(240, 236, 247, 0.35);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── Top Bar ─── */
+        .topbar {
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+            height: 56px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-subtle);
+            flex-shrink: 0;
+            z-index: 10;
+            position: relative;
+        }
+
+        .topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .topbar-logo {
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .topbar-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Centered nav */
+        .topbar-nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 0;
+            z-index: 1;
+        }
+
+        .topbar-nav a {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 16px 20px;
+            position: relative;
+            transition: color 0.2s ease;
+            letter-spacing: 0.2px;
+        }
+
+        .topbar-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .topbar-nav a.active {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .topbar-nav .nav-sep {
+            width: 1px;
+            height: 16px;
+            background: var(--border-subtle);
+            flex-shrink: 0;
+        }
+
+        /* ─── Content Frame ─── */
+        .content-frame {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+
+        .content-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .content-frame iframe.active {
+            opacity: 1;
+            pointer-events: all;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="topbar-brand">
+            <span class="topbar-logo">⚡</span>
+            <span class="topbar-title">Eplug</span>
+        </div>
+
+        <nav class="topbar-nav">
+            <a href="#" class="active" data-target="sitemap">Sitemap</a>
+            <div class="nav-sep"></div>
+            <a href="#" data-target="wireframes">Wireframes</a>
+            <div class="nav-sep"></div>
+            <a href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web" target="_blank"
+                data-target="design">Design</a>
+        </nav>
+    </div>
+
+    <!-- Content -->
+    <div class="content-frame">
+        <iframe id="frame-sitemap" class="active" src="sitemap.html"></iframe>
+        <iframe id="frame-wireframes" src="wireframes/index.html"></iframe>
+    </div>
+
+    <script>
+        const navLinks = document.querySelectorAll('.topbar-nav a[data-target]');
+        const frames = {
+            sitemap: document.getElementById('frame-sitemap'),
+            wireframes: document.getElementById('frame-wireframes')
+        };
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const target = link.dataset.target;
+
+                // Design link opens externally — don't prevent default
+                if (target === 'design') return;
+
+                e.preventDefault();
+
+                // Update active states
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                // Update frame visibility
+                Object.values(frames).forEach(f => f.classList.remove('active'));
+                if (frames[target]) frames[target].classList.add('active');
+            });
+        });
+
+        // Listen for messages from sitemap to switch to wireframe pages
+        window.addEventListener('message', (e) => {
+            if (e.data && e.data.type === 'navigate-wireframe') {
+                // Switch to wireframes nav
+                navLinks.forEach(l => l.classList.remove('active'));
+                document.querySelector('[data-target="wireframes"]').classList.add('active');
+                Object.values(frames).forEach(f => f.classList.remove('active'));
+                frames.wireframes.classList.add('active');
+
+                // Navigate the wireframe iframe
+                frames.wireframes.src = e.data.url;
+            }
+        });
+    </script>
+</body>
+
+</html>

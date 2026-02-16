@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eplug — Website Sitemap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0a0613;
+            --bg-surface: #110d1f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.06);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(168, 130, 255, 0.25);
+            --text-primary: #f0ecf7;
+            --text-secondary: rgba(240, 236, 247, 0.55);
+            --text-tertiary: rgba(240, 236, 247, 0.35);
+            --accent-purple: #a882ff;
+            --accent-violet: #7c5ce0;
+            --accent-pink: #e06cb0;
+            --accent-blue: #5c8ce0;
+            --accent-cyan: #5ce0d6;
+            --accent-green: #5ce08c;
+            --accent-amber: #e0b05c;
+            --accent-rose: #e05c7c;
+            --accent-fuchsia: #FF00C5;
+            --glow-purple: rgba(168, 130, 255, 0.08);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(168, 130, 255, 0.07) 0%, rgba(124, 92, 224, 0.03) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -300px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(224, 108, 176, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 1;
+            padding: 48px 48px 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .header-top-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 4px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent-purple);
+            background: rgba(168, 130, 255, 0.08);
+            border: 1px solid rgba(168, 130, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 100px;
+            width: fit-content;
+        }
+
+        .header-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-purple);
+            box-shadow: 0 0 8px var(--accent-purple);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .header-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-meta .dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--text-tertiary);
+        }
+
+        /* Main grid */
+        .sitemap {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            padding: 40px 48px 64px;
+            min-width: 1200px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 16px 12px;
+            margin-bottom: 4px;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: background 0.2s ease;
+        }
+
+        .column-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .column-header:hover .column-title {
+            color: var(--accent-purple);
+        }
+
+        .column-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--bg-deep);
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .column-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--bg-deep);
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .column:nth-child(1) .column-number {
+            background: var(--accent-purple);
+        }
+
+        .column:nth-child(2) .column-number {
+            background: var(--accent-blue);
+        }
+
+        .column:nth-child(3) .column-number {
+            background: var(--accent-cyan);
+        }
+
+        .column:nth-child(4) .column-number {
+            background: var(--accent-pink);
+        }
+
+        .column:nth-child(5) .column-number {
+            background: var(--accent-amber);
+        }
+
+        .column:nth-child(6) .column-number {
+            background: var(--accent-green);
+        }
+
+        .column-title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            color: var(--text-primary);
+            line-height: 1.2;
+            transition: color 0.2s ease;
+        }
+
+        .column-count {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            margin-top: 1px;
+        }
+
+        .column-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Tile (linked) */
+        .tile {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(168, 130, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tile:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(168, 130, 255, 0.06);
+        }
+
+        .tile:hover::before {
+            opacity: 1;
+        }
+
+        .tile-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .tile-index {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            font-variant-numeric: tabular-nums;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+
+        .tile-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.35;
+            letter-spacing: -0.1px;
+        }
+
+        .tile-desc {
+            font-size: 11.5px;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+
+        .tile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 10px;
+        }
+
+        .tile-tag {
+            font-size: 10px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* Accent per column */
+        .column:nth-child(1) .tile:hover {
+            border-color: rgba(168, 130, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(168, 130, 255, 0.06);
+        }
+
+        .column:nth-child(2) .tile:hover {
+            border-color: rgba(92, 140, 224, 0.25);
+            box-shadow: 0 8px 32px rgba(92, 140, 224, 0.06);
+        }
+
+        .column:nth-child(3) .tile:hover {
+            border-color: rgba(92, 224, 214, 0.25);
+            box-shadow: 0 8px 32px rgba(92, 224, 214, 0.06);
+        }
+
+        .column:nth-child(4) .tile:hover {
+            border-color: rgba(224, 108, 176, 0.25);
+            box-shadow: 0 8px 32px rgba(224, 108, 176, 0.06);
+        }
+
+        .column:nth-child(5) .tile:hover {
+            border-color: rgba(224, 176, 92, 0.25);
+            box-shadow: 0 8px 32px rgba(224, 176, 92, 0.06);
+        }
+
+        .column:nth-child(6) .tile:hover {
+            border-color: rgba(92, 224, 140, 0.25);
+            box-shadow: 0 8px 32px rgba(92, 224, 140, 0.06);
+        }
+
+        .column:nth-child(1) .tile:hover::before {
+            background: linear-gradient(90deg, transparent, rgba(168, 130, 255, 0.3), transparent);
+        }
+
+        .column:nth-child(2) .tile:hover::before {
+            background: linear-gradient(90deg, transparent, rgba(92, 140, 224, 0.3), transparent);
+        }
+
+        .column:nth-child(3) .tile:hover::before {
+            background: linear-gradient(90deg, transparent, rgba(92, 224, 214, 0.3), transparent);
+        }
+
+        .column:nth-child(4) .tile:hover::before {
+            background: linear-gradient(90deg, transparent, rgba(224, 108, 176, 0.3), transparent);
+        }
+
+        .column:nth-child(5) .tile:hover::before {
+            background: linear-gradient(90deg, transparent, rgba(224, 176, 92, 0.3), transparent);
+        }
+
+        .column:nth-child(6) .tile:hover::before {
+            background: linear-gradient(90deg, transparent, rgba(92, 224, 140, 0.3), transparent);
+        }
+
+        .tile--footer {
+            border-style: dashed;
+            background: transparent;
+        }
+
+        /* Grain */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 128px 128px;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .column {
+            animation: fadeUp 0.5s ease both;
+        }
+
+        .column:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .column:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .column:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .column:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        .column:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        .column:nth-child(6) {
+            animation-delay: 0.3s;
+        }
+
+        .tile {
+            animation: fadeUp 0.4s ease both;
+        }
+
+        /* Footer strip */
+        .footer-bar {
+            position: relative;
+            z-index: 1;
+            padding: 0 48px 48px;
+        }
+
+        .footer-strip {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-strip-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-strip-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .footer-strip-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .footer-strip-cols {
+            display: flex;
+            gap: 8px;
+        }
+
+        .footer-col-tag {
+            font-size: 10px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Link arrow hint on hover */
+        .tile::after {
+            content: '→';
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            transform: translateX(-4px);
+        }
+
+        .tile:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grain"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="header-top-row">
+                <div class="header-badge">Sitemap</div>
+            </div>
+            <h1>Eplug Website Architecture</h1>
+            <p class="header-subtitle">Urban DC Fast Charging Network — 6 pages, full section breakdown</p>
+        </div>
+        <div class="header-meta">
+            <span>6 pages</span>
+            <div class="dot"></div>
+            <span>32 sections</span>
+            <div class="dot"></div>
+            <span>Brooklyn, NY 2026</span>
+        </div>
+    </header>
+
+    <!-- Sitemap Grid -->
+    <main class="sitemap">
+
+        <!-- ═══════════ COLUMN 1: HOME ═══════════ -->
+        <div class="column">
+            <a class="column-header" href="wireframes/home.html" onclick="nav(this);return false">
+                <div class="column-number">01</div>
+                <div class="column-info">
+                    <div class="column-title">Home</div>
+                    <div class="column-count">7 sections</div>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.12s" href="wireframes/home.html#section-01"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">01</span><span class="tile-title">Hero</span></div>
+                <p class="tile-desc">Fullscreen video background. «Urban Fast Charging for the Future of America». Two
+                    CTAs: View Map / Partner.</p>
+                <div class="tile-tags"><span class="tile-tag">video bg</span><span class="tile-tag">2× CTA</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.16s" href="wireframes/home.html#section-02"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">02</span><span class="tile-title">What Is
+                        Eplug?</span></div>
+                <p class="tile-desc">Urban-only positioning. 5 differentiators with checkmarks. Split-screen visual:
+                    highway vs. city station.</p>
+                <div class="tile-tags"><span class="tile-tag">split visual</span><span class="tile-tag">5 USPs</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.2s" href="wireframes/home.html#section-03"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">03</span><span class="tile-title">Why DC Fast
+                        Only</span></div>
+                <p class="tile-desc">«15–25 min. Always. Everywhere.» 3-column grid: Drivers / Fleets / Cities. Bold
+                    callout: «We don't do slow charging.»</p>
+                <div class="tile-tags"><span class="tile-tag">3 columns</span><span class="tile-tag">callout</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.24s" href="wireframes/home.html#section-04"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">04</span><span class="tile-title">App & Loyalty
+                        Preview</span></div>
+                <p class="tile-desc">«Charge Smarter. Earn Faster.» App mockup showcase. 4 feature blocks. Email
+                    waitlist capture.</p>
+                <div class="tile-tags"><span class="tile-tag">app mockup</span><span class="tile-tag">waitlist</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.28s" href="wireframes/home.html#section-05"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">05</span><span class="tile-title">Coming in
+                        2026</span></div>
+                <p class="tile-desc">Brooklyn launch details. 300 kW chargers, lounges, restrooms, retail, 24/7
+                    security. Early fleet pricing CTA.</p>
+                <div class="tile-tags"><span class="tile-tag">renders</span><span class="tile-tag">form</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.32s" href="wireframes/home.html#section-06"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">06</span><span class="tile-title">Built for Electric
+                        City</span></div>
+                <p class="tile-desc">Urban vision: Cleaner / Fairer / Stronger / Smarter. City montage imagery.</p>
+                <div class="tile-tags"><span class="tile-tag">4 pillars</span></div>
+            </a>
+
+            <a class="tile tile--footer" style="animation-delay:0.36s" href="wireframes/home.html#section-07"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">07</span><span class="tile-title">Footer CTA</span>
+                </div>
+                <p class="tile-desc">«The Future Is Urban. The Future Is Fast.» Dual CTA: Fleet Operator / Property
+                    Owner.</p>
+                <div class="tile-tags"><span class="tile-tag">2× CTA</span></div>
+            </a>
+        </div>
+
+        <!-- ═══════════ COLUMN 2: ABOUT ═══════════ -->
+        <div class="column">
+            <a class="column-header" href="wireframes/about.html" onclick="nav(this);return false">
+                <div class="column-number">02</div>
+                <div class="column-info">
+                    <div class="column-title">About</div>
+                    <div class="column-count">4 sections</div>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.14s" href="wireframes/about.html#section-01"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">01</span><span class="tile-title">Hero</span></div>
+                <p class="tile-desc">«The First Network That Gets Cities.» Bold positioning statement — not highway, not
+                    garage, pure urban infra.</p>
+                <div class="tile-tags"><span class="tile-tag">manifesto</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.18s" href="wireframes/about.html#section-02"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">02</span><span class="tile-title">Our Mission</span>
+                </div>
+                <p class="tile-desc">«Fast Charging as Essential as Streetlights.» Problem stats (65% can't charge at
+                    home). Solution: Dense. Fast. Urban.</p>
+                <div class="tile-tags"><span class="tile-tag">stats</span><span class="tile-tag">problem/solution</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.22s" href="wireframes/about.html#section-03"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">03</span><span class="tile-title">Our
+                        Principles</span></div>
+                <p class="tile-desc">6-item grid: Urban-Only, 100% DC Fast, Driver-First, Aggressive Deploy, Community,
+                    Fleet-Grade Reliability.</p>
+                <div class="tile-tags"><span class="tile-tag">6-grid</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.26s" href="wireframes/about.html#section-04"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">04</span><span class="tile-title">Team</span></div>
+                <p class="tile-desc">«Built by People Who Believe in Cities.» Placeholder for founder bios, photos,
+                    mission video.</p>
+                <div class="tile-tags"><span class="tile-tag">placeholder</span></div>
+            </a>
+        </div>
+
+        <!-- ═══════════ COLUMN 3: NETWORK ═══════════ -->
+        <div class="column">
+            <a class="column-header" href="wireframes/network.html" onclick="nav(this);return false">
+                <div class="column-number">03</div>
+                <div class="column-info">
+                    <div class="column-title">Network</div>
+                    <div class="column-count">4 sections</div>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.16s" href="wireframes/network.html#section-01"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">01</span><span class="tile-title">Hero</span></div>
+                <p class="tile-desc">«Where We're Building the Future.» Brooklyn 2026 launch, national expansion
+                    follows.</p>
+                <div class="tile-tags"><span class="tile-tag">headline</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.2s" href="wireframes/network.html#section-02"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">02</span><span class="tile-title">Interactive
+                        Map</span></div>
+                <p class="tile-desc">Live Mapbox/Leaflet map with location finder. Pin markers for current & upcoming
+                    hubs. Search by ZIP/neighborhood.</p>
+                <div class="tile-tags"><span class="tile-tag">Mapbox</span><span class="tile-tag">location search</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.24s" href="wireframes/network.html#section-03"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">03</span><span class="tile-title">Flagship: 390
+                        Bedford Ave</span></div>
+                <p class="tile-desc">Location card: 44 DC Fast chargers, 88 bays, lounge, restrooms, retail.
+                    Williamsburg Bridge adjacent. Opening Soon.</p>
+                <div class="tile-tags"><span class="tile-tag">render</span><span class="tile-tag">details card</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.28s" href="wireframes/network.html#section-04"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">04</span><span class="tile-title">Expansion
+                        Strategy</span></div>
+                <p class="tile-desc">Site criteria: density >10K/sq mi, fleet corridors, EV adoption >5%. Timeline: 2026
+                    Brooklyn → 2030 1,000+ hubs.</p>
+                <div class="tile-tags"><span class="tile-tag">timeline</span><span class="tile-tag">criteria</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- ═══════════ COLUMN 4: APP & REWARDS ═══════════ -->
+        <div class="column">
+            <a class="column-header" href="wireframes/app-rewards.html" onclick="nav(this);return false">
+                <div class="column-number">04</div>
+                <div class="column-info">
+                    <div class="column-title">App & Rewards</div>
+                    <div class="column-count">7 sections</div>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.18s" href="wireframes/app-rewards.html#section-01"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">01</span><span class="tile-title">Hero</span></div>
+                <p class="tile-desc">«The App That Charges You and Rewards You.» Large app interface showcase. Launching
+                    2026.</p>
+                <div class="tile-tags"><span class="tile-tag">app showcase</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.22s" href="wireframes/app-rewards.html#section-02"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">02</span><span class="tile-title">Current App
+                        Problems</span></div>
+                <p class="tile-desc">«The app drivers actually want.» Pain points of existing charging apps — sets up
+                    Eplug as the solution.</p>
+                <div class="tile-tags"><span class="tile-tag">pain points</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.26s" href="wireframes/app-rewards.html#section-03"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">03</span><span class="tile-title">Feature Grid</span>
+                </div>
+                <p class="tile-desc">4-column layout: Plug & Charge, Real-Time Intel, Transparent Pricing, Instant
+                    Support. 5 features each.</p>
+                <div class="tile-tags"><span class="tile-tag">4 columns</span><span class="tile-tag">20 features</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.3s" href="wireframes/app-rewards.html#section-04"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">04</span><span class="tile-title">Loyalty &
+                        Rewards</span></div>
+                <p class="tile-desc">«Rewards That Don't Insult Your Intelligence.» Tier structure, redemption screen,
+                    comparison chart. Structure TBD.</p>
+                <div class="tile-tags"><span class="tile-tag">tiers</span><span class="tile-tag">placeholder</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.34s" href="wireframes/app-rewards.html#section-05"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">05</span><span class="tile-title">Fleet & Power
+                        Tools</span></div>
+                <p class="tile-desc">Reserved stalls, bulk credits, expense reports, predictive wait times,
+                    multi-vehicle management dashboard.</p>
+                <div class="tile-tags"><span class="tile-tag">dashboard UI</span><span class="tile-tag">5
+                        features</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.38s" href="wireframes/app-rewards.html#section-06"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">06</span><span class="tile-title">Community
+                        Integration</span></div>
+                <p class="tile-desc">Nearby coffee, food, retail while charging. Auto-activated partner discounts.
+                    1,000+ local partners.</p>
+                <div class="tile-tags"><span class="tile-tag">map view</span><span class="tile-tag">partners</span>
+                </div>
+            </a>
+
+            <a class="tile tile--footer" style="animation-delay:0.42s" href="wireframes/app-rewards.html#section-07"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">07</span><span class="tile-title">Waitlist CTA</span>
+                </div>
+                <p class="tile-desc">«Be First.» Founding member badge, bonus points, grand opening invites. Email
+                    capture.</p>
+                <div class="tile-tags"><span class="tile-tag">email capture</span></div>
+            </a>
+        </div>
+
+        <!-- ═══════════ COLUMN 5: PARTNERS ═══════════ -->
+        <div class="column">
+            <a class="column-header" href="wireframes/partners.html" onclick="nav(this);return false">
+                <div class="column-number">05</div>
+                <div class="column-info">
+                    <div class="column-title">Partners</div>
+                    <div class="column-count">5 sections</div>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.2s" href="wireframes/partners.html#section-01"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">01</span><span class="tile-title">Hero</span></div>
+                <p class="tile-desc">«We Don't Build Alone. We Build With Cities.» Audience: property, fleets, retail,
+                    municipalities.</p>
+                <div class="tile-tags"><span class="tile-tag">4 audiences</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.24s" href="wireframes/partners.html#section-02"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">02</span><span class="tile-title">For Fleet
+                        Operators</span></div>
+                <p class="tile-desc">DC Fast turnaround, fleet pricing, reserved stalls, consolidated billing. Uber,
+                    Lyft, delivery. Testimonial placeholder.</p>
+                <div class="tile-tags"><span class="tile-tag">7 value props</span><span class="tile-tag">CTA form</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.28s" href="wireframes/partners.html#section-03"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">03</span><span class="tile-title">For Property
+                        Owners</span></div>
+                <p class="tile-desc">Zero CapEx, recurring income, tenant amenity. 4 partnership models: Profit Share /
+                    Lease / Co-Invest / Full Deploy.</p>
+                <div class="tile-tags"><span class="tile-tag">4 models</span><span class="tile-tag">case study</span>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.32s" href="wireframes/partners.html#section-04"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">04</span><span class="tile-title">For Retail
+                        Businesses</span></div>
+                <p class="tile-desc">«15–25 min = Captive Customers.» Guaranteed foot traffic, dwell time, loyalty
+                    integration. 20-40% transaction uplift.</p>
+                <div class="tile-tags"><span class="tile-tag">data stat</span><span class="tile-tag">CTA</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.36s" href="wireframes/partners.html#section-05"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">05</span><span class="tile-title">For
+                        Municipalities</span></div>
+                <p class="tile-desc">Turnkey deployment, job creation, equity-focused sites, climate compliance.
+                    Public-private partnerships.</p>
+                <div class="tile-tags"><span class="tile-tag">gov/public</span><span class="tile-tag">CTA</span></div>
+            </a>
+        </div>
+
+        <!-- ═══════════ COLUMN 6: CONTACT ═══════════ -->
+        <div class="column">
+            <a class="column-header" href="wireframes/contact.html" onclick="nav(this);return false">
+                <div class="column-number">06</div>
+                <div class="column-info">
+                    <div class="column-title">Contact</div>
+                    <div class="column-count">3 sections</div>
+                </div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.22s" href="wireframes/contact.html#section-01"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">01</span><span class="tile-title">Hero</span></div>
+                <p class="tile-desc">«Let's Build the Future Together.» Fleet, property, retail, municipal — we move
+                    fast.</p>
+                <div class="tile-tags"><span class="tile-tag">headline</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.26s" href="wireframes/contact.html#section-02"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">02</span><span class="tile-title">Contact Form</span>
+                </div>
+                <p class="tile-desc">Fields: Name, Email, Phone (opt), Type dropdown (8 options: Fleet / Property /
+                    Retail / Municipality / Driver / Investor / Press / Other), Message.</p>
+                <div class="tile-tags"><span class="tile-tag">dropdown</span><span class="tile-tag">8 types</span></div>
+            </a>
+
+            <a class="tile" style="animation-delay:0.3s" href="wireframes/contact.html#section-03"
+                onclick="nav(this);return false">
+                <div class="tile-header"><span class="tile-index">03</span><span class="tile-title">Office Info</span>
+                </div>
+                <p class="tile-desc">HQ address (TBD). Emails: info@, partnership@, pr@eplug.com. Phone TBD.</p>
+                <div class="tile-tags"><span class="tile-tag">3 emails</span></div>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Global Footer strip -->
+    <div class="footer-bar">
+        <div class="footer-strip">
+            <div class="footer-strip-left">
+                <div class="footer-strip-title">⚡ Sitewide Footer</div>
+                <div class="footer-strip-desc">Persistent across all pages — 5 columns</div>
+            </div>
+            <div class="footer-strip-cols">
+                <span class="footer-col-tag">Brand / Logo</span>
+                <span class="footer-col-tag">Navigation</span>
+                <span class="footer-col-tag">For Drivers</span>
+                <span class="footer-col-tag">For Partners</span>
+                <span class="footer-col-tag">Legal</span>
+                <span class="footer-col-tag">Social Media</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigate to wireframe via parent hub (if inside iframe) or direct
+        function nav(el) {
+            const url = el.getAttribute('href');
+            if (window.parent !== window) {
+                // Inside iframe — message the parent hub to switch tab
+                window.parent.postMessage({ type: 'navigate-wireframe', url: url }, '*');
+            } else {
+                // Standalone — navigate directly
+                window.location.href = url;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
