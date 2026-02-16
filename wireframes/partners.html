@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eplug — Partners (Wireframe)</title>
-    <link rel="stylesheet" href="_shared.css">
+    <link rel="stylesheet" href="wireframe-styles.css">
 </head>
 
 <body>
@@ -14,15 +14,15 @@
         <!-- ══════════ NAVIGATION ══════════ -->
         <nav class="wire-nav">
             <div class="wire-nav-brand">
-                <div class="logo-placeholder">E</div>Eplug
+                <img src="../assets/logo/eplug-logo-on-light.svg" alt="Eplug Logo" height="28">
             </div>
             <ul class="wire-nav-links">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="network.html">Network</a></li>
-                <li><a href="app-rewards.html">App & Rewards</a></li>
-                <li><a href="partners.html" class="active">Partners</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="home.html" onclick="nav(this);return false">Home</a></li>
+                <li><a href="about.html" onclick="nav(this);return false">About</a></li>
+                <li><a href="network.html" onclick="nav(this);return false">Network</a></li>
+                <li><a href="app-rewards.html" onclick="nav(this);return false">App & Rewards</a></li>
+                <li><a href="partners.html" onclick="nav(this);return false" class="active">Partners</a></li>
+                <li><a href="contact.html" onclick="nav(this);return false">Contact</a></li>
             </ul>
             <button class="wire-nav-cta">Partner With Us</button>
         </nav>
@@ -306,11 +306,11 @@
                     <div class="footer-col">
                         <div class="footer-col-title">Navigation</div>
                         <ul>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="network.html">Network</a></li>
-                            <li><a href="app-rewards.html">App & Rewards</a></li>
-                            <li><a href="partners.html">Partners</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="about.html" onclick="nav(this);return false">About</a></li>
+                            <li><a href="network.html" onclick="nav(this);return false">Network</a></li>
+                            <li><a href="app-rewards.html" onclick="nav(this);return false">App & Rewards</a></li>
+                            <li><a href="partners.html" onclick="nav(this);return false">Partners</a></li>
+                            <li><a href="contact.html" onclick="nav(this);return false">Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
@@ -348,6 +348,13 @@
         </footer>
 
     </div>
+
+    <script>
+        function nav(el) {
+            const url = 'wireframes/' + el.getAttribute('href');
+            window.parent.postMessage({ type: 'navigate-wireframe', url: url }, '*');
+        }
+    </script>
 </body>
 
 </html>
