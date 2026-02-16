@@ -183,9 +183,18 @@
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
 
+                // Reset scroll to top
+                window.scrollTo(0, 0);
+
                 // Update frame visibility
                 Object.values(frames).forEach(f => f.classList.remove('active'));
-                if (frames[target]) frames[target].classList.add('active');
+                if (frames[target]) {
+                    frames[target].classList.add('active');
+                    // If clicking Wireframes, reset it to the index (grid)
+                    if (target === 'wireframes') {
+                        frames.wireframes.src = 'wireframes/index.html';
+                    }
+                }
             });
         });
 
@@ -197,6 +206,9 @@
                 document.querySelector('[data-target="wireframes"]').classList.add('active');
                 Object.values(frames).forEach(f => f.classList.remove('active'));
                 frames.wireframes.classList.add('active');
+
+                // Reset scroll to top of PARENT when navigating
+                window.scrollTo(0, 0);
 
                 // Navigate the wireframe iframe
                 frames.wireframes.src = e.data.url;
