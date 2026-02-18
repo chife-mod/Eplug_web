@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eplug — Interactive CTA Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="test-container">
+        <!-- Parallax Photo Layer -->
+        <div class="parallax-layer" id="parallax-container">
+            <!-- Row 1 -->
+            <div class="drift-photo" data-speed-x="0.01" data-speed-y="0.015" style="top: 5%; left: 10%; width: 180px;">
+                <img src="assets/nyc_night_charging_hub_1771362788465.png">
+            </div>
+            <div class="drift-photo" data-speed-x="0.015" data-speed-y="0.02"
+                style="top: 15%; left: 40%; width: 140px; opacity: 0.3;"><img
+                    src="assets/nyc_street_bokeh_1_1771363573279.png"></div>
+            <div class="drift-photo" data-speed-x="0.02" data-speed-y="0.025" style="top: 8%; left: 75%; width: 220px;">
+                <img src="assets/williamsburg_bridge_dusk_1771362803539.png">
+            </div>
+
+            <!-- Row 2 -->
+            <div class="drift-photo" data-speed-x="0.012" data-speed-y="0.018"
+                style="top: 35%; left: 2%; width: 200px; opacity: 0.5;"><img
+                    src="assets/nyc_fleet_charging_station_1771362973047.png"></div>
+            <div class="drift-photo" data-speed-x="0.025" data-speed-y="0.03"
+                style="top: 45%; left: 85%; width: 160px;"><img src="assets/nyc_day_charging_hub_v2_1771362827495.png">
+            </div>
+            <div class="drift-photo" data-speed-x="0.01" data-speed-y="0.02"
+                style="top: 25%; left: 60%; width: 130px; opacity: 0.4;"><img
+                    src="assets/premium_charger_closeup_v2_1771362841895.png"></div>
+
+            <!-- Row 3 -->
+            <div class="drift-photo" data-speed-x="0.018" data-speed-y="0.022"
+                style="top: 65%; left: 8%; width: 160px;"><img
+                    src="assets/nyc_architecture_abstract_1_1771363557209.png"></div>
+            <div class="drift-photo" data-speed-x="0.015" data-speed-y="0.015"
+                style="top: 75%; left: 35%; width: 190px; opacity: 0.3;"><img
+                    src="assets/nyc_night_charging_hub_1771362788465.png"></div>
+            <div class="drift-photo" data-speed-x="0.022" data-speed-y="0.035"
+                style="top: 60%; left: 70%; width: 200px;"><img src="assets/williamsburg_bridge_dusk_1771362803539.png">
+            </div>
+
+            <!-- Row 4 -->
+            <div class="drift-photo" data-speed-x="0.01" data-speed-y="0.025"
+                style="top: 85%; left: 15%; width: 140px; opacity: 0.4;"><img
+                    src="assets/nyc_fleet_charging_station_1771362973047.png"></div>
+            <div class="drift-photo" data-speed-x="0.02" data-speed-y="0.015"
+                style="top: 90%; left: 55%; width: 220px;"><img src="assets/nyc_day_charging_hub_v2_1771362827495.png">
+            </div>
+            <div class="drift-photo" data-speed-x="0.015" data-speed-y="0.04"
+                style="top: 82%; left: 80%; width: 170px; opacity: 0.5;"><img
+                    src="assets/nyc_architecture_abstract_1_1771363557209.png"></div>
+
+            <!-- Additional Depth -->
+            <div class="drift-photo" data-speed-x="0.035" data-speed-y="0.05"
+                style="top: 40%; left: 15%; width: 120px; opacity: 0.2;"><img
+                    src="assets/premium_charger_closeup_v2_1771362841895.png"></div>
+            <div class="drift-photo" data-speed-x="0.04" data-speed-y="0.045"
+                style="top: 50%; left: 65%; width: 100px; opacity: 0.2;"><img
+                    src="assets/nyc_street_bokeh_1_1771363573279.png"></div>
+            <div class="drift-photo" data-speed-x="0.005" data-speed-y="0.01"
+                style="top: 20%; left: 25%; width: 150px; opacity: 0.3;"><img
+                    src="assets/nyc_night_charging_hub_1771362788465.png"></div>
+        </div>
+
+        <!-- Central CTA Content -->
+        <div class="cta-content">
+            <div class="cta-tag">Urban Infrastructure</div>
+            <h1 class="cta-headline">Urban Fast Charging<br>for the Future of America</h1>
+            <p class="cta-desc">Built for density. Built for speed. Built for the city life that never&nbsp;stops.</p>
+            <button class="cta-btn">
+                <span>Contact Us</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const photos = document.querySelectorAll('.drift-photo');
+
+        window.addEventListener('mousemove', (e) => {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            const mouseX = e.clientX - centerX;
+            const mouseY = e.clientY - centerY;
+
+            photos.forEach(photo => {
+                const speedX = parseFloat(photo.getAttribute('data-speed-x'));
+                const speedY = parseFloat(photo.getAttribute('data-speed-y'));
+
+                // Same direction movement, refined subtle amplitude
+                const x = mouseX * speedX;
+                const y = mouseY * speedY;
+
+                photo.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+:root {
+    --bg-deep: #0A0B18;
+    --accent-fuchsia: #FF00C5;
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --glass-bg: rgba(45, 46, 51, 0.64);
+    --glass-border: rgba(255, 255, 255, 0.4);
+
+    /* 8px Grid Base */
+    --sp-xs: 8px;
+    --sp-sm: 16px;
+    --sp-md: 24px;
+    --sp-lg: 32px;
+    --sp-xl: 40px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.test-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Parallax Layer */
+.parallax-layer {
+    position: absolute;
+    inset: -5%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.drift-photo {
+    position: absolute;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.drift-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6) contrast(1.1);
+    transition: filter 0.4s ease;
+    /* Clean up: ensure no frames/borders by scaling slightly */
+    transform: scale(1.05);
+}
+
+.drift-photo:hover img {
+    filter: brightness(0.9) contrast(1.1);
+}
+
+/* Content Area */
+.cta-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 900px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Entrance Animations */
+@keyframes blurFadeUp {
+    0% {
+        opacity: 0;
+        filter: blur(20px);
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+}
+
+.cta-tag {
+    opacity: 0;
+    animation: blurFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    background: rgba(10, 11, 24, 0.8);
+    /* 80% Opacity theme color */
+    backdrop-filter: blur(20px);
+    /* Deep blur */
+    border: none;
+    /* No border */
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 400;
+    /* Regular */
+    letter-spacing: 2px;
+    color: var(--accent-fuchsia);
+    text-shadow: 0 0 10px rgba(255, 0, 197, 0.3);
+    margin-bottom: var(--sp-md);
+    /* 24px */
+    text-transform: uppercase;
+    /* All caps */
+}
+
+.cta-headline {
+    opacity: 0;
+    animation: blurFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    font-size: 64px;
+    /* Refined */
+    font-weight: 600;
+    /* Medium-SemiBold range */
+    line-height: 1.1;
+    text-transform: none;
+    /* No caps */
+    letter-spacing: -1px;
+    margin-bottom: var(--sp-md);
+    /* 24px */
+}
+
+.cta-desc {
+    opacity: 0;
+    animation: blurFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    font-size: 16px;
+    /* Refined */
+    color: var(--text-secondary);
+    max-width: 500px;
+    line-height: 1.4;
+    /* 140% */
+}
+
+.cta-btn {
+    opacity: 0;
+    animation: blurFadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+    margin-top: var(--sp-xl);
+    /* 40px */
+    background-color: var(--accent-fuchsia);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 10px 30px rgba(255, 0, 197, 0.3);
+}
+
+.cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(255, 0, 197, 0.4);
+    background-color: #ff33d1;
+}
+
+.cta-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.cta-btn:hover svg {
+    transform: translate(2px, -2px);
+}
+
+@media (max-width: 768px) {
+    .cta-headline {
+        font-size: 40px;
+    }
+
+    .drift-photo {
+        opacity: 0.2 !important;
+    }
+}
