@@ -173,24 +173,31 @@
             position: relative;
             z-index: 1;
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 16px;
-            padding: 40px 48px 64px;
-            min-width: 1200px;
+            grid-template-columns: repeat(5, 1fr);
+            /* Changed to 5 columns */
+            gap: 24px;
+            /* Increased gap */
+            padding: 40px 64px 80px;
+            /* More padding */
+            width: 100%;
+            /* Full width */
+            max-width: none;
+            /* Remove constraint */
         }
 
         .column {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 16px;
+            /* Increased gap between tiles */
         }
 
         .column-header {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             padding: 16px 16px 12px;
-            margin-bottom: 4px;
+            margin-bottom: 8px;
             text-decoration: none;
             color: inherit;
             cursor: pointer;
@@ -198,40 +205,23 @@
             transition: background 0.2s ease;
         }
 
-        .column-header:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .column-header:hover .column-title {
-            color: var(--accent-purple);
-        }
-
         .column-number {
-            font-size: 11px;
+            font-size: 13px;
+            /* Larger */
             font-weight: 700;
             color: var(--bg-deep);
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
+            width: 28px;
+            /* Larger */
+            height: 28px;
+            /* Larger */
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
 
-        .column-number {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--bg-deep);
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
+        /* Re-map column colors for 5 columns */
         .column:nth-child(1) .column-number {
             background: var(--accent-purple);
         }
@@ -248,33 +238,26 @@
             background: var(--accent-pink);
         }
 
+        /* Was Partner accent, now flows sequentially */
         .column:nth-child(5) .column-number {
-            background: var(--accent-amber);
-        }
-
-        .column:nth-child(6) .column-number {
             background: var(--accent-green);
         }
 
         .column-title {
-            font-size: 14px;
+            font-size: 18px;
+            /* Larger */
             font-weight: 700;
-            letter-spacing: -0.2px;
+            letter-spacing: -0.3px;
             color: var(--text-primary);
             line-height: 1.2;
             transition: color 0.2s ease;
         }
 
         .column-count {
-            font-size: 10px;
+            font-size: 12px;
             color: var(--text-tertiary);
             font-weight: 500;
-            margin-top: 1px;
-        }
-
-        .column-info {
-            display: flex;
-            flex-direction: column;
+            margin-top: 2px;
         }
 
         /* Tile (linked) */
@@ -282,7 +265,8 @@
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-md);
-            padding: 14px 16px;
+            padding: 20px 24px;
+            /* Larger padding */
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -292,78 +276,60 @@
             color: inherit;
         }
 
-        .tile::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(168, 130, 255, 0.2), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .tile:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(168, 130, 255, 0.06);
-        }
-
-        .tile:hover::before {
-            opacity: 1;
-        }
+        /* ... hover effects ... */
 
         .tile-header {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 8px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
         .tile-index {
-            font-size: 10px;
+            font-size: 12px;
+            /* Larger */
             font-weight: 600;
             color: var(--text-tertiary);
             font-variant-numeric: tabular-nums;
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 16px;
+            right: 16px;
         }
 
         .tile-title {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 16px;
+            /* Larger */
+            font-weight: 700;
             color: var(--text-primary);
             line-height: 1.35;
             letter-spacing: -0.1px;
         }
 
         .tile-desc {
-            font-size: 11.5px;
-            line-height: 1.55;
+            font-size: 14px;
+            /* Larger */
+            line-height: 1.6;
             color: var(--text-secondary);
         }
 
         .tile-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 16px;
         }
 
         .tile-tag {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 500;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 100px;
             background: rgba(255, 255, 255, 0.04);
             color: var(--text-tertiary);
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* Accent per column */
+        /* Update accent colors for hover/before to match 5 columns */
         .column:nth-child(1) .tile:hover {
             border-color: rgba(168, 130, 255, 0.25);
             box-shadow: 0 8px 32px rgba(168, 130, 255, 0.06);
@@ -385,11 +351,6 @@
         }
 
         .column:nth-child(5) .tile:hover {
-            border-color: rgba(224, 176, 92, 0.25);
-            box-shadow: 0 8px 32px rgba(224, 176, 92, 0.06);
-        }
-
-        .column:nth-child(6) .tile:hover {
             border-color: rgba(92, 224, 140, 0.25);
             box-shadow: 0 8px 32px rgba(92, 224, 140, 0.06);
         }
@@ -411,10 +372,6 @@
         }
 
         .column:nth-child(5) .tile:hover::before {
-            background: linear-gradient(90deg, transparent, rgba(224, 176, 92, 0.3), transparent);
-        }
-
-        .column:nth-child(6) .tile:hover::before {
             background: linear-gradient(90deg, transparent, rgba(92, 224, 140, 0.3), transparent);
         }
 
@@ -563,12 +520,12 @@
                 <div class="header-badge">Sitemap</div>
             </div>
             <h1>Eplug Website Architecture</h1>
-            <p class="header-subtitle">Urban DC Fast Charging Network — 6 pages, full section breakdown</p>
+            <p class="header-subtitle">Urban DC Fast Charging Network — 5 pages, full section breakdown</p>
         </div>
         <div class="header-meta">
-            <span>6 pages</span>
+            <span>5 pages</span>
             <div class="dot"></div>
-            <span>32 sections</span>
+            <span>25 sections</span>
             <div class="dot"></div>
             <span>Brooklyn, NY 2026</span>
         </div>
@@ -748,86 +705,12 @@
         </div>
 
         <!-- ═══════════ COLUMN 4: APP & REWARDS ═══════════ -->
-        <div class="column">
-            <a class="column-header" href="wireframes/app-rewards.html" onclick="nav(this);return false">
-                <div class="column-number">04</div>
-                <div class="column-info">
-                    <div class="column-title">App & Rewards</div>
-                    <div class="column-count">7 sections</div>
-                </div>
-            </a>
+        <!-- Column 4 Removed (App & Rewards) -->
 
-            <a class="tile" style="animation-delay:0.18s" href="wireframes/app-rewards.html#section-01"
-                onclick="nav(this);return false">
-                <div class="tile-header"><span class="tile-index">01</span><span class="tile-title">Hero</span></div>
-                <p class="tile-desc">«The App That Charges You and Rewards You.» Large app interface showcase. Launching
-                    2026.</p>
-                <div class="tile-tags"><span class="tile-tag">app showcase</span></div>
-            </a>
-
-            <a class="tile" style="animation-delay:0.22s" href="wireframes/app-rewards.html#section-02"
-                onclick="nav(this);return false">
-                <div class="tile-header"><span class="tile-index">02</span><span class="tile-title">Current App
-                        Problems</span></div>
-                <p class="tile-desc">«The app drivers actually want.» Pain points of existing charging apps — sets up
-                    Eplug as the solution.</p>
-                <div class="tile-tags"><span class="tile-tag">pain points</span></div>
-            </a>
-
-            <a class="tile" style="animation-delay:0.26s" href="wireframes/app-rewards.html#section-03"
-                onclick="nav(this);return false">
-                <div class="tile-header"><span class="tile-index">03</span><span class="tile-title">Feature Grid</span>
-                </div>
-                <p class="tile-desc">4-column layout: Plug & Charge, Real-Time Intel, Transparent Pricing, Instant
-                    Support. 5 features each.</p>
-                <div class="tile-tags"><span class="tile-tag">4 columns</span><span class="tile-tag">20 features</span>
-                </div>
-            </a>
-
-            <a class="tile" style="animation-delay:0.3s" href="wireframes/app-rewards.html#section-04"
-                onclick="nav(this);return false">
-                <div class="tile-header"><span class="tile-index">04</span><span class="tile-title">Loyalty &
-                        Rewards</span></div>
-                <p class="tile-desc">«Rewards That Don't Insult Your Intelligence.» Tier structure, redemption screen,
-                    comparison chart. Structure TBD.</p>
-                <div class="tile-tags"><span class="tile-tag">tiers</span><span class="tile-tag">placeholder</span>
-                </div>
-            </a>
-
-            <a class="tile" style="animation-delay:0.34s" href="wireframes/app-rewards.html#section-05"
-                onclick="nav(this);return false">
-                <div class="tile-header"><span class="tile-index">05</span><span class="tile-title">Fleet & Power
-                        Tools</span></div>
-                <p class="tile-desc">Reserved stalls, bulk credits, expense reports, predictive wait times,
-                    multi-vehicle management dashboard.</p>
-                <div class="tile-tags"><span class="tile-tag">dashboard UI</span><span class="tile-tag">5
-                        features</span></div>
-            </a>
-
-            <a class="tile" style="animation-delay:0.38s" href="wireframes/app-rewards.html#section-06"
-                onclick="nav(this);return false">
-                <div class="tile-header"><span class="tile-index">06</span><span class="tile-title">Community
-                        Integration</span></div>
-                <p class="tile-desc">Nearby coffee, food, retail while charging. Auto-activated partner discounts.
-                    1,000+ local partners.</p>
-                <div class="tile-tags"><span class="tile-tag">map view</span><span class="tile-tag">partners</span>
-                </div>
-            </a>
-
-            <a class="tile tile--footer" style="animation-delay:0.42s" href="wireframes/app-rewards.html#section-07"
-                onclick="nav(this);return false">
-                <div class="tile-header"><span class="tile-index">07</span><span class="tile-title">Waitlist CTA</span>
-                </div>
-                <p class="tile-desc">«Be First.» Founding member badge, bonus points, grand opening invites. Email
-                    capture.</p>
-                <div class="tile-tags"><span class="tile-tag">email capture</span></div>
-            </a>
-        </div>
-
-        <!-- ═══════════ COLUMN 5: PARTNERS ═══════════ -->
+        <!-- ═══════════ COLUMN 4: PARTNERS (Was 5) ═══════════ -->
         <div class="column">
             <a class="column-header" href="wireframes/partners.html" onclick="nav(this);return false">
-                <div class="column-number">05</div>
+                <div class="column-number">04</div>
                 <div class="column-info">
                     <div class="column-title">Partners</div>
                     <div class="column-count">5 sections</div>
@@ -881,10 +764,10 @@
             </a>
         </div>
 
-        <!-- ═══════════ COLUMN 6: CONTACT ═══════════ -->
+        <!-- ═══════════ COLUMN 5: CONTACT (Was 6) ═══════════ -->
         <div class="column">
             <a class="column-header" href="wireframes/contact.html" onclick="nav(this);return false">
-                <div class="column-number">06</div>
+                <div class="column-number">05</div>
                 <div class="column-info">
                     <div class="column-title">Contact</div>
                     <div class="column-count">3 sections</div>
