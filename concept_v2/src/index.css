@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-fuchsia: #FF00C5;
+  --color-brand-purple: #2E0054;
+  --color-brand-violet: #0C0214;
+  --color-brand-white: #FFFFFF;
+  --color-brand-grey: #DEDCF9;
+
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+@layer base {
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-brand-violet);
+    color: var(--color-brand-white);
+    font-family: var(--font-body);
+  }
+
+  body {
+    overflow-x: hidden;
+    background-color: var(--color-brand-violet);
+  }
+}
+
+@layer utilities {
+  .text-glow-fuchsia {
+    text-shadow: 0 0 20px rgba(255, 0, 197, 0.35);
+  }
+
+  .box-glow-fuchsia {
+    box-shadow: 0 0 30px rgba(255, 0, 197, 0.35);
+  }
+
+  .text-stroke-violet {
+    -webkit-text-stroke: 1px var(--color-brand-violet);
+    color: transparent;
+  }
+
+  .text-stroke-fuchsia {
+    -webkit-text-stroke: 1px var(--color-brand-fuchsia);
+    color: transparent;
+  }
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.9);
+  }
+}
