@@ -1483,22 +1483,16 @@
 
                               // Dynamic links: Local Vite vs Github Pages
                               const isDev = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
-                              const baseViteUrl = 'http://localhost:5174';
+                              const baseViteUrl = 'http://localhost:5174/#';
 
                               // In Github Pages, the root is /Eplug_web/ so our built app is at /Eplug_web/concept_v2/dist/index.html
-                              // We can just use a relative path from the root index.html
-                              const baseProdUrl = './concept_v2/dist/index.html';
+                              const baseProdUrl = './concept_v2/dist/index.html#';
 
                               document.querySelectorAll('.dynamic-app-link').forEach(link => {
                                 const path = link.getAttribute('data-app-path');
                                 if (path) {
-                                  // In dev, open the vite server path.
-                                  // In prod, Vite uses a router. If we link directly to the sub-route on GitHub pages, 
-                                  // we need our Vite build to support it (e.g. HashRouter or configured redirects). 
-                                  // For now, since it's a test component, we'll link to the prod root if HashRouter isn't set up yet,
-                                  // or just append the path if we are going to configure Vite to handle it.
-                                  // Let's link to the base prod URL for now until Vite router is updated for GH Pages.
-                                  link.href = isDev ? baseViteUrl + path : baseProdUrl;
+                                  // We are using HashRouter now. So sub routes become /#/path
+                                  link.href = (isDev ? baseViteUrl : baseProdUrl) + path;
                                 }
                               });
                             </script>
