@@ -2,6 +2,7 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import V5App from './V5App';
 import HeaderButtons from './components/v5/HeaderButtons';
 import TheNumbers from './components/v5/TheNumbers';
+import WhatIsEplug from './components/v5/WhatIsEplug';
 
 const TestHeaderButtons = () => (
     <div className="w-full h-screen bg-zinc-900 flex items-center justify-center relative overflow-hidden">
@@ -24,6 +25,12 @@ const TestTheNumbers = () => (
     </div>
 );
 
+const TestWhatIsEplug = () => (
+    <div className="w-full min-h-screen bg-[#0A0A0A]">
+        <WhatIsEplug />
+    </div>
+);
+
 function App() {
     return (
         <Router>
@@ -31,6 +38,7 @@ function App() {
                 <Route path="/" element={<V5App />} />
                 <Route path="/test-header-buttons" element={<TestHeaderButtons />} />
                 <Route path="/test-numbers" element={<TestTheNumbers />} />
+                <Route path="/test-whatis" element={<TestWhatIsEplug />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </Router>
