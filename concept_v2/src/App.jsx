@@ -4,13 +4,12 @@ import HeaderButtons from './components/v5/HeaderButtons';
 import WhatIsEplug from './components/v5/WhatIsEplug';
 
 const TestHeaderButtons = () => (
-    <div className="w-full h-screen bg-zinc-900 flex items-center justify-center relative overflow-hidden">
-        {/* Adds a background to see the blur clearly */}
-        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[600px] h-[600px] bg-indigo-500/20 rounded-full blur-[80px]"></div>
-        </div>
-        <div className="relative z-10 p-10">
+    <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#DEDCF9' }}>
+        <div className="flex flex-col items-center">
             <HeaderButtons />
+            <p style={{ marginTop: '40px', fontSize: '13px', color: 'rgba(60,40,120,0.4)', letterSpacing: '0.02em' }}>
+                Hover over the buttons to test the hover effect
+            </p>
         </div>
     </div>
 );
