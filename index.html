@@ -95,48 +95,45 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 60px;
+      height: 64px;
+      position: relative;
     }
 
     .logo-area {
       display: flex;
       align-items: center;
-      gap: 12px;
     }
 
-    .logo-bolt {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #00c8ff, #0070ff);
-      border-radius: 8px;
+    /* ─── Unified Header Nav ─── */
+    .header-nav {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 18px;
     }
 
-    .logo-text {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: #fff;
-    }
-
-    .logo-text span {
-      color: var(--accent);
-    }
-
-    .header-sep {
-      width: 1px;
-      height: 20px;
-      background: var(--border);
-      margin: 0 4px;
-    }
-
-    .hub-label {
+    .header-nav-link {
       font-size: 13px;
-      color: var(--text-muted);
-      letter-spacing: 0.03em;
+      font-weight: 500;
+      color: rgba(240, 236, 247, 0.55);
+      text-decoration: none;
+      padding: 20px;
+      letter-spacing: 0.2px;
+      transition: color 0.2s ease;
+    }
+
+    .header-nav-link:hover,
+    .header-nav-link.active {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .header-nav-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border);
+      flex-shrink: 0;
     }
 
     .header-right {
@@ -686,10 +683,16 @@
       <div class="header-inner">
         <div class="logo-area">
           <img src="./concept_v2/src/assets/images/eplug-logo-on-dark.svg" alt="EPLUG"
-            style="height: 22px; width: auto;" />
-          <div class="header-sep"></div>
-          <span class="hub-label">Project Hub</span>
+            style="height: 40px; width: auto;" />
         </div>
+        <nav class="header-nav">
+          <a class="header-nav-link active" href="./index.html">Hub</a>
+          <div class="header-nav-sep"></div>
+          <a class="header-nav-link" href="./UX/index.html">UX Hub</a>
+          <div class="header-nav-sep"></div>
+          <a class="header-nav-link" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
+            target="_blank">Figma</a>
+        </nav>
         <div class="header-right">
           <span class="header-date" id="today-date"></span>
           <div class="overall-progress">

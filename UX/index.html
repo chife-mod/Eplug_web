@@ -46,7 +46,7 @@
             display: flex;
             align-items: center;
             padding: 0 32px;
-            height: 56px;
+            height: 64px;
             background: var(--bg-surface);
             border-bottom: 1px solid var(--border-subtle);
             flex-shrink: 0;
@@ -57,22 +57,8 @@
         .topbar-brand {
             display: flex;
             align-items: center;
-            gap: 12px;
             position: relative;
             z-index: 2;
-        }
-
-        .topbar-logo {
-            font-size: 22px;
-            line-height: 1;
-        }
-
-        .topbar-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-tertiary);
-            letter-spacing: 1px;
-            text-transform: uppercase;
         }
 
         /* Centered nav */
@@ -146,10 +132,12 @@
     <div class="topbar">
         <div class="topbar-brand">
             <img src="../concept_v2/src/assets/images/eplug-logo-on-dark.svg" alt="EPLUG"
-                style="height: 18px; width: auto;" />
+                style="height: 40px; width: auto;" />
         </div>
 
         <nav class="topbar-nav">
+            <a href="../index.html" data-target="hub">Hub</a>
+            <div class="nav-sep"></div>
             <a href="#" class="active" data-target="sitemap">Sitemap</a>
             <div class="nav-sep"></div>
             <a href="#" data-target="wireframes">Wireframes</a>
