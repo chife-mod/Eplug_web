@@ -32,3 +32,10 @@ To avoid wasting time guessing margins and colors from screenshots, we establish
 *   `src/components/v4/` - Contains the latest approved components (Header, Hero, WhatIsEplug, WhyDCFast, AppAndLoyalty). All fixed up regarding layout gaps and animations.
 *   `src/index.css` - Contains global Tailwind imports and custom keyframes (like `fadeSlideUp`).
 *   `tailwind.config.js` - Should be the source of truth for colors and fonts extracted from Figma going forward.
+
+## 5. Recent Iteration: Internal Developer Portal Unification
+*   **Unified Hub:** The core HTML pages (`index.html` as the Main Hub, `UX/sitemap.html`, and `UX/wireframes/index.html`) were refactored into a cohesive "internal developer portal".
+*   **Design System Injection:** `shared-header.js` now independently injects global CSS variables, header navigation, dark theme with purple glow, grain overlay, and `eplug-tile` card components into all local HTML static files.
+*   **Layout Fixes:** Implemented `overflow-y: scroll` on the root HTML to eliminate layout jumping across navigation transitions.
+*   **UX Structure:** The dashboard was simplified to clearly present Site Architecture (23 sections, 5 pages mapped) and isolated working components alongside the main Figma file.
+*   **Testing Routes:** Components like `<WhatIsEplug />` and `<HeaderButtons />` are tested on dedicated sub-routes (e.g., `#/test-whatis` with dark background and `#/test-header-buttons` with `#DEDCF9` light background) to confirm context-specific behavior before merging.
