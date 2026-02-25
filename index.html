@@ -676,33 +676,8 @@
 </head>
 
 <body>
-
-  <!-- ─── HEADER ─────────────────────────────────────────────────────────────-->
-  <header class="header">
-    <div class="container">
-      <div class="header-inner">
-        <div class="logo-area">
-          <img src="./concept_v2/src/assets/images/eplug-logo-on-dark.svg" alt="EPLUG"
-            style="height: 64px; width: auto;" />
-        </div>
-        <nav class="header-nav">
-          <a class="header-nav-link active" href="./index.html">Hub</a>
-          <div class="header-nav-sep"></div>
-          <a class="header-nav-link" href="./UX/index.html">UX Hub</a>
-          <div class="header-nav-sep"></div>
-          <a class="header-nav-link" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
-            target="_blank">Figma</a>
-        </nav>
-        <div class="header-right">
-          <span class="header-date" id="today-date"></span>
-          <div class="overall-progress">
-            <span class="label">Overall</span>
-            <span class="pct">27%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- ─── HEADER (shared) ──────────────────────────────────────────────────-->
+  <div id="eplug-header"></div>
 
   <!-- ─── HERO ───────────────────────────────────────────────────────────────-->
   <div class="hero">
@@ -952,11 +927,6 @@
   </div>
 
   <script>
-    // Set today's date
-    const d = new Date();
-    const opts = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-    document.getElementById('today-date').textContent = d.toLocaleDateString('en-US', opts);
-
     // Dynamic links: Local Vite vs Github Pages
     const isDev = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
     const baseViteUrl = 'http://localhost:5177/#';
@@ -969,6 +939,7 @@
       }
     });
   </script>
+  <script src="./shared-header.js"></script>
 </body>
 
 </html>

@@ -41,35 +41,23 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ─── Top Bar ─── */
-        .topbar {
+        /* ─── UX Sub-nav (below shared header) ─── */
+        .topbar-subnav {
             display: flex;
             align-items: center;
-            padding: 0 32px;
-            height: 96px;
+            justify-content: center;
+            height: 48px;
             background: var(--bg-surface);
             border-bottom: 1px solid var(--border-subtle);
             flex-shrink: 0;
-            z-index: 10;
             position: relative;
-        }
-
-        .topbar-brand {
-            display: flex;
-            align-items: center;
-            position: relative;
-            z-index: 2;
+            z-index: 9;
         }
 
         /* Centered nav */
         .topbar-nav {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 0;
-            z-index: 1;
         }
 
         .topbar-nav a {
@@ -77,7 +65,7 @@
             font-weight: 500;
             color: var(--text-secondary);
             text-decoration: none;
-            padding: 16px 20px;
+            padding: 12px 20px;
             position: relative;
             transition: color 0.2s ease;
             letter-spacing: 0.2px;
@@ -128,16 +116,12 @@
 
 <body>
 
-    <!-- Top Bar -->
-    <div class="topbar">
-        <div class="topbar-brand">
-            <img src="../concept_v2/src/assets/images/eplug-logo-on-dark.svg" alt="EPLUG"
-                style="height: 64px; width: auto;" />
-        </div>
+    <!-- Shared Header -->
+    <div id="eplug-header"></div>
 
+    <!-- UX Sub-nav: Sitemap / Wireframes / Design -->
+    <div class="topbar-subnav">
         <nav class="topbar-nav">
-            <a href="../index.html" data-target="hub">Hub</a>
-            <div class="nav-sep"></div>
             <a href="#" class="active" data-target="sitemap">Sitemap</a>
             <div class="nav-sep"></div>
             <a href="#" data-target="wireframes">Wireframes</a>
@@ -205,6 +189,7 @@
             }
         });
     </script>
+    <script src="../shared-header.js"></script>
 </body>
 
 </html>
