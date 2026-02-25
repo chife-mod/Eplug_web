@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eplug — Project Hub</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
   <style>
     /* ─── Reset & Base ─────────────────────────────────────────────────────── */
     *,
@@ -692,7 +693,7 @@
           <span class="header-date" id="today-date"></span>
           <div class="overall-progress">
             <span class="label">Overall</span>
-            <span class="pct">12%</span>
+            <span class="pct">27%</span>
           </div>
         </div>
       </div>
@@ -718,24 +719,12 @@
           <div class="phase-row">
             <span class="phase-name">Design</span>
             <div class="phase-bar-wrap">
-              <div class="phase-bar-fill active" style="width:5%"></div>
+              <div class="phase-bar-fill active" style="width:20%"></div>
             </div>
-            <span class="phase-pct">5%</span>
+            <span class="phase-pct">20%</span>
           </div>
-          <div class="phase-row">
-            <span class="phase-name">Screens</span>
-            <div class="phase-bar-wrap">
-              <div class="phase-bar-fill empty" style="width:0%"></div>
-            </div>
-            <span class="phase-pct">0%</span>
-          </div>
-          <div class="phase-row">
-            <span class="phase-name">Pages</span>
-            <div class="phase-bar-wrap">
-              <div class="phase-bar-fill empty" style="width:0%"></div>
-            </div>
-            <span class="phase-pct">0%</span>
-          </div>
+
+
           <div class="phase-row">
             <span class="phase-name">Deploy</span>
             <div class="phase-bar-wrap">
@@ -748,27 +737,7 @@
     </div>
   </div>
 
-  <!-- ─── STATS ROW ──────────────────────────────────────────────────────────-->
-  <div class="container">
-    <div class="stats-row">
-      <div class="stat-card">
-        <span class="stat-value accent">8</span>
-        <span class="stat-label">Files ready</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value green">5</span>
-        <span class="stat-label">Wireframes done</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value amber">0</span>
-        <span class="stat-label">Screens built</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value" style="color:#fff">6</span>
-        <span class="stat-label">Pages planned</span>
-      </div>
-    </div>
-  </div>
+
 
   <!-- ─── SECTION: UX & ARCHITECTURE ───────────────────────────────────────-->
   <div class="section">
@@ -776,7 +745,6 @@
       <div class="section-head">
         <span class="section-title">UX &amp; Architecture</span>
         <span class="section-count">3 files</span>
-        <div class="section-line"></div>
         <span class="section-badge badge-done">Done</span>
       </div>
       <div class="cards-grid">
@@ -811,7 +779,7 @@
           </div>
           <div class="card-body">
             <div class="card-title">Sitemap</div>
-            <div class="card-desc">Visual site architecture — 5 columns, 25 sections with hover</div>
+            <div class="card-desc">Visual site architecture — 5 columns, 26 sections with hover</div>
           </div>
           <div class="card-progress">
             <div class="card-bar">
@@ -851,25 +819,24 @@
     </div>
   </div>
 
-  <!-- ─── SECTION: WIREFRAMES ───────────────────────────────────────────────-->
+  <!-- ─── SECTION: ISOLATED COMPONENTS ─────────────────────────────────────-->
   <div class="section">
     <div class="container">
       <div class="section-head">
-        <span class="section-title">Wireframes</span>
-        <span class="section-count">5 of 6 pages</span>
-        <div class="section-line"></div>
-        <span class="section-badge badge-done">Done</span>
+        <span class="section-title">Isolated Components</span>
+        <span class="section-count">2 built</span>
+        <span class="section-badge badge-active">Active</span>
       </div>
       <div class="cards-grid wide">
 
-        <a class="card status-done" href="./UX/wireframes/home.html" target="_blank">
+        <a class="card status-done dynamic-app-link" href="#" data-app-path="/test-header-buttons" target="_blank">
           <div class="card-top">
-            <div class="card-icon icon-wire">🏠</div>
+            <div class="card-icon icon-wire">✨</div>
             <span class="card-status">Done</span>
           </div>
           <div class="card-body">
-            <div class="card-title">Home</div>
-            <div class="card-desc">Hero, Value Prop, DC Fast, App Preview, 2026 Roadmap</div>
+            <div class="card-title">Header Buttons</div>
+            <div class="card-desc">Pill-slider animation using Framer Motion (v5)</div>
           </div>
           <div class="card-progress">
             <div class="card-bar">
@@ -878,19 +845,19 @@
             <span class="card-pct">100%</span>
           </div>
           <div class="card-footer">
-            <span class="card-path">wireframes/home.html</span>
+            <span class="card-path">v5/HeaderButtons</span>
             <span class="card-arrow">↗</span>
           </div>
         </a>
 
-        <a class="card status-done" href="./UX/wireframes/about.html" target="_blank">
+        <a class="card status-done dynamic-app-link" href="#" data-app-path="/test-whatis" target="_blank">
           <div class="card-top">
-            <div class="card-icon icon-wire">🏢</div>
+            <div class="card-icon icon-wire">✨</div>
             <span class="card-status">Done</span>
           </div>
           <div class="card-body">
-            <div class="card-title">About</div>
-            <div class="card-desc">Mission, Principles (6), Team placeholder</div>
+            <div class="card-title">What Is Eplug</div>
+            <div class="card-desc">Horizontal slider · ambient glow · scroll-trigger (v5)</div>
           </div>
           <div class="card-progress">
             <div class="card-bar">
@@ -899,624 +866,105 @@
             <span class="card-pct">100%</span>
           </div>
           <div class="card-footer">
-            <span class="card-path">wireframes/about.html</span>
+            <span class="card-path">v5/WhatIsEplug</span>
             <span class="card-arrow">↗</span>
           </div>
         </a>
 
-        <a class="card status-done" href="./UX/wireframes/network.html" target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-wire">📍</div>
-            <span class="card-status">Done</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">Network</div>
-            <div class="card-desc">Interactive map, 390 Bedford Ave, Expansion Strategy</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:100%"></div>
-            </div>
-            <span class="card-pct">100%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">wireframes/network.html</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
-
-        <a class="card status-done" href="./UX/wireframes/partners.html" target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-wire">🤝</div>
-            <span class="card-status">Done</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">Partners</div>
-            <div class="card-desc">Fleet Operators, Property Owners, Retail, Municipalities</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:100%"></div>
-            </div>
-            <span class="card-pct">100%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">wireframes/partners.html</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
-
-        <a class="card status-done" href="./UX/wireframes/contact.html" target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-wire">✉️</div>
-            <span class="card-status">Done</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">Contact</div>
-            <div class="card-desc">Premium form — Name, Email, Partner type dropdown, Message</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:100%"></div>
-            </div>
-            <span class="card-pct">100%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">wireframes/contact.html</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
-
-        <!-- Planned: App & Rewards wireframe -->
-        <div class="card status-planned">
-          <div class="card-top">
-            <div class="card-icon icon-wire">📱</div>
-            <span class="card-status">Planned</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">App &amp; Rewards</div>
-            <div class="card-desc">Features grid, Loyalty program, Fleet tools, Waitlist CTA</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:0%"></div>
-            </div>
-            <span class="card-pct">0%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">wireframes/app.html</span>
-            <span class="card-arrow" style="color:var(--text-dim)">—</span>
-          </div>
-          </a>
-
+        <div class="card-add">
+          <div class="card-add-icon">＋</div>
+          <div class="card-add-label">Awaiting Figma Link</div>
         </div>
+
       </div>
     </div>
+  </div>
 
-    <!-- ─── SECTION: DESIGN ───────────────────────────────────────────────────-->
-    <div class="section">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-title">Design</span>
-          <span class="section-count">Figma</span>
-          <div class="section-line"></div>
-          <span class="section-badge badge-active">Active</span>
-        </div>
-        <div class="cards-grid">
+  <!-- ─── SECTION: DESIGN ──────────────────────────────────────────────────-->
+  <div class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-title">Design</span>
+        <span class="section-count">Figma</span>
+        <span class="section-badge badge-active">Active</span>
+      </div>
+      <div class="cards-grid">
 
-          <a class="card card-figma status-active" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
-            target="_blank">
-            <div class="card-top">
-              <div class="card-icon icon-external" style="font-size:20px">
-                <svg width="20" height="20" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M19 28.5C19 23.8056 22.8056 20 27.5 20C32.1944 20 36 23.8056 36 28.5C36 33.1944 32.1944 37 27.5 37C22.8056 37 19 33.1944 19 28.5Z"
-                    fill="#1ABCFE" />
-                  <path
-                    d="M2 47.5C2 42.8056 5.80558 39 10.5 39H19V47.5C19 52.1944 15.1944 56 10.5 56C5.80558 56 2 52.1944 2 47.5Z"
-                    fill="#0ACF83" />
-                  <path d="M19 1V20H27.5C32.1944 20 36 16.1944 36 11.5C36 6.80558 32.1944 3 27.5 3L19 1Z"
-                    fill="#FF7262" />
-                  <path d="M2 11.5C2 16.1944 5.80558 20 10.5 20H19V3H10.5C5.80558 3 2 6.80558 2 11.5Z" fill="#F24E1E" />
-                  <path d="M2 28.5C2 33.1944 5.80558 37 10.5 37H19V20H10.5C5.80558 20 2 23.8056 2 28.5Z"
-                    fill="#A259FF" />
-                </svg>
-              </div>
-              <span class="card-status">Active</span>
+        <a class="card card-figma status-active" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
+          target="_blank">
+          <div class="card-top">
+            <div class="card-icon icon-external" style="font-size:20px">
+              <svg width="20" height="20" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M19 28.5C19 23.8056 22.8056 20 27.5 20C32.1944 20 36 23.8056 36 28.5C36 33.1944 32.1944 37 27.5 37C22.8056 37 19 33.1944 19 28.5Z"
+                  fill="#1ABCFE" />
+                <path
+                  d="M2 47.5C2 42.8056 5.80558 39 10.5 39H19V47.5C19 52.1944 15.1944 56 10.5 56C5.80558 56 2 52.1944 2 47.5Z"
+                  fill="#0ACF83" />
+                <path d="M19 1V20H27.5C32.1944 20 36 16.1944 36 11.5C36 6.80558 32.1944 3 27.5 3L19 1Z"
+                  fill="#FF7262" />
+                <path d="M2 11.5C2 16.1944 5.80558 20 10.5 20H19V3H10.5C5.80558 3 2 6.80558 2 11.5Z" fill="#F24E1E" />
+                <path d="M2 28.5C2 33.1944 5.80558 37 10.5 37H19V20H10.5C5.80558 20 2 23.8056 2 28.5Z" fill="#A259FF" />
+              </svg>
             </div>
-            <div class="card-body">
-              <div class="card-title">Figma — Eplug Web</div>
-              <div class="card-desc">Main design file — UI components, design system, all screens</div>
-            </div>
-            <div class="card-progress">
-              <div class="card-bar">
-                <div class="card-bar-fill" style="width:5%"></div>
-              </div>
-              <span class="card-pct">5%</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-path">figma.com/design/…</span>
-              <span class="card-arrow">↗</span>
-            </div>
-          </a>
-
-          <div class="card-add">
-            <div class="card-add-icon">🎨</div>
-            <div class="card-add-label">Design tokens · coming soon</div>
+            <span class="card-status">Active</span>
           </div>
+          <div class="card-body">
+            <div class="card-title">Figma — Eplug Web</div>
+            <div class="card-desc">Main design file — UI components, design system, all screens</div>
+          </div>
+          <div class="card-progress">
+            <div class="card-bar">
+              <div class="card-bar-fill" style="width:20%"></div>
+            </div>
+            <span class="card-pct">20%</span>
+          </div>
+          <div class="card-footer">
+            <span class="card-path">figma.com/design/…</span>
+            <span class="card-arrow">↗</span>
+          </div>
+        </a>
 
+        <div class="card-add">
+          <div class="card-add-icon">🎨</div>
+          <div class="card-add-label">Design tokens · coming soon</div>
         </div>
+
       </div>
     </div>
+  </div>
 
-    <!-- ─── SECTION: ISOLATED COMPONENTS ──────────────────────────────────────-->
-    <div class="section">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-title">Isolated Components</span>
-          <span class="section-count">2 built</span>
-          <div class="section-line"></div>
-          <span class="section-badge badge-active">Active</span>
-        </div>
-        <div class="cards-grid wide">
 
-          <a class="card status-done dynamic-app-link" href="#" data-app-path="/test-header-buttons" target="_blank">
-            <div class="card-top">
-              <div class="card-icon icon-wire">✨</div>
-              <span class="card-status">Done</span>
-            </div>
-            <div class="card-body">
-              <div class="card-title">Header Buttons</div>
-              <div class="card-desc">Pill-slider animation using Framer Motion (v5)</div>
-            </div>
-            <div class="card-progress">
-              <div class="card-bar">
-                <div class="card-bar-fill" style="width:100%"></div>
-              </div>
-              <span class="card-pct">100%</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-path">v5/HeaderButtons</span>
-              <span class="card-arrow">↗</span>
-            </div>
-          </a>
-
-          <a class="card status-done dynamic-app-link" href="#" data-app-path="/test-numbers" target="_blank">
-            <div class="card-top">
-              <div class="card-icon icon-wire">✨</div>
-              <span class="card-status">Done</span>
-            </div>
-            <div class="card-body">
-              <div class="card-title">The Numbers</div>
-              <div class="card-desc">Scroll-scrubbed image slides & sync content (v5)</div>
-            </div>
-            <div class="card-progress">
-              <div class="card-bar">
-                <div class="card-bar-fill" style="width:100%"></div>
-              </div>
-              <span class="card-pct">100%</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-path">v5/TheNumbers</span>
-              <span class="card-arrow">↗</span>
-            </div>
-          </a>
-
-          <div class="card-add">
-            <div class="card-add-icon">＋</div>
-            <div class="card-add-label">Awaiting Figma Link</div>
-          </div>
-
-        </div>
+  <!-- ─── FOOTER ────────────────────────────────────────────────────────────-->
+  <div class="container">
+    <div class="hub-footer">
+      <span class="footer-left">Eplug Project Hub · Internal developer dashboard</span>
+      <div class="footer-right">
+        <a class="footer-link" href="./UX/index.html">UX Hub</a>
+        <a class="footer-link" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
+          target="_blank">Figma</a>
       </div>
     </div>
+  </div>
 
-    <!-- ─── SECTION: SCREENS ──────────────────────────────────────────────────-->
-    <div class="section">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-title">Screens</span>
-          <span class="section-count">0 of ~20 built</span>
-          <div class="section-line"></div>
-          <span class="section-badge badge-planned">Planned</span>
-        </div>
-        <div class="cards-grid wide">
+  <script>
+    // Set today's date
+    const d = new Date();
+    const opts = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+    document.getElementById('today-date').textContent = d.toLocaleDateString('en-US', opts);
 
-          <div class="card status-planned">
-            <div class="card-top">
-              <div class="card-icon icon-screen">⚡</div>
-              <span class="card-status">Planned</span>
-            </div>
-            <div class="card-body">
-              <div class="card-title">Screen — Hero</div>
-              <div class="card-desc">Fullscreen video hero, headline, 2 CTAs</div>
-            </div>
-            <div class="card-progress">
-              <div class="card-bar">
-                <div class="card-bar-fill" style="width:0%"></div>
-              </div>
-              <span class="card-pct">0%</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-path">screens/hero.html</span>
-              <span class="card-arrow" style="color:var(--text-dim)">—</span>
-            </div>
-            </a>
+    // Dynamic links: Local Vite vs Github Pages
+    const isDev = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
+    const baseViteUrl = 'http://localhost:5177/#';
+    const baseProdUrl = './concept_v2/dist/index.html#';
 
-            <div class="card status-planned">
-              <div class="card-top">
-                <div class="card-icon icon-screen">💬</div>
-                <span class="card-status">Planned</span>
-              </div>
-              <div class="card-body">
-                <div class="card-title">Screen — Testimonials</div>
-                <div class="card-desc">Social proof, quotes, customer logos</div>
-              </div>
-              <div class="card-progress">
-                <div class="card-bar">
-                  <div class="card-bar-fill" style="width:0%"></div>
-                </div>
-                <span class="card-pct">0%</span>
-              </div>
-              <div class="card-footer">
-                <span class="card-path">screens/testimonials.html</span>
-                <span class="card-arrow" style="color:var(--text-dim)">—</span>
-              </div>
-              </a>
-
-              <div class="card status-planned">
-                <div class="card-top">
-                  <div class="card-icon icon-screen">🏢</div>
-                  <span class="card-status">Planned</span>
-                </div>
-                <div class="card-body">
-                  <div class="card-title">Screen — About Us</div>
-                  <div class="card-desc">Mission statement, urban-first values</div>
-                </div>
-                <div class="card-progress">
-                  <div class="card-bar">
-                    <div class="card-bar-fill" style="width:0%"></div>
-                  </div>
-                  <span class="card-pct">0%</span>
-                </div>
-                <div class="card-footer">
-                  <span class="card-path">screens/about-us.html</span>
-                  <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                </div>
-                </a>
-
-                <div class="card status-planned">
-                  <div class="card-top">
-                    <div class="card-icon icon-screen">✅</div>
-                    <span class="card-status">Planned</span>
-                  </div>
-                  <div class="card-body">
-                    <div class="card-title">Screen — Benefits</div>
-                    <div class="card-desc">DC Fast advantages — 3-column layout</div>
-                  </div>
-                  <div class="card-progress">
-                    <div class="card-bar">
-                      <div class="card-bar-fill" style="width:0%"></div>
-                    </div>
-                    <span class="card-pct">0%</span>
-                  </div>
-                  <div class="card-footer">
-                    <span class="card-path">screens/benefits.html</span>
-                    <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                  </div>
-                  </a>
-
-                  <div class="card status-planned">
-                    <div class="card-top">
-                      <div class="card-icon icon-screen">📱</div>
-                      <span class="card-status">Planned</span>
-                    </div>
-                    <div class="card-body">
-                      <div class="card-title">Screen — App Preview</div>
-                      <div class="card-desc">App mockup, loyalty, fleet tools, waitlist</div>
-                    </div>
-                    <div class="card-progress">
-                      <div class="card-bar">
-                        <div class="card-bar-fill" style="width:0%"></div>
-                      </div>
-                      <span class="card-pct">0%</span>
-                    </div>
-                    <div class="card-footer">
-                      <span class="card-path">screens/app-preview.html</span>
-                      <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                    </div>
-                    </a>
-
-                    <div class="card status-planned">
-                      <div class="card-top">
-                        <div class="card-icon icon-screen">📍</div>
-                        <span class="card-status">Planned</span>
-                      </div>
-                      <div class="card-body">
-                        <div class="card-title">Screen — Network Map</div>
-                        <div class="card-desc">Mapbox interactive, 390 Bedford Ave location card</div>
-                      </div>
-                      <div class="card-progress">
-                        <div class="card-bar">
-                          <div class="card-bar-fill" style="width:0%"></div>
-                        </div>
-                        <span class="card-pct">0%</span>
-                      </div>
-                      <div class="card-footer">
-                        <span class="card-path">screens/network-map.html</span>
-                        <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                      </div>
-                      </a>
-
-                      <div class="card-add">
-                        <div class="card-add-icon">＋</div>
-                        <div class="card-add-label">Add new screen</div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-                <!-- ─── SECTION: PAGES ────────────────────────────────────────────────────-->
-                <div class="section">
-                  <div class="container">
-                    <div class="section-head">
-                      <span class="section-title">Pages</span>
-                      <span class="section-count">0 of 6 assembled</span>
-                      <div class="section-line"></div>
-                      <span class="section-badge badge-planned">Planned</span>
-                    </div>
-                    <div class="cards-grid wide">
-
-                      <div class="card status-planned">
-                        <div class="card-top">
-                          <div class="card-icon icon-page">🏠</div>
-                          <span class="card-status">Planned</span>
-                        </div>
-                        <div class="card-body">
-                          <div class="card-title">Home Page</div>
-                          <div class="card-desc">7 sections assembled — full Hero → Footer CTA</div>
-                        </div>
-                        <div class="card-progress">
-                          <div class="card-bar">
-                            <div class="card-bar-fill" style="width:0%"></div>
-                          </div>
-                          <span class="card-pct">0%</span>
-                        </div>
-                        <div class="card-footer">
-                          <span class="card-path">pages/home.html</span>
-                          <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                        </div>
-                        </a>
-
-                        <div class="card status-planned">
-                          <div class="card-top">
-                            <div class="card-icon icon-page">🏢</div>
-                            <span class="card-status">Planned</span>
-                          </div>
-                          <div class="card-body">
-                            <div class="card-title">About Page</div>
-                            <div class="card-desc">Hero, Mission, Principles (6), Team</div>
-                          </div>
-                          <div class="card-progress">
-                            <div class="card-bar">
-                              <div class="card-bar-fill" style="width:0%"></div>
-                            </div>
-                            <span class="card-pct">0%</span>
-                          </div>
-                          <div class="card-footer">
-                            <span class="card-path">pages/about.html</span>
-                            <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                          </div>
-                          </a>
-
-                          <div class="card status-planned">
-                            <div class="card-top">
-                              <div class="card-icon icon-page">📍</div>
-                              <span class="card-status">Planned</span>
-                            </div>
-                            <div class="card-body">
-                              <div class="card-title">Network Page</div>
-                              <div class="card-desc">Map, Location cards, Expansion strategy</div>
-                            </div>
-                            <div class="card-progress">
-                              <div class="card-bar">
-                                <div class="card-bar-fill" style="width:0%"></div>
-                              </div>
-                              <span class="card-pct">0%</span>
-                            </div>
-                            <div class="card-footer">
-                              <span class="card-path">pages/network.html</span>
-                              <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                            </div>
-                            </a>
-
-                            <div class="card status-planned">
-                              <div class="card-top">
-                                <div class="card-icon icon-page">📱</div>
-                                <span class="card-status">Planned</span>
-                              </div>
-                              <div class="card-body">
-                                <div class="card-title">App &amp; Rewards Page</div>
-                                <div class="card-desc">Features, Loyalty, Fleet tools, Waitlist</div>
-                              </div>
-                              <div class="card-progress">
-                                <div class="card-bar">
-                                  <div class="card-bar-fill" style="width:0%"></div>
-                                </div>
-                                <span class="card-pct">0%</span>
-                              </div>
-                              <div class="card-footer">
-                                <span class="card-path">pages/app.html</span>
-                                <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                              </div>
-                              </a>
-
-                              <div class="card status-planned">
-                                <div class="card-top">
-                                  <div class="card-icon icon-page">🤝</div>
-                                  <span class="card-status">Planned</span>
-                                </div>
-                                <div class="card-body">
-                                  <div class="card-title">Partners Page</div>
-                                  <div class="card-desc">4 audiences — Fleet, Property, Retail, Municipality</div>
-                                </div>
-                                <div class="card-progress">
-                                  <div class="card-bar">
-                                    <div class="card-bar-fill" style="width:0%"></div>
-                                  </div>
-                                  <span class="card-pct">0%</span>
-                                </div>
-                                <div class="card-footer">
-                                  <span class="card-path">pages/partners.html</span>
-                                  <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                                </div>
-                                </a>
-
-                                <div class="card status-planned">
-                                  <div class="card-top">
-                                    <div class="card-icon icon-page">✉️</div>
-                                    <span class="card-status">Planned</span>
-                                  </div>
-                                  <div class="card-body">
-                                    <div class="card-title">Contact Page</div>
-                                    <div class="card-desc">Premium form, partner type filter, office info</div>
-                                  </div>
-                                  <div class="card-progress">
-                                    <div class="card-bar">
-                                      <div class="card-bar-fill" style="width:0%"></div>
-                                    </div>
-                                    <span class="card-pct">0%</span>
-                                  </div>
-                                  <div class="card-footer">
-                                    <span class="card-path">pages/contact.html</span>
-                                    <span class="card-arrow" style="color:var(--text-dim)">—</span>
-                                  </div>
-                                  </a>
-
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- ─── SECTION: MATERIALS & DOCS ─────────────────────────────────────────-->
-                            <div class="section">
-                              <div class="container">
-                                <div class="section-head">
-                                  <span class="section-title">Materials &amp; Docs</span>
-                                  <div class="section-line"></div>
-                                </div>
-                                <div class="cards-grid">
-
-                                  <a class="card status-done" href="./materials/pipeline.md" target="_blank">
-                                    <div class="card-top">
-                                      <div class="card-icon icon-doc">📋</div>
-                                      <span class="card-status">Done</span>
-                                    </div>
-                                    <div class="card-body">
-                                      <div class="card-title">Pipeline</div>
-                                      <div class="card-desc">Phase-by-phase development pipeline with all tasks</div>
-                                    </div>
-                                    <div class="card-footer">
-                                      <span class="card-path">materials/pipeline.md</span>
-                                      <span class="card-arrow">↗</span>
-                                    </div>
-                                  </a>
-
-                                  <a class="card status-done" href="./PLAN.md" target="_blank">
-                                    <div class="card-top">
-                                      <div class="card-icon icon-doc">🗒</div>
-                                      <span class="card-status">Done</span>
-                                    </div>
-                                    <div class="card-body">
-                                      <div class="card-title">Plan</div>
-                                      <div class="card-desc">Main development plan — tech stack decisions and milestones
-                                      </div>
-                                    </div>
-                                    <div class="card-footer">
-                                      <span class="card-path">PLAN.md</span>
-                                      <span class="card-arrow">↗</span>
-                                    </div>
-                                  </a>
-
-                                  <a class="card status-done" href="./materials/UX-analysis.md" target="_blank">
-                                    <div class="card-top">
-                                      <div class="card-icon icon-doc">🔍</div>
-                                      <span class="card-status">Done</span>
-                                    </div>
-                                    <div class="card-body">
-                                      <div class="card-title">UX Analysis</div>
-                                      <div class="card-desc">Competitor research, UX insights, recommendations</div>
-                                    </div>
-                                    <div class="card-footer">
-                                      <span class="card-path">materials/UX-analysis.md</span>
-                                      <span class="card-arrow">↗</span>
-                                    </div>
-                                  </a>
-
-                                  <a class="card status-done" href="./materials/Eplug website structure and texts.md"
-                                    target="_blank">
-                                    <div class="card-top">
-                                      <div class="card-icon icon-doc">📄</div>
-                                      <span class="card-status">Done</span>
-                                    </div>
-                                    <div class="card-body">
-                                      <div class="card-title">Brief &amp; Texts</div>
-                                      <div class="card-desc">Full site structure, all copy and content brief</div>
-                                    </div>
-                                    <div class="card-footer">
-                                      <span class="card-path">materials/Eplug website…</span>
-                                      <span class="card-arrow">↗</span>
-                                    </div>
-                                  </a>
-
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- ─── FOOTER ─────────────────────────────────────────────────────────────-->
-                            <div class="container">
-                              <div class="hub-footer">
-                                <span class="footer-left">Eplug Project Hub · Internal developer dashboard</span>
-                                <div class="footer-right">
-                                  <a class="footer-link" href="./UX/index.html">UX Hub</a>
-                                  <a class="footer-link"
-                                    href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
-                                    target="_blank">Figma</a>
-                                  <a class="footer-link" href="./materials/pipeline.md">Pipeline</a>
-                                </div>
-                              </div>
-                            </div>
-
-                            <script>
-                              // Set today's date
-                              const d = new Date();
-                              const opts = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-                              document.getElementById('today-date').textContent = d.toLocaleDateString('en-US', opts);
-
-                              // All clickable cards — make entire card keyboard accessible
-                              document.querySelectorAll('.card[onclick]').forEach(card => {
-                                card.setAttribute('role', 'button');
-                                card.setAttribute('tabindex', '0');
-                                card.addEventListener('keydown', e => {
-                                  if (e.key === 'Enter' || e.key === ' ') card.click();
-                                });
-                              });
-
-                              // Dynamic links: Local Vite vs Github Pages
-                              const isDev = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
-                              const baseViteUrl = 'http://localhost:5174/#';
-
-                              // In Github Pages, the root is /Eplug_web/ so our built app is at /Eplug_web/concept_v2/dist/index.html
-                              const baseProdUrl = './concept_v2/dist/index.html#';
-
-                              document.querySelectorAll('.dynamic-app-link').forEach(link => {
-                                const path = link.getAttribute('data-app-path');
-                                if (path) {
-                                  // We are using HashRouter now. So sub routes become /#/path
-                                  link.href = (isDev ? baseViteUrl : baseProdUrl) + path;
-                                }
-                              });
-                            </script>
+    document.querySelectorAll('.dynamic-app-link').forEach(link => {
+      const path = link.getAttribute('data-app-path');
+      if (path) {
+        link.href = (isDev ? baseViteUrl : baseProdUrl) + path;
+      }
+    });
+  </script>
 </body>
 
 </html>
