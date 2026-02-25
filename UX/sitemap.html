@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eplug — Website Sitemap</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
@@ -19,84 +20,29 @@
             box-sizing: border-box;
         }
 
+        /* Sitemap-specific accent colors for 5 columns (shared vars injected by shared-header.js) */
         :root {
-            --bg-deep: #0a0613;
-            --bg-surface: #110d1f;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --bg-card-hover: rgba(255, 255, 255, 0.06);
-            --border-subtle: rgba(255, 255, 255, 0.06);
-            --border-hover: rgba(168, 130, 255, 0.25);
-            --text-primary: #f0ecf7;
-            --text-secondary: rgba(240, 236, 247, 0.55);
-            --text-tertiary: rgba(240, 236, 247, 0.35);
-            --accent-purple: #a882ff;
             --accent-violet: #7c5ce0;
             --accent-pink: #e06cb0;
             --accent-blue: #5c8ce0;
             --accent-cyan: #5ce0d6;
             --accent-green: #5ce08c;
-            --accent-amber: #e0b05c;
-            --accent-rose: #e05c7c;
-            --accent-fuchsia: #FF00C5;
-            --glow-purple: rgba(168, 130, 255, 0.08);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-        }
-
-        html {
-            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-deep);
-            color: var(--text-primary);
-            min-height: 100vh;
             overflow-x: auto;
-            -webkit-font-smoothing: antialiased;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 600px;
-            background: radial-gradient(ellipse, rgba(168, 130, 255, 0.07) 0%, rgba(124, 92, 224, 0.03) 40%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -300px;
-            right: -100px;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(ellipse, rgba(224, 108, 176, 0.05) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Header */
+        /* ── Page Header — now uses shared eplug-page + eplug-section-head ── */
         .header {
             position: relative;
             z-index: 1;
-            padding: 48px 48px 0;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 24px;
         }
 
         .header-left {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .header-top-row {
@@ -108,37 +54,6 @@
 
         .header-badge {
             display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--accent-purple);
-            background: rgba(168, 130, 255, 0.08);
-            border: 1px solid rgba(168, 130, 255, 0.15);
-            padding: 6px 14px;
-            border-radius: 100px;
-            width: fit-content;
-        }
-
-        .header-badge::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-purple);
-            box-shadow: 0 0 8px var(--accent-purple);
-        }
-
-        .header h1 {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .header-subtitle {
@@ -175,15 +90,11 @@
             z-index: 1;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            /* Changed to 5 columns */
             gap: 24px;
-            /* Increased gap */
-            padding: 40px 64px 80px;
-            /* More padding */
+            padding: 40px 48px 80px;
+            max-width: 1280px;
+            margin: 0 auto;
             width: 100%;
-            /* Full width */
-            max-width: none;
-            /* Remove constraint */
         }
 
         .column {
@@ -446,6 +357,8 @@
             position: relative;
             z-index: 1;
             padding: 0 48px 48px;
+            max-width: 1280px;
+            margin: 0 auto;
         }
 
         .footer-strip {
@@ -512,25 +425,18 @@
 
 <body>
 
-    <div class="grain"></div>
+    <!-- Shared Header (injects grain, glow, design system) -->
+    <div id="eplug-header"></div>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-left">
-            <div class="header-top-row">
-                <div class="header-badge">Sitemap</div>
-            </div>
-            <h1>Eplug Website Architecture</h1>
-            <p class="header-subtitle">Urban DC Fast Charging Network — 5 pages, full section breakdown</p>
+    <!-- Page Header -->
+    <div class="eplug-page">
+        <div class="eplug-section-head">
+            <div class="eplug-tag">Sitemap</div>
+            <h1 class="eplug-heading">Eplug Website Architecture</h1>
+            <p class="eplug-subheading">Urban DC Fast Charging Network — 5 pages, full section breakdown &nbsp;·&nbsp;
+                26 sections &nbsp;·&nbsp; Brooklyn, NY 2026</p>
         </div>
-        <div class="header-meta">
-            <span>5 pages</span>
-            <div class="dot"></div>
-            <span>26 sections</span>
-            <div class="dot"></div>
-            <span>Brooklyn, NY 2026</span>
-        </div>
-    </header>
+    </div>
 
     <!-- Sitemap Grid -->
     <main class="sitemap">
@@ -822,18 +728,12 @@
     </div>
 
     <script>
-        // Navigate to wireframe via parent hub (if inside iframe) or direct
         function nav(el) {
             const url = el.getAttribute('href');
-            if (window.parent !== window) {
-                // Inside iframe — message the parent hub to switch tab
-                window.parent.postMessage({ type: 'navigate-wireframe', url: url }, '*');
-            } else {
-                // Standalone — navigate directly
-                window.location.href = url;
-            }
+            if (url) window.location.href = url;
         }
     </script>
+    <script src="../shared-header.js"></script>
 
 </body>
 

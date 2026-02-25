@@ -7,8 +7,11 @@
   <title>Eplug — Project Hub</title>
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <style>
-    /* ─── Reset & Base ─────────────────────────────────────────────────────── */
     *,
     *::before,
     *::after {
@@ -17,926 +20,495 @@
       padding: 0;
     }
 
-    :root {
-      --bg: #070b10;
-      --surface: #0d1520;
-      --card: #101d2e;
-      --card-hover: #162438;
-      --border: rgba(255, 255, 255, 0.07);
-      --border-glow: rgba(0, 200, 255, 0.25);
+    /* ── Hub-specific card styles (base classes from shared-header.js) ── */
 
-      --accent: #00c8ff;
-      --accent-dim: rgba(0, 200, 255, 0.12);
-      --green: #00e676;
-      --green-dim: rgba(0, 230, 118, 0.12);
-      --amber: #ffb300;
-      --amber-dim: rgba(255, 179, 0, 0.12);
-      --gray: #4a5e72;
-      --gray-dim: rgba(74, 94, 114, 0.15);
-
-      --text: #d4e4f0;
-      --text-muted: #607080;
-      --text-dim: #3a4e5e;
-
-      --radius: 12px;
-      --radius-sm: 8px;
+    /* Section dividers */
+    .hub-section {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    html {
-      scroll-behavior: smooth;
+    .hub-section:first-of-type {
+      border-top: none;
     }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      font-size: 14px;
-      line-height: 1.5;
+    .hub-section-body {
+      padding-bottom: 40px;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ─── Scrollbar ──────────────────────────────────────────────────────────*/
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #1e3045;
-      border-radius: 3px;
-    }
-
-    /* ─── Layout ─────────────────────────────────────────────────────────────*/
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 32px;
-    }
-
-    /* ─── Header ─────────────────────────────────────────────────────────────*/
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(7, 11, 16, 0.9);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 96px;
-      position: relative;
-    }
-
-    .logo-area {
-      display: flex;
-      align-items: center;
-    }
-
-    /* ─── Unified Header Nav ─── */
-    .header-nav {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-    }
-
-    .header-nav-link {
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(240, 236, 247, 0.55);
-      text-decoration: none;
-      padding: 20px;
-      letter-spacing: 0.2px;
-      transition: color 0.2s ease;
-    }
-
-    .header-nav-link:hover,
-    .header-nav-link.active {
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .header-nav-sep {
-      width: 1px;
-      height: 16px;
-      background: var(--border);
-      flex-shrink: 0;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .header-date {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .overall-progress {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-    }
-
-    .overall-progress .pct {
-      color: var(--accent);
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .overall-progress .label {
-      color: var(--text-muted);
-    }
-
-    /* ─── Hero Banner ────────────────────────────────────────────────────────*/
-    .hero {
-      padding: 40px 0 32px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .hero-inner {
+    /* Card grid — 3 cols default, 4 for wide */
+    .hub-grid {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .hero-title {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      color: #fff;
-    }
-
-    .hero-title span {
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      margin-top: 6px;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    /* Phase progress pills */
-    .phase-pills {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 260px;
-    }
-
-    .phase-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .phase-name {
-      font-size: 11px;
-      color: var(--text-muted);
-      width: 64px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    .phase-bar-wrap {
-      flex: 1;
-      height: 6px;
-      background: var(--surface);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .phase-bar-fill {
-      height: 100%;
-      border-radius: 3px;
-      background: linear-gradient(90deg, var(--accent), #0070ff);
-      transition: width 0.6s ease;
-    }
-
-    .phase-bar-fill.done {
-      background: linear-gradient(90deg, var(--green), #00b060);
-    }
-
-    .phase-bar-fill.active {
-      background: linear-gradient(90deg, var(--accent), #0070ff);
-    }
-
-    .phase-bar-fill.empty {
-      background: var(--gray-dim);
-      width: 0% !important;
-    }
-
-    .phase-pct {
-      font-size: 11px;
-      color: var(--text-muted);
-      width: 32px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    /* ─── Stats Row ──────────────────────────────────────────────────────────*/
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      padding: 24px 0;
-    }
-
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .stat-value {
-      font-size: 28px;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .stat-value.accent {
-      color: var(--accent);
-    }
-
-    .stat-value.green {
-      color: var(--green);
-    }
-
-    .stat-value.amber {
-      color: var(--amber);
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* ─── Section ────────────────────────────────────────────────────────────*/
-    .section {
-      padding: 32px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section:last-child {
-      border-bottom: none;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .section-count {
-      font-size: 11px;
-      color: var(--text-dim);
-    }
-
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .section-badge {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 10px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .badge-done {
-      background: var(--green-dim);
-      color: var(--green);
-    }
-
-    .badge-active {
-      background: var(--accent-dim);
-      color: var(--accent);
-    }
-
-    .badge-planned {
-      background: var(--gray-dim);
-      color: var(--gray);
-    }
-
-    /* ─── Cards Grid ─────────────────────────────────────────────────────────*/
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
 
-    .cards-grid.wide {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    .hub-grid.hub-grid-4 {
+      grid-template-columns: repeat(4, 1fr);
     }
 
-    /* ─── Card ───────────────────────────────────────────────────────────────*/
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px 16px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, transform 0.15s;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 120px;
-      /* anchor reset */
-      color: inherit;
-      text-decoration: none;
+    /* Card status pill */
+    .hub-card-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
     }
 
-    .card::before {
+    .hub-card-status::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
-    }
-
-    .card.status-done::before {
-      background: radial-gradient(ellipse at top left, rgba(0, 230, 118, 0.06), transparent 60%);
-    }
-
-    .card.status-active::before {
-      background: radial-gradient(ellipse at top left, rgba(0, 200, 255, 0.07), transparent 60%);
-    }
-
-    .card:hover {
-      background: var(--card-hover);
-      border-color: var(--border-glow);
-      transform: translateY(-2px);
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
-    .card.status-done:hover {
-      border-color: rgba(0, 230, 118, 0.3);
-    }
-
-    .card.status-planned {
-      opacity: 0.55;
-      cursor: default;
-    }
-
-    .card.status-planned:hover {
-      transform: none;
-      border-color: var(--border);
-      background: var(--card);
-    }
-
-    .card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .card-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
       flex-shrink: 0;
     }
 
-    .icon-ux {
-      background: rgba(0, 200, 255, 0.12);
+    .hub-card-status.done {
+      background: rgba(92, 224, 140, 0.1);
+      color: #5ce08c;
+      border: 1px solid rgba(92, 224, 140, 0.12);
     }
 
-    .icon-map {
-      background: rgba(0, 200, 255, 0.12);
+    .hub-card-status.done::before {
+      background: #5ce08c;
     }
 
-    .icon-wire {
-      background: rgba(100, 130, 255, 0.12);
+    .hub-card-status.active {
+      background: rgba(168, 130, 255, 0.1);
+      color: #a882ff;
+      border: 1px solid rgba(168, 130, 255, 0.12);
     }
 
-    .icon-design {
-      background: rgba(255, 100, 200, 0.12);
+    .hub-card-status.active::before {
+      background: #a882ff;
+      box-shadow: 0 0 6px #a882ff;
     }
 
-    .icon-screen {
-      background: rgba(255, 179, 0, 0.12);
+    .hub-card-status.soon {
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(240, 236, 247, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .icon-page {
-      background: rgba(0, 230, 118, 0.12);
+    .hub-card-status.soon::before {
+      background: rgba(240, 236, 247, 0.3);
     }
 
-    .icon-doc {
-      background: rgba(74, 94, 114, 0.20);
+    /* Hub card inner structure */
+    .hub-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 14px;
     }
 
-    .icon-external {
-      background: rgba(138, 100, 255, 0.12);
-    }
-
-    .card-status {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 10px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .status-done .card-status {
-      background: var(--green-dim);
-      color: var(--green);
-    }
-
-    .status-active .card-status {
-      background: var(--accent-dim);
-      color: var(--accent);
-    }
-
-    .status-planned .card-status {
-      background: var(--gray-dim);
-      color: var(--gray);
-    }
-
-    .card-body {
-      flex: 1;
-    }
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 4px;
-      line-height: 1.3;
-    }
-
-    .card-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    .card-footer {
+    .hub-card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
     }
 
-    .card-path {
-      font-size: 11px;
-      color: var(--text-dim);
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 180px;
+    .hub-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f0ecf7;
+      letter-spacing: -0.1px;
+      margin-bottom: 6px;
+      line-height: 1.25;
     }
 
-    .card-arrow {
+    .hub-card-desc {
       font-size: 12px;
-      color: var(--text-dim);
-      transition: color 0.2s, transform 0.2s;
+      color: rgba(240, 236, 247, 0.45);
+      line-height: 1.6;
     }
 
-    .card:hover .card-arrow {
-      color: var(--accent);
-      transform: translate(2px, -2px);
-    }
-
-    /* Progress bar on card */
-    .card-progress {
+    /* Progress bar */
+    .hub-card-progress {
       display: flex;
       align-items: center;
       gap: 8px;
+      margin-top: 14px;
     }
 
-    .card-bar {
+    .hub-card-bar {
       flex: 1;
-      height: 3px;
-      background: var(--surface);
+      height: 2px;
+      background: rgba(255, 255, 255, 0.06);
       border-radius: 2px;
       overflow: hidden;
     }
 
-    .card-bar-fill {
+    .hub-card-bar-fill {
       height: 100%;
       border-radius: 2px;
+      background: linear-gradient(90deg, #5ce08c, #5cbfe0);
+      transition: width 0.6s ease;
     }
 
-    .status-done .card-bar-fill {
-      background: var(--green);
+    .hub-card-bar-fill.in-progress {
+      background: linear-gradient(90deg, #a882ff, #5c8ce0);
     }
 
-    .status-active .card-bar-fill {
-      background: var(--accent);
-    }
-
-    .status-planned .card-bar-fill {
-      background: var(--gray);
-    }
-
-    .card-pct {
+    .hub-card-pct {
       font-size: 11px;
-      font-weight: 600;
-      min-width: 28px;
+      font-weight: 700;
+      color: rgba(240, 236, 247, 0.35);
+      width: 30px;
       text-align: right;
+      flex-shrink: 0;
     }
 
-    .status-done .card-pct {
-      color: var(--green);
+    /* Card footer with path */
+    .hub-card-footer {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .status-active .card-pct {
-      color: var(--accent);
+    .hub-card-path {
+      font-size: 10px;
+      color: rgba(240, 236, 247, 0.28);
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      letter-spacing: 0;
     }
 
-    .status-planned .card-pct {
-      color: var(--gray);
+    .hub-card-arrow {
+      font-size: 12px;
+      color: rgba(168, 130, 255, 0.5);
+      opacity: 0;
+      transform: translateX(-5px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
     }
 
-    /* Placeholder "add" card */
-    .card-add {
-      background: transparent;
+    .eplug-tile:hover .hub-card-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* "Add" placeholder card */
+    .hub-card-add {
       border: 1px dashed rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius);
-      padding: 18px 20px;
+      border-radius: 12px;
+      padding: 20px 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      min-height: 120px;
+      gap: 8px;
+      min-height: 100px;
+      color: rgba(240, 236, 247, 0.2);
+    }
+
+    .hub-card-add-icon {
+      font-size: 22px;
       opacity: 0.4;
     }
 
-    .card-add-icon {
-      font-size: 22px;
+    .hub-card-add-label {
+      font-size: 11px;
+      text-align: center;
     }
 
-    .card-add-label {
-      font-size: 12px;
-      color: var(--text-muted);
+    /* Section header (group labels) */
+    .hub-section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 32px 0 16px;
     }
 
-    /* ─── Figma special card ─────────────────────────────────────────────────*/
-    .card-figma {
-      background: linear-gradient(135deg, #1a0d2e, #0d1a3e);
-      border-color: rgba(138, 100, 255, 0.2);
+    .hub-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(240, 236, 247, 0.35);
     }
 
-    .card-figma:hover {
-      border-color: rgba(138, 100, 255, 0.5);
+    .hub-section-count {
+      font-size: 10px;
+      color: rgba(240, 236, 247, 0.2);
     }
 
-    /* ─── Footer ─────────────────────────────────────────────────────────────*/
+    /* Hub footer */
     .hub-footer {
-      padding: 24px 0;
-      border-top: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 24px 0 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 8px;
     }
 
-    .footer-left {
-      font-size: 12px;
-      color: var(--text-dim);
+    .hub-footer-left {
+      font-size: 11px;
+      color: rgba(240, 236, 247, 0.25);
     }
 
-    .footer-right {
+    .hub-footer-links {
       display: flex;
       gap: 16px;
     }
 
-    .footer-link {
-      font-size: 12px;
-      color: var(--text-muted);
-      transition: color 0.2s;
+    .hub-footer-link {
+      font-size: 11px;
+      color: rgba(168, 130, 255, 0.55);
+      text-decoration: none;
+      transition: opacity 0.15s;
     }
 
-    .footer-link:hover {
-      color: var(--accent);
+    .hub-footer-link:hover {
+      opacity: 0.7;
     }
 
-    /* ─── Utility ────────────────────────────────────────────────────────────*/
-    .mt-4 {
-      margin-top: 4px;
+    /* Animations */
+    @keyframes hubFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .grid-2 {
-      grid-template-columns: repeat(2, 1fr);
+    .hub-animate {
+      animation: hubFadeUp 0.4s ease both;
     }
   </style>
 </head>
 
 <body>
-  <!-- ─── HEADER (shared) ──────────────────────────────────────────────────-->
+
+  <!-- Shared Header (injects grain, glow, design system CSS) -->
   <div id="eplug-header"></div>
 
-  <!-- ─── HERO ───────────────────────────────────────────────────────────────-->
-  <div class="hero">
-    <div class="container">
-      <div class="hero-inner">
-        <div>
-          <h1 class="hero-title">Eplug <span>Web</span> — Development Dashboard</h1>
-          <p class="hero-sub">Brooklyn, New York · Urban DC Fast Charging Network · Launch 2026</p>
-        </div>
-        <div class="phase-pills">
-          <div class="phase-row">
-            <span class="phase-name">UX</span>
-            <div class="phase-bar-wrap">
-              <div class="phase-bar-fill done" style="width:85%"></div>
-            </div>
-            <span class="phase-pct">85%</span>
-          </div>
-          <div class="phase-row">
-            <span class="phase-name">Design</span>
-            <div class="phase-bar-wrap">
-              <div class="phase-bar-fill active" style="width:20%"></div>
-            </div>
-            <span class="phase-pct">20%</span>
-          </div>
+  <div class="eplug-page">
 
+    <!-- ── Page Header ────────────────────────────────────────────────────── -->
+    <div class="eplug-section-head">
+      <div class="eplug-tag">Project Hub</div>
+      <h1 class="eplug-heading">Eplug Web — Development Dashboard</h1>
+      <p class="eplug-subheading">Brooklyn, New York · Urban DC Fast Charging Network · Launch 2026</p>
+    </div>
 
-          <div class="phase-row">
-            <span class="phase-name">Deploy</span>
-            <div class="phase-bar-wrap">
-              <div class="phase-bar-fill empty" style="width:0%"></div>
+    <!-- ── UX & Architecture ──────────────────────────────────────────────── -->
+    <div class="hub-section">
+      <div class="hub-section-head">
+        <span class="hub-section-title">UX &amp; Architecture</span>
+        <span class="hub-section-count">3 files</span>
+        <span class="hub-card-status done">Done</span>
+      </div>
+      <div class="hub-section-body">
+        <div class="hub-grid">
+
+          <a class="eplug-tile hub-animate" href="./UX/sitemap.html" style="animation-delay:0.05s">
+            <div class="hub-card-top">
+              <div class="hub-card-icon">🗺</div>
+              <span class="hub-card-status done">Done</span>
             </div>
-            <span class="phase-pct">0%</span>
-          </div>
+            <div class="hub-card-title">Sitemap</div>
+            <div class="hub-card-desc">Visual site architecture — 5 columns, 26 sections with hover interactions</div>
+            <div class="hub-card-progress">
+              <div class="hub-card-bar">
+                <div class="hub-card-bar-fill" style="width:100%"></div>
+              </div>
+              <span class="hub-card-pct">100%</span>
+            </div>
+            <div class="hub-card-footer">
+              <span class="hub-card-path">UX/sitemap.html</span>
+              <span class="hub-card-arrow">↗</span>
+            </div>
+          </a>
+
+          <a class="eplug-tile hub-animate" href="./UX/wireframes/index.html" style="animation-delay:0.1s">
+            <div class="hub-card-top">
+              <div class="hub-card-icon">📐</div>
+              <span class="hub-card-status done">Done</span>
+            </div>
+            <div class="hub-card-title">Wireframes Index</div>
+            <div class="hub-card-desc">Catalog of all wireframe pages with preview cards — 5 pages, 23 sections</div>
+            <div class="hub-card-progress">
+              <div class="hub-card-bar">
+                <div class="hub-card-bar-fill" style="width:100%"></div>
+              </div>
+              <span class="hub-card-pct">100%</span>
+            </div>
+            <div class="hub-card-footer">
+              <span class="hub-card-path">UX/wireframes/index.html</span>
+              <span class="hub-card-arrow">↗</span>
+            </div>
+          </a>
+
+          <a class="eplug-tile hub-animate" href="./UX/index.html" style="animation-delay:0.15s">
+            <div class="hub-card-top">
+              <div class="hub-card-icon">🧭</div>
+              <span class="hub-card-status done">Done</span>
+            </div>
+            <div class="hub-card-title">UX Hub</div>
+            <div class="hub-card-desc">Main navigation hub — Sitemap + Wireframes consolidated in one view</div>
+            <div class="hub-card-progress">
+              <div class="hub-card-bar">
+                <div class="hub-card-bar-fill" style="width:100%"></div>
+              </div>
+              <span class="hub-card-pct">100%</span>
+            </div>
+            <div class="hub-card-footer">
+              <span class="hub-card-path">UX/index.html</span>
+              <span class="hub-card-arrow">↗</span>
+            </div>
+          </a>
+
         </div>
       </div>
     </div>
-  </div>
 
-
-
-  <!-- ─── SECTION: UX & ARCHITECTURE ───────────────────────────────────────-->
-  <div class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-title">UX &amp; Architecture</span>
-        <span class="section-count">3 files</span>
-        <span class="section-badge badge-done">Done</span>
+    <!-- ── Isolated Components ─────────────────────────────────────────────── -->
+    <div class="hub-section">
+      <div class="hub-section-head">
+        <span class="hub-section-title">Isolated Components</span>
+        <span class="hub-section-count">2 built</span>
+        <span class="hub-card-status active">Active</span>
       </div>
-      <div class="cards-grid">
+      <div class="hub-section-body">
+        <div class="hub-grid">
 
-        <!-- UX Hub -->
-        <a class="card status-done" href="./UX/index.html" target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-ux">🧭</div>
-            <span class="card-status">Done</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">UX Hub</div>
-            <div class="card-desc">Main navigation hub — Sitemap + Wireframes in one view</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:100%"></div>
+          <a class="eplug-tile hub-animate dynamic-app-link" href="#" data-app-path="/test-header-buttons"
+            target="_blank" style="animation-delay:0.05s">
+            <div class="hub-card-top">
+              <div class="hub-card-icon">✨</div>
+              <span class="hub-card-status done">Done</span>
             </div>
-            <span class="card-pct">100%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">UX/index.html</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
-
-        <!-- Sitemap -->
-        <a class="card status-done" href="./UX/sitemap.html" target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-map">🗺</div>
-            <span class="card-status">Done</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">Sitemap</div>
-            <div class="card-desc">Visual site architecture — 5 columns, 26 sections with hover</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:100%"></div>
+            <div class="hub-card-title">Header Buttons</div>
+            <div class="hub-card-desc">Pill-slider animation using Framer Motion (v5)</div>
+            <div class="hub-card-progress">
+              <div class="hub-card-bar">
+                <div class="hub-card-bar-fill" style="width:100%"></div>
+              </div>
+              <span class="hub-card-pct">100%</span>
             </div>
-            <span class="card-pct">100%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">UX/sitemap.html</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
-
-        <!-- Wireframes Index -->
-        <a class="card status-done" href="./UX/wireframes/index.html" target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-wire">📐</div>
-            <span class="card-status">Done</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">Wireframes Index</div>
-            <div class="card-desc">Catalog of all wireframe pages with preview cards</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:100%"></div>
+            <div class="hub-card-footer">
+              <span class="hub-card-path">v5/HeaderButtons</span>
+              <span class="hub-card-arrow">↗</span>
             </div>
-            <span class="card-pct">100%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">UX/wireframes/index.html</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
+          </a>
 
-      </div>
-    </div>
-  </div>
-
-  <!-- ─── SECTION: ISOLATED COMPONENTS ─────────────────────────────────────-->
-  <div class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-title">Isolated Components</span>
-        <span class="section-count">2 built</span>
-        <span class="section-badge badge-active">Active</span>
-      </div>
-      <div class="cards-grid wide">
-
-        <a class="card status-done dynamic-app-link" href="#" data-app-path="/test-header-buttons" target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-wire">✨</div>
-            <span class="card-status">Done</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">Header Buttons</div>
-            <div class="card-desc">Pill-slider animation using Framer Motion (v5)</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:100%"></div>
+          <a class="eplug-tile hub-animate dynamic-app-link" href="#" data-app-path="/test-whatis" target="_blank"
+            style="animation-delay:0.1s">
+            <div class="hub-card-top">
+              <div class="hub-card-icon">✨</div>
+              <span class="hub-card-status done">Done</span>
             </div>
-            <span class="card-pct">100%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">v5/HeaderButtons</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
-
-        <a class="card status-done dynamic-app-link" href="#" data-app-path="/test-whatis" target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-wire">✨</div>
-            <span class="card-status">Done</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">What Is Eplug</div>
-            <div class="card-desc">Horizontal slider · ambient glow · scroll-trigger (v5)</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:100%"></div>
+            <div class="hub-card-title">What Is Eplug</div>
+            <div class="hub-card-desc">Horizontal slider · ambient glow · scroll-trigger (v5)</div>
+            <div class="hub-card-progress">
+              <div class="hub-card-bar">
+                <div class="hub-card-bar-fill" style="width:100%"></div>
+              </div>
+              <span class="hub-card-pct">100%</span>
             </div>
-            <span class="card-pct">100%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">v5/WhatIsEplug</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
+            <div class="hub-card-footer">
+              <span class="hub-card-path">v5/WhatIsEplug</span>
+              <span class="hub-card-arrow">↗</span>
+            </div>
+          </a>
 
-        <div class="card-add">
-          <div class="card-add-icon">＋</div>
-          <div class="card-add-label">Awaiting Figma Link</div>
+          <div class="hub-card-add">
+            <div class="hub-card-add-icon">＋</div>
+            <div class="hub-card-add-label">Awaiting Figma Link</div>
+          </div>
+
         </div>
-
       </div>
     </div>
-  </div>
 
-  <!-- ─── SECTION: DESIGN ──────────────────────────────────────────────────-->
-  <div class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-title">Design</span>
-        <span class="section-count">Figma</span>
-        <span class="section-badge badge-active">Active</span>
+    <!-- ── Design ──────────────────────────────────────────────────────────── -->
+    <div class="hub-section">
+      <div class="hub-section-head">
+        <span class="hub-section-title">Design</span>
+        <span class="hub-section-count">Figma</span>
+        <span class="hub-card-status active">Active</span>
       </div>
-      <div class="cards-grid">
+      <div class="hub-section-body">
+        <div class="hub-grid">
 
-        <a class="card card-figma status-active" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
-          target="_blank">
-          <div class="card-top">
-            <div class="card-icon icon-external" style="font-size:20px">
-              <svg width="20" height="20" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M19 28.5C19 23.8056 22.8056 20 27.5 20C32.1944 20 36 23.8056 36 28.5C36 33.1944 32.1944 37 27.5 37C22.8056 37 19 33.1944 19 28.5Z"
-                  fill="#1ABCFE" />
-                <path
-                  d="M2 47.5C2 42.8056 5.80558 39 10.5 39H19V47.5C19 52.1944 15.1944 56 10.5 56C5.80558 56 2 52.1944 2 47.5Z"
-                  fill="#0ACF83" />
-                <path d="M19 1V20H27.5C32.1944 20 36 16.1944 36 11.5C36 6.80558 32.1944 3 27.5 3L19 1Z"
-                  fill="#FF7262" />
-                <path d="M2 11.5C2 16.1944 5.80558 20 10.5 20H19V3H10.5C5.80558 3 2 6.80558 2 11.5Z" fill="#F24E1E" />
-                <path d="M2 28.5C2 33.1944 5.80558 37 10.5 37H19V20H10.5C5.80558 20 2 23.8056 2 28.5Z" fill="#A259FF" />
-              </svg>
+          <a class="eplug-tile hub-animate" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
+            target="_blank" style="animation-delay:0.05s">
+            <div class="hub-card-top">
+              <div class="hub-card-icon">
+                <svg width="18" height="18" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M19 28.5C19 23.8 22.8 20 27.5 20C32.2 20 36 23.8 36 28.5C36 33.2 32.2 37 27.5 37C22.8 37 19 33.2 19 28.5Z"
+                    fill="#1ABCFE" />
+                  <path d="M2 47.5C2 42.8 5.8 39 10.5 39H19V47.5C19 52.2 15.2 56 10.5 56C5.8 56 2 52.2 2 47.5Z"
+                    fill="#0ACF83" />
+                  <path d="M19 1V20H27.5C32.2 20 36 16.2 36 11.5C36 6.8 32.2 3 27.5 3L19 1Z" fill="#FF7262" />
+                  <path d="M2 11.5C2 16.2 5.8 20 10.5 20H19V3H10.5C5.8 3 2 6.8 2 11.5Z" fill="#F24E1E" />
+                  <path d="M2 28.5C2 33.2 5.8 37 10.5 37H19V20H10.5C5.8 20 2 23.8 2 28.5Z" fill="#A259FF" />
+                </svg>
+              </div>
+              <span class="hub-card-status active">Active</span>
             </div>
-            <span class="card-status">Active</span>
-          </div>
-          <div class="card-body">
-            <div class="card-title">Figma — Eplug Web</div>
-            <div class="card-desc">Main design file — UI components, design system, all screens</div>
-          </div>
-          <div class="card-progress">
-            <div class="card-bar">
-              <div class="card-bar-fill" style="width:20%"></div>
+            <div class="hub-card-title">Figma — Eplug Web</div>
+            <div class="hub-card-desc">Main design file — UI components, design system, all screens</div>
+            <div class="hub-card-progress">
+              <div class="hub-card-bar">
+                <div class="hub-card-bar-fill in-progress" style="width:20%"></div>
+              </div>
+              <span class="hub-card-pct">20%</span>
             </div>
-            <span class="card-pct">20%</span>
-          </div>
-          <div class="card-footer">
-            <span class="card-path">figma.com/design/…</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
+            <div class="hub-card-footer">
+              <span class="hub-card-path">figma.com/design/…</span>
+              <span class="hub-card-arrow">↗</span>
+            </div>
+          </a>
 
-        <div class="card-add">
-          <div class="card-add-icon">🎨</div>
-          <div class="card-add-label">Design tokens · coming soon</div>
+          <div class="hub-card-add">
+            <div class="hub-card-add-icon">🎨</div>
+            <div class="hub-card-add-label">Design tokens · coming soon</div>
+          </div>
+
         </div>
-
       </div>
     </div>
-  </div>
 
-
-  <!-- ─── FOOTER ────────────────────────────────────────────────────────────-->
-  <div class="container">
+    <!-- ── Footer ─────────────────────────────────────────────────────────── -->
     <div class="hub-footer">
-      <span class="footer-left">Eplug Project Hub · Internal developer dashboard</span>
-      <div class="footer-right">
-        <a class="footer-link" href="./UX/index.html">UX Hub</a>
-        <a class="footer-link" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
+      <span class="hub-footer-left">Eplug Project Hub · Internal developer dashboard</span>
+      <div class="hub-footer-links">
+        <a class="hub-footer-link" href="./UX/sitemap.html">Sitemap</a>
+        <a class="hub-footer-link" href="./UX/wireframes/index.html">Wireframes</a>
+        <a class="hub-footer-link" href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web"
           target="_blank">Figma</a>
       </div>
     </div>
+
   </div>
 
   <script>
-    // Dynamic links: Local Vite vs Github Pages
     const isDev = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
     const baseViteUrl = 'http://localhost:5177/#';
     const baseProdUrl = './concept_v2/dist/index.html#';
-
     document.querySelectorAll('.dynamic-app-link').forEach(link => {
       const path = link.getAttribute('data-app-path');
-      if (path) {
-        link.href = (isDev ? baseViteUrl : baseProdUrl) + path;
-      }
+      if (path) link.href = (isDev ? baseViteUrl : baseProdUrl) + path;
     });
   </script>
   <script src="./shared-header.js"></script>

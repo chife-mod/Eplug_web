@@ -119,75 +119,9 @@
     <!-- Shared Header -->
     <div id="eplug-header"></div>
 
-    <!-- UX Sub-nav: Sitemap / Wireframes / Design -->
-    <div class="topbar-subnav">
-        <nav class="topbar-nav">
-            <a href="#" class="active" data-target="sitemap">Sitemap</a>
-            <div class="nav-sep"></div>
-            <a href="#" data-target="wireframes">Wireframes</a>
-            <div class="nav-sep"></div>
-            <a href="https://www.figma.com/design/NsarAMa9SQMVyRCQDvgqg3/Eplug-Web" target="_blank"
-                data-target="design">Design</a>
-        </nav>
-    </div>
-
-    <!-- Content -->
-    <div class="content-frame">
-        <iframe id="frame-sitemap" class="active" src="sitemap.html"></iframe>
-        <iframe id="frame-wireframes" src="wireframes/index.html"></iframe>
-    </div>
-
     <script>
-        const navLinks = document.querySelectorAll('.topbar-nav a[data-target]');
-        const frames = {
-            sitemap: document.getElementById('frame-sitemap'),
-            wireframes: document.getElementById('frame-wireframes')
-        };
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const target = link.dataset.target;
-
-                // Design link opens externally — don't prevent default
-                if (target === 'design') return;
-
-                e.preventDefault();
-
-                // Update active states
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-
-                // Reset scroll to top
-                window.scrollTo(0, 0);
-
-                // Update frame visibility
-                Object.values(frames).forEach(f => f.classList.remove('active'));
-                if (frames[target]) {
-                    frames[target].classList.add('active');
-                    // If clicking Wireframes, reset it to the index (grid)
-                    if (target === 'wireframes') {
-                        frames.wireframes.src = 'wireframes/index.html';
-                    }
-                }
-            });
-        });
-
-        // Listen for messages from sitemap to switch to wireframe pages
-        window.addEventListener('message', (e) => {
-            if (e.data && e.data.type === 'navigate-wireframe') {
-                // Switch to wireframes nav
-                navLinks.forEach(l => l.classList.remove('active'));
-                document.querySelector('[data-target="wireframes"]').classList.add('active');
-                Object.values(frames).forEach(f => f.classList.remove('active'));
-                frames.wireframes.classList.add('active');
-
-                // Reset scroll to top of PARENT when navigating
-                window.scrollTo(0, 0);
-
-                // Navigate the wireframe iframe
-                frames.wireframes.src = e.data.url;
-            }
-        });
+        // UX/index.html now acts as a redirect to sitemap
+        window.location.replace('sitemap.html');
     </script>
     <script src="../shared-header.js"></script>
 </body>

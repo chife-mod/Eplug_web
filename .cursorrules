@@ -1,0 +1,5 @@
+# ALWAYS FOLLOW THESE RULES:
+- NEVER commit secrets, API keys, or Figma tokens (e.g., `figd_...`) to version control.
+- If a Figma config or script needs a token, ALWAYS use a placeholder like `figd_PLACEHOLDER` or check `process.env.FIGMA_TOKEN`.
+- ALWAYS scrub files of any hardcoded tokens before running `git add` and `git commit`. 
+- If a terminal output mentions "secret scanning" or "repository rule violations", STOP and investigate immediately! Remove the secret from the branch history using `git commit --amend` or `git reset` before trying again.
