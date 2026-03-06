@@ -75,8 +75,8 @@ const contentVariants = {
         x: 0,
         filter: 'blur(0px)',
         transition: {
-            duration: 0.55,
-            ease: [0.22, 1, 0.36, 1], // expo out — Framer Motion's recommended easing
+            duration: 0.45,
+            ease: [0.22, 1, 0.36, 1],
             staggerChildren: 0.07,
         },
     },
@@ -381,11 +381,11 @@ export default function AppLoyalty() {
                         clipPath: 'inset(0 0 0 0 round 8px)',
                     }}
                     transition={{
-                        duration: 0.65, ease: [0.4, 0, 0.2, 1],
+                        duration: prevCurrentRef.current === 2 && current !== 2 ? 0.35 : 0.65, ease: [0.4, 0, 0.2, 1],
                         // When leaving slide 3: wait for CTA to exit first (0.45s)
                         bottom: {
-                            duration: 0.65, ease: [0.4, 0, 0.2, 1],
-                            delay: prevCurrentRef.current === 2 && current !== 2 ? 0.45 : 0,
+                            duration: prevCurrentRef.current === 2 && current !== 2 ? 0.35 : 0.65, ease: [0.4, 0, 0.2, 1],
+                            delay: prevCurrentRef.current === 2 && current !== 2 ? 0.15 : 0,
                         },
                     }}
                     style={{
