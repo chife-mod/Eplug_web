@@ -3,18 +3,18 @@
 // Standalone slide, 1280×550px — insert into AppLoyalty slider as slide 3
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
-const imgMap = '/assets/64ab791c42faa3e74ef4c4b20cf5f6c96cd691b0.png';
-const imgPlaceBase = '/assets/51fd965544a9bb5a24b9a48c43aa5c18efd33eff.png'; // base photo for cards
-const imgDominoPark = '/assets/1ee17a74f53517b14278f544c709b0f4a2647720.png'; // Domino Park photo overlay
-const imgDominoLogo = '/assets/4e775ac2426e1d0f1d29ee26debe694a297e2bb4.png'; // Domino Park logo
-const imgDominoVector = '/assets/6138e57f379eb4c8e85e178dae9bd79d71f8bdeb.svg'; // Domino Park text logo (SVG)
-const imgLindustrie = '/assets/3ad359547357b535f4d3bd31f4d852bc029ce773.png'; // L'Industrie photo
-const imgLindustrieLo = '/assets/57b6f4471dd1b35e77d1a7eae5cebcf3bfda0380.png'; // L'Industrie logo
-const imgMarcy = '/assets/b667b604f2088ea4b6c32307b70724a4466742f9.png'; // Marcy Ave metro photo
-const imgEplugLogo = '/assets/eplug-logo-vertical-fixed.svg'; // patched: preserveAspectRatio=xMidYMid meet // ePlug vertical logo
-const imgPlusIcon = '/assets/a83e85b496b208bbf54ee8be30b8037af3f54ff3.svg'; // + icon
-const imgCtaBg = '/assets/6daa838d2f6d8f40231b736620ff996470ffe5ba.svg'; // CTA bg vector
-const imgArrow = '/assets/6ae1f5d0d2a1eebeb22a64136931410a8487f315.svg'; // arrow icon
+const imgMap = './assets/64ab791c42faa3e74ef4c4b20cf5f6c96cd691b0.png';
+const imgPlaceBase = './assets/51fd965544a9bb5a24b9a48c43aa5c18efd33eff.png'; // base photo for cards
+const imgDominoPark = './assets/1ee17a74f53517b14278f544c709b0f4a2647720.png'; // Domino Park photo overlay
+const imgDominoLogo = './assets/4e775ac2426e1d0f1d29ee26debe694a297e2bb4.png'; // Domino Park logo
+const imgDominoVector = './assets/6138e57f379eb4c8e85e178dae9bd79d71f8bdeb.svg'; // Domino Park text logo (SVG)
+const imgLindustrie = './assets/3ad359547357b535f4d3bd31f4d852bc029ce773.png'; // L'Industrie photo
+const imgLindustrieLo = './assets/57b6f4471dd1b35e77d1a7eae5cebcf3bfda0380.png'; // L'Industrie logo
+const imgMarcy = './assets/b667b604f2088ea4b6c32307b70724a4466742f9.png'; // Marcy Ave metro photo
+const imgEplugLogo = './assets/eplug-logo-vertical-fixed.svg'; // patched: preserveAspectRatio=xMidYMid meet // ePlug vertical logo
+const imgPlusIcon = './assets/a83e85b496b208bbf54ee8be30b8037af3f54ff3.svg'; // + icon
+const imgCtaBg = './assets/6daa838d2f6d8f40231b736620ff996470ffe5ba.svg'; // CTA bg vector
+const imgArrow = './assets/6ae1f5d0d2a1eebeb22a64136931410a8487f315.svg'; // arrow icon
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 

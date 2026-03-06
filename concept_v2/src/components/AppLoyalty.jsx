@@ -7,13 +7,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import AppLoyaltySlide3 from './AppLoyaltySlide3';
 
 // ─── Assets ──────────────────────────────────────────────────────────────────
-const imgEplugDot = '/assets/d644f2b79aef1661f54cd91ac43ed3ab9c701d2a.svg';
-const imgStation = '/assets/c66c5af03c1bac914a34ba01d1ccd3f833dd97e3.png'; // slide 1 bg
-const imgHandUi = '/assets/3064c3369d020fcfce5b14e533c52936e54d33fb.png'; // slide 1 hand
-const imgFleet = '/assets/bf8a830bfed9870d60c602a1dfc69e5af6e839a3.png'; // slide 2 bg
+const imgEplugDot = './assets/d644f2b79aef1661f54cd91ac43ed3ab9c701d2a.svg';
+const imgStation = './assets/c66c5af03c1bac914a34ba01d1ccd3f833dd97e3.png'; // slide 1 bg
+const imgHandUi = './assets/3064c3369d020fcfce5b14e533c52936e54d33fb.png'; // slide 1 hand
+const imgFleet = './assets/bf8a830bfed9870d60c602a1dfc69e5af6e839a3.png'; // slide 2 bg
 // CTA card assets (same as AppLoyaltySlide3)
-const imgCtaBg = '/assets/6daa838d2f6d8f40231b736620ff996470ffe5ba.svg';
-const imgArrow = '/assets/6ae1f5d0d2a1eebeb22a64136931410a8487f315.svg';
+const imgCtaBg = './assets/6daa838d2f6d8f40231b736620ff996470ffe5ba.svg';
+const imgArrow = './assets/6ae1f5d0d2a1eebeb22a64136931410a8487f315.svg';
 
 // ─── Slide data ───────────────────────────────────────────────────────────────
 // Slide 3 map is a rich UI — rendered as a custom component (see MapSlide)
