@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eplug — Our Mission Section Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ─── Design Tokens ─── */
+        :root {
+            --brand-fuchsia: #FF00C5;
+            --brand-purple: #2E0054;
+            --brand-violet: #0C0214;
+            --brand-grey: #DEDCF9;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--brand-violet);
+            color: #fff;
+            font-family: var(--font-body);
+            overflow-x: hidden;
+        }
+
+        /* ══════════════════════════════════════
+           HERO PREVIEW STRIPE (context)
+        ══════════════════════════════════════ */
+        .context-stripe {
+            width: 100%;
+            padding: 20px 80px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .context-stripe .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--brand-fuchsia);
+            box-shadow: 0 0 10px rgba(255,0,197,0.8);
+            animation: pulse 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        .context-stripe p {
+            font-family: var(--font-heading);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* ══════════════════════════════════════
+           OUR MISSION SECTION
+        ══════════════════════════════════════ */
+        .our-mission {
+            position: relative;
+            width: 100%;
+            padding: 96px 80px 120px;
+            overflow: hidden;
+        }
+
+        /* Decorative glows */
+        .glow-fuchsia-bl {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 55vw; height: 55vh;
+            background: radial-gradient(ellipse at 10% 100%, rgba(255,0,197,0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .glow-purple-tr {
+            position: absolute;
+            top: 0; right: 0;
+            width: 45vw; height: 50vh;
+            background: radial-gradient(ellipse at 90% 0%, rgba(46,0,84,0.3) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .grid-line {
+            position: absolute;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: rgba(255,255,255,0.025);
+            pointer-events: none;
+        }
+        .grid-line-left  { left: 5%; }
+        .grid-line-right { right: 5%; }
+
+        /* Container */
+        .mission-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1380px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
+
+        /* ─── Block 1: Overline + Headline + Intro ─── */
+        .block-1 {
+            display: flex;
+            gap: 64px;
+            align-items: flex-start;
+        }
+
+        .block-1-left {
+            flex: 0 0 58%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Eyebrow */
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            animation: fadeUp 0.7s 0.1s ease-out forwards;
+        }
+
+        .eyebrow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--brand-fuchsia);
+            box-shadow: 0 0 10px rgba(255,0,197,0.9);
+            animation: pulse 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        .eyebrow-text {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* Headline */
+        .mission-headline {
+            overflow: hidden;
+        }
+
+        .mission-h2 {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: clamp(36px, 4vw, 60px);
+            line-height: 1.06;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* Each "word" wraps in a clip container for reveal animation */
+        .word-wrap {
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: bottom;
+            margin-right: 0.22em;
+        }
+
+        .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(110%);
+        }
+
+        .word:nth-child(1)  { animation: wordReveal 1.1s 0.15s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .word:nth-child(2)  { animation: wordReveal 1.1s 0.20s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .word:nth-child(3)  { animation: wordReveal 1.1s 0.25s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .word:nth-child(4)  { animation: wordReveal 1.1s 0.30s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .word:nth-child(5)  { animation: wordReveal 1.1s 0.35s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .word:nth-child(6)  { animation: wordReveal 1.1s 0.40s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .word:nth-child(7)  { animation: wordReveal 1.1s 0.45s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+        @keyframes wordReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Body intro */
+        .body-intro {
+            font-family: var(--font-body);
+            font-size: 17px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.58);
+            max-width: 520px;
+            opacity: 0;
+            animation: fadeUp 0.9s 0.55s ease-out forwards;
+        }
+
+        /* ─── Right accent card ─── */
+        .block-1-right {
+            flex: 1;
+            min-width: 0;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 48px -16px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            animation: slideLeft 1s 0.4s ease-out forwards;
+        }
+
+        .card-label {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 9px;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.28);
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .stat-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .stat-num {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 30px;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .stat-num.fuchsia {
+            color: var(--brand-fuchsia);
+            text-shadow: 0 0 20px rgba(255,0,197,0.4);
+        }
+
+        .stat-label {
+            font-family: var(--font-body);
+            font-size: 13px;
+            line-height: 1.45;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ─── Fuchsia Divider ─── */
+        .fuchsia-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, rgba(255,0,197,0.5) 0%, rgba(255,0,197,0.1) 50%, transparent 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: growX 1.2s 0.7s ease-out forwards;
+        }
+
+        @keyframes growX {
+            to { transform: scaleX(1); }
+        }
+
+        /* ─── Block 2: Problem + Rule + Solution ─── */
+        .block-2 {
+            display: flex;
+            gap: 0;
+            align-items: flex-start;
+        }
+
+        /* Problem column */
+        .problem-col {
+            flex: 0 0 44%;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .col-label {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 9px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+        }
+
+        .col-label.fuchsia { color: rgba(255,0,197,0.55); }
+        .col-label.muted   { color: rgba(255,255,255,0.28); }
+
+        .problem-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .problem-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            opacity: 0;
+        }
+
+        .problem-item:last-child { border-bottom: none; }
+
+        /* Staggered entry */
+        .problem-item:nth-child(1) { animation: slideRight 0.75s 0.8s  ease-out forwards; }
+        .problem-item:nth-child(2) { animation: slideRight 0.75s 0.92s ease-out forwards; }
+        .problem-item:nth-child(3) { animation: slideRight 0.75s 1.04s ease-out forwards; }
+        .problem-item:nth-child(4) { animation: slideRight 0.75s 1.16s ease-out forwards; }
+        .problem-item:nth-child(5) { animation: slideRight 0.75s 1.28s ease-out forwards; }
+
+        @keyframes slideRight {
+            from { opacity: 0; transform: translateX(-18px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .problem-num {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 9px;
+            letter-spacing: 0.18em;
+            color: rgba(255,255,255,0.18);
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        .problem-text {
+            font-family: var(--font-body);
+            font-size: 15px;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.52);
+        }
+
+        .problem-stat {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 18px;
+            color: var(--brand-fuchsia);
+            text-shadow: 0 0 16px rgba(255,0,197,0.35);
+            margin-right: 4px;
+        }
+
+        /* Fuchsia vertical rule */
+        .vertical-rule {
+            width: 2px;
+            align-self: stretch;
+            margin: 0 64px;
+            flex-shrink: 0;
+            background: linear-gradient(to bottom, var(--brand-fuchsia) 0%, rgba(255,0,197,0.08) 100%);
+            box-shadow: 0 0 14px rgba(255,0,197,0.2);
+            transform: scaleY(0);
+            transform-origin: top;
+            animation: growY 1.3s 0.9s ease-out forwards;
+        }
+
+        @keyframes growY {
+            to { transform: scaleY(1); }
+        }
+
+        /* Solution column */
+        .solution-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            opacity: 0;
+            animation: slideLeft 1s 1s ease-out forwards;
+        }
+
+        .solution-body {
+            font-family: var(--font-body);
+            font-size: 17px;
+            line-height: 1.72;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .solution-body strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .not-scattered {
+            font-family: var(--font-body);
+            font-size: 15px;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.38);
+            font-style: italic;
+        }
+
+        /* ─── "Dense. Fast. Urban." tagline ─── */
+        .tagline-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            align-items: baseline;
+            margin-top: 16px;
+        }
+
+        .tagline-word {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: clamp(28px, 2.8vw, 44px);
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            line-height: 1;
+            color: var(--brand-fuchsia);
+            text-shadow: 0 0 28px rgba(255,0,197,0.35);
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .tagline-word span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(80%);
+        }
+        .tagline-word:nth-child(1) span { animation: wordReveal 0.9s 1.1s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .tagline-word:nth-child(2) span { animation: wordReveal 0.9s 1.2s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .tagline-word:nth-child(3) span { animation: wordReveal 0.9s 1.3s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+        /* CTA button */
+        .btn-primary {
+            margin-top: 8px;
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: var(--brand-fuchsia);
+            color: #fff;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 24px rgba(255,0,197,0.3);
+            transition: background 0.3s, color 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            color: var(--brand-violet);
+        }
+
+        .btn-primary svg {
+            transition: transform 0.25s;
+        }
+
+        .btn-primary:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* ─── Generic keyframes ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideLeft {
+            from { opacity: 0; transform: translateX(24px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.55; transform: scale(0.82); }
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 1100px) {
+            .our-mission { padding: 80px 48px 96px; }
+            .block-1 { flex-direction: column; gap: 40px; }
+            .block-1-left { flex: unset; width: 100%; }
+            .block-1-right { width: 100%; }
+            .vertical-rule { display: none; }
+            .block-2 { flex-direction: column; gap: 48px; }
+            .problem-col { flex: unset; width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .our-mission { padding: 64px 24px 80px; }
+            .context-stripe { padding: 16px 24px; }
+            .mission-h2 { font-size: clamp(32px, 8vw, 48px); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Context stripe (replaces hero in preview) -->
+<div class="context-stripe">
+    <div class="dot"></div>
+    <p>↑ About Hero Section sits above · Scroll down for "Our Mission" preview ↓</p>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     OUR MISSION SECTION
+════════════════════════════════════════ -->
+<section class="our-mission">
+
+    <!-- Background decorations -->
+    <div class="glow-fuchsia-bl"></div>
+    <div class="glow-purple-tr"></div>
+    <div class="grid-line grid-line-left"></div>
+    <div class="grid-line grid-line-right"></div>
+
+    <div class="mission-content">
+
+        <!-- ── Block 1: Overline + Headline + Intro ── -->
+        <div class="block-1">
+
+            <div class="block-1-left">
+                <!-- Eyebrow -->
+                <div class="eyebrow">
+                    <div class="eyebrow-dot"></div>
+                    <span class="eyebrow-text">Our Mission</span>
+                </div>
+
+                <!-- Headline -->
+                <div class="mission-headline">
+                    <h2 class="mission-h2">
+                        <span class="word-wrap"><span class="word">Make</span></span>
+                        <span class="word-wrap"><span class="word">Fast</span></span>
+                        <span class="word-wrap"><span class="word">Charging</span></span>
+                        <span class="word-wrap"><span class="word">as</span></span>
+                        <span class="word-wrap"><span class="word">Essential</span></span>
+                        <span class="word-wrap"><span class="word">as</span></span>
+                        <span class="word-wrap"><span class="word">Streetlights</span></span>
+                    </h2>
+                </div>
+
+                <!-- Body intro -->
+                <p class="body-intro">
+                    American cities are going electric faster than anyone predicted.
+                    But the infrastructure is failing them.
+                </p>
+            </div>
+
+            <!-- Stats card -->
+            <div class="block-1-right">
+                <div class="card-label">The scale of the problem</div>
+                <div class="stat-rows">
+                    <div class="stat-row">
+                        <span class="stat-num">250M<span style="font-size:18px;color:var(--brand-fuchsia)">+</span></span>
+                        <span class="stat-label">Americans living in urban zones</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-num fuchsia">65%</span>
+                        <span class="stat-label">Can't charge at home</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-num">0</span>
+                        <span class="stat-label">Urban-first DC Fast networks<br>before Eplug</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Fuchsia Divider ── -->
+        <div class="fuchsia-divider"></div>
+
+        <!-- ── Block 2: Problem + Rule + Solution ── -->
+        <div class="block-2">
+
+            <!-- Problem column -->
+            <div class="problem-col">
+                <div class="col-label fuchsia">The Problem</div>
+                <ul class="problem-list">
+                    <li class="problem-item">
+                        <span class="problem-num">01</span>
+                        <p class="problem-text">
+                            <span class="problem-stat">65%</span>of urban households can't charge at home
+                        </p>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-num">02</span>
+                        <p class="problem-text">Existing networks focus on highways, not neighborhoods</p>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-num">03</span>
+                        <p class="problem-text">Level 2 chargers are too slow for city turnover</p>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-num">04</span>
+                        <p class="problem-text">Fleets have nowhere to charge at scale</p>
+                    </li>
+                    <li class="problem-item">
+                        <span class="problem-num">05</span>
+                        <p class="problem-text">Retail and mixed-use properties are underserved</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Vertical fuchsia rule -->
+            <div class="vertical-rule"></div>
+
+            <!-- Solution column -->
+            <div class="solution-col">
+                <div class="col-label muted">Our Solution</div>
+
+                <p class="solution-body">
+                    DC Fast charging where it matters —
+                    <strong>high-density residential zones, fleet corridors,
+                    retail clusters, transit hubs.</strong>
+                </p>
+
+                <p class="not-scattered">
+                    Not scattered. Not slow. Not suburban.
+                </p>
+
+                <!-- Dense. Fast. Urban. -->
+                <div class="tagline-wrap">
+                    <div class="tagline-word"><span>Dense.</span></div>
+                    <div class="tagline-word"><span>Fast.</span></div>
+                    <div class="tagline-word"><span>Urban.</span></div>
+                </div>
+
+                <a href="#" class="btn-primary">
+                    See Our Network
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
+                              d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>

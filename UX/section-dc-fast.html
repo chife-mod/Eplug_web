@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1440">
+    <title>DC Fast Section — Eplug Web</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            background: #0c0214;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ─── SECTION WRAPPER ─── */
+        .section-dc-fast {
+            position: relative;
+            width: 1440px;
+            height: 974px;
+            overflow: hidden;
+            background: #fff;
+            /* fallback */
+        }
+
+        /* ─── HERO IMAGE BLOCK (node 167:665) ─── */
+        /* Full-width dark hero photo, top-aligned, 1440×494 */
+        .hero-image-block {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1440px;
+            height: 494px;
+            pointer-events: none;
+        }
+
+        .hero-image-block .hero-img {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .hero-image-block .hero-img img {
+            position: absolute;
+            top: -0.06%;
+            left: 0;
+            width: 100%;
+            height: 159%;
+            max-width: none;
+            object-fit: cover;
+        }
+
+        /* Gradient overlays — exact from Figma */
+        .hero-image-block .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background:
+                /* bottom fade to dark */
+                linear-gradient(180deg,
+                    rgba(12, 2, 20, 0) 79.937%,
+                    rgb(12, 2, 20) 100%),
+                /* left diagonal fade */
+                linear-gradient(-77.5347deg,
+                    rgba(12, 2, 20, 0) 44.044%,
+                    rgb(12, 2, 20) 99.095%),
+                /* additional bottom fade */
+                linear-gradient(180deg,
+                    rgba(12, 2, 20, 0) 79.937%,
+                    rgb(12, 2, 20) 100%);
+        }
+
+        /* ─── TEXT BLOCK (node 173:218) ─── */
+        /* left: 80px, top: 192px, w: 737px */
+        .text-block {
+            position: absolute;
+            left: 80px;
+            top: 192px;
+            width: 737px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Label row: green dot + "Why DC Fast..." */
+        .text-block .label-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .text-block .label-row .dot-icon {
+            position: relative;
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+        }
+
+        .text-block .label-row .dot-icon img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .text-block .label-row span {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.54;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        /* Headlines group */
+        .text-block .headlines {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .text-block .h2-always {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #ffffff;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        .text-block .bottom-row {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .text-block .body-small {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.54;
+            color: #ffffff;
+            width: 263px;
+            padding-top: 44px;
+            flex-shrink: 0;
+        }
+
+        .text-block .h2-everywhere {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #ffffff;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ─── PHOTO CARD (node 175:367) ─── */
+        /* left: 80px, top: 435px, w: 411px, h: 462px */
+        .photo-card {
+            position: absolute;
+            left: 80px;
+            top: 435px;
+            width: 411px;
+            height: 462px;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .photo-card .photo-layer {
+            position: absolute;
+            inset: 0;
+            background: white;
+            border-radius: 16px;
+        }
+
+        /* Layer 1 — first photo (slightly zoomed/offset) */
+        .photo-card .photo-1 {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .photo-card .photo-1 img {
+            position: absolute;
+            height: 144.81%;
+            left: -12.78%;
+            top: -38.74%;
+            width: 123.31%;
+            max-width: none;
+            object-fit: cover;
+        }
+
+        /* Layer 2 — second photo overlay */
+        .photo-card .photo-2 {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .photo-card .photo-2 img {
+            position: absolute;
+            height: 141.62%;
+            left: -10.3%;
+            top: -32.9%;
+            width: 120.59%;
+            max-width: none;
+            object-fit: cover;
+        }
+
+        /* Layer 3 — blurred overlay photo */
+        .photo-card .photo-blur {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+        }
+
+        /* ─── 3 GLASS CARDS ROW (node 174:260) ─── */
+        /* left: 515px, top: 435px, w: 845px */
+        /* Note: left = 80 + 411 + 8 = 499? But Figma says 515+80 = 595? 
+       Let's use exact: left = calc(33.33% + 35px) at 1440px = 480+35 = 515px */
+        .cards-row {
+            position: absolute;
+            left: 515px;
+            top: 435px;
+            width: 845px;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .glass-card {
+            flex: 1 0 0;
+            min-width: 1px;
+            min-height: 1px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 24px 32px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            position: relative;
+        }
+
+        .glass-card .card-icon {
+            position: relative;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            opacity: 0.7;
+            overflow: hidden;
+        }
+
+        .glass-card .card-icon .icon-inner {
+            position: absolute;
+            /* inset: 12.5% = 4px on each side for 32px container */
+            top: 4px;
+            right: 4px;
+            bottom: 4px;
+            left: 4px;
+        }
+
+        .glass-card .card-icon .icon-inner img {
+            /* inset: -3.13% → slight overflow */
+            position: absolute;
+            top: -3.13%;
+            right: -3.13%;
+            bottom: -3.13%;
+            left: -3.13%;
+            width: 106.26%;
+            height: 106.26%;
+            display: block;
+        }
+
+        .glass-card .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.1;
+            color: #0c0c0c;
+            white-space: nowrap;
+        }
+
+        .glass-card .card-body {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.54;
+            color: #0c0c0c;
+            width: 100%;
+        }
+
+        /* ─── CTA BANNER (node 175:350) ─── */
+        /* left: 515px, top: 732px, w: 845px */
+        .cta-banner {
+            position: absolute;
+            left: 515px;
+            top: 732px;
+            width: 845px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            padding: 40px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 4px solid #FF00C5;
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            overflow: hidden;
+        }
+
+        .cta-banner .cta-headline {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #0c0c0c;
+            text-transform: uppercase;
+            text-align: center;
+            white-space: nowrap;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .cta-banner .cta-sub {
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.3;
+            color: #0c0c0c;
+            text-align: center;
+            white-space: nowrap;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* Decorative ellipse — left edge of CTA banner */
+        .cta-ellipse {
+            position: absolute;
+            left: -62px;
+            top: 103px;
+            width: 116px;
+            height: 116px;
+            overflow: visible;
+            pointer-events: none;
+        }
+
+        .cta-ellipse img {
+            position: absolute;
+            /* inset: -129.31% */
+            top: -129.31%;
+            left: -129.31%;
+            width: 358.62%;
+            height: 358.62%;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="section-dc-fast" data-node-id="173:217">
+
+        <!-- HERO IMAGE BLOCK (167:665) -->
+        <div class="hero-image-block" data-node-id="167:665">
+            <div class="hero-img">
+                <picture>
+                    <source media="(-webkit-min-device-pixel-ratio: 2)"
+                        srcset="../assets/sections/dc-fast/bg-hero-1444@2x.jpg">
+                    <img src="../assets/sections/dc-fast/bg-hero-1444.jpg" alt="EV charging station in city"
+                        loading="eager">
+                </picture>
+            </div>
+            <div class="hero-gradient"></div>
+        </div>
+
+        <!-- TEXT BLOCK (173:218) -->
+        <div class="text-block" data-node-id="173:218">
+            <div class="label-row" data-node-id="173:219">
+                <div class="dot-icon" data-node-id="173:220">
+                    <img src="../assets/sections/dc-fast/dot-indicator.svg" alt="">
+                </div>
+                <span data-node-id="173:222">Why DC Fast — And Only DC Fast</span>
+            </div>
+
+            <div class="headlines" data-node-id="173:235">
+                <p class="h2-always" data-node-id="173:223">15–25 Minutes. Always.</p>
+                <div class="bottom-row" data-node-id="173:238">
+                    <div data-node-id="173:239">
+                        <p class="body-small" data-node-id="173:236">Level 2 chargers are garage accessories. DC Fast is
+                            city infrastructure.</p>
+                    </div>
+                    <p class="h2-everywhere" data-node-id="173:233">Everywhere.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHOTO CARD (175:367) -->
+        <div class="photo-card" data-node-id="175:367">
+            <div class="photo-layer"></div>
+            <div class="photo-1">
+                <picture>
+                    <source media="(-webkit-min-device-pixel-ratio: 2)"
+                        srcset="../assets/sections/dc-fast/card-photo-1@2x.jpg">
+                    <img src="../assets/sections/dc-fast/card-photo-1.jpg" alt="">
+                </picture>
+            </div>
+            <div class="photo-2">
+                <picture>
+                    <source media="(-webkit-min-device-pixel-ratio: 2)"
+                        srcset="../assets/sections/dc-fast/card-photo-2@2x.jpg">
+                    <img src="../assets/sections/dc-fast/card-photo-2.jpg" alt="">
+                </picture>
+            </div>
+            <picture>
+                <source media="(-webkit-min-device-pixel-ratio: 2)"
+                    srcset="../assets/sections/dc-fast/card-photo-blur@2x.jpg">
+                <img class="photo-blur" src="../assets/sections/dc-fast/card-photo-blur.jpg" alt="">
+            </picture>
+        </div>
+
+        <!-- 3 GLASS CARDS ROW (174:260) -->
+        <div class="cards-row" data-node-id="174:260">
+
+            <!-- Card 1: For Drivers (175:282) -->
+            <div class="glass-card" data-node-id="175:282">
+                <div class="card-icon" data-node-id="174:263">
+                    <div class="icon-inner">
+                        <img src="../assets/sections/dc-fast/icon-steering-wheel.svg" alt="Steering wheel icon">
+                    </div>
+                </div>
+                <p class="card-title" data-node-id="174:279">For Drivers</p>
+                <p class="card-body" data-node-id="174:265">Charge while you live your life. Coffee run. Grocery stop.
+                    Quick break. No 4-hour waits. No overnight planning.</p>
+            </div>
+
+            <!-- Card 2: For Fleets (175:283) -->
+            <div class="glass-card" data-node-id="175:283">
+                <div class="card-icon" data-node-id="I175:283;174:263">
+                    <div class="icon-inner">
+                        <img src="../assets/sections/dc-fast/icon-brand-uber.svg" alt="Fleet icon">
+                    </div>
+                </div>
+                <p class="card-title" data-node-id="I175:283;174:279">For Fleets</p>
+                <p class="card-body" data-node-id="I175:283;174:265">Uber, Lyft, delivery — every hour offline is money
+                    lost. DC Fast gets drivers back on the road in 20 minutes, not 4 hours. Maximum uptime. Maximum
+                    earnings.</p>
+            </div>
+
+            <!-- Card 3: For Cities (175:289) -->
+            <div class="glass-card" data-node-id="175:289">
+                <div class="card-icon" data-node-id="I175:289;174:263">
+                    <div class="icon-inner">
+                        <img src="../assets/sections/dc-fast/icon-building-skyscraper.svg" alt="City icon">
+                    </div>
+                </div>
+                <p class="card-title" data-node-id="I175:289;174:279">For Cities</p>
+                <p class="card-body" data-node-id="I175:289;174:265">Higher turnover = more access. Smaller footprint =
+                    better land use. Faster deployment = infrastructure that keeps pace with adoption.</p>
+            </div>
+
+        </div>
+
+        <!-- CTA BANNER (175:350) -->
+        <div class="cta-banner" data-node-id="175:350">
+            <!-- Decorative ellipse (175:383) -->
+            <div class="cta-ellipse" data-node-id="175:383">
+                <img src="../assets/sections/dc-fast/ellipse-decoration.svg" alt="">
+            </div>
+            <p class="cta-headline" data-node-id="175:357">We don't do slow charging.</p>
+            <p class="cta-sub" data-node-id="175:353">If it takes hours, it doesn't belong in a city. Period.</p>
+        </div>
+
+    </section>
+</body>
+
+</html>

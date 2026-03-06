@@ -396,7 +396,7 @@
     <div class="hub-section">
       <div class="hub-section-head">
         <span class="hub-section-title">Isolated Components</span>
-        <span class="hub-section-count">2 built</span>
+        <span class="hub-section-count">3 built</span>
         <span class="hub-card-status active">Active</span>
       </div>
       <div class="hub-section-body">
@@ -442,10 +442,25 @@
             </div>
           </a>
 
-          <div class="hub-card-add">
-            <div class="hub-card-add-icon">＋</div>
-            <div class="hub-card-add-label">Awaiting Figma Link</div>
-          </div>
+          <a class="eplug-tile hub-animate dynamic-app-link" href="#" data-app-path="/test-app-loyalty" target="_blank"
+            style="animation-delay:0.15s">
+            <div class="hub-card-top">
+              <div class="hub-card-icon">✨</div>
+              <span class="hub-card-status done">Done</span>
+            </div>
+            <div class="hub-card-title">App & Loyalty Slider</div>
+            <div class="hub-card-desc">3-slide carousel · map · CTA animations</div>
+            <div class="hub-card-progress">
+              <div class="hub-card-bar">
+                <div class="hub-card-bar-fill" style="width:100%"></div>
+              </div>
+              <span class="hub-card-pct">100%</span>
+            </div>
+            <div class="hub-card-footer">
+              <span class="hub-card-path">AppLoyalty</span>
+              <span class="hub-card-arrow">↗</span>
+            </div>
+          </a>
 
         </div>
       </div>
@@ -468,7 +483,7 @@
 
   <script>
     const isDev = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
-    const baseViteUrl = 'http://localhost:5177/#';
+    const baseViteUrl = 'http://localhost:5175/#';
     const baseProdUrl = './concept_v2/dist/index.html#';
     document.querySelectorAll('.dynamic-app-link').forEach(link => {
       const path = link.getAttribute('data-app-path');
