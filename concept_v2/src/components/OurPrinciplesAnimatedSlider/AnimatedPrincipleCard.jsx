@@ -4,39 +4,35 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 /**
  * AnimatedPrincipleCard — scroll-driven expanding card
  *
- * Behaviour (ref: q-industrial.com):
- *   - Default state: image wrapper is 410px wide, card height ~252px
- *   - As the card scrolls into the top 30% of viewport the image wrapper
- *     expands to 845px and its height grows to 381px.
- *   - Card height animates from 252px compact to ~429px expanded.
- *
- * Figma dimensions:
- *   Compact:  card h=252px, image 410×(full height)
- *   Expanded: image 845×381px
+ * Modified for fluid responsiveness:
+ * Width and aspect-ratio are animated via CSS custom properties.
+ * On desktop they scale as we scroll. On mobile, the CSS ignores the custom
+ * properties and enforces a 100% width and 4:3 aspect ratio.
  */
 export default function AnimatedPrincipleCard({ number, title, description, imageSrc }) {
     const cardRef = useRef(null);
 
     // Track *this* card's scroll position relative to the viewport.
-    // offset: ['start 1', 'start 0']
-    //   scrollYProgress = 0 → top of card is at the BOTTOM of viewport (card just entered)
-    //   scrollYProgress = 1 → top of card is at the TOP of viewport (fully expanded)
     const { scrollYProgress } = useScroll({
         target: cardRef,
-        // 'start 0' → 100% width when the top of the card touches the top of the viewport
         offset: ['start 1', 'start 0'],
     });
 
-    // Animated values — compact → expanded
-    const imageWidth = useTransform(scrollYProgress, [0, 1], [410, 845]);
-    const imageHeight = useTransform(scrollYProgress, [0, 1], [204, 381]);
-    const cardHeight = useTransform(scrollYProgress, [0, 1], [252, 429]);
+    // Animated values — passed as CSS custom properties
+    // Instead of fixed pixels, we use percentages for width and a ratio for height.
+    // Equivalent of 410px -> 845px out of max ~1280px is roughly 32% to 66%.
+    const dynamicWidth = useTransform(scrollYProgress, [0, 1], ['32%', '66%']);
+
+    // Equivalent Aspect Ratios:
+    // Compact: 410 / 204 ≈ 2.01
+    // Expanded: 845 / 381 ≈ 2.21
+    const dynamicAspect = useTransform(scrollYProgress, [0, 1], [410 / 204, 845 / 381]);
 
     return (
         <motion.div
             ref={cardRef}
             className="principle-acard"
-            style={{ height: cardHeight }}
+        // Card height is now natural, dictated by content & image
         >
             {/* Text column */}
             <div className="principle-acard__text">
@@ -47,12 +43,12 @@ export default function AnimatedPrincipleCard({ number, title, description, imag
                 <p className="principle-acard__description">{description}</p>
             </div>
 
-            {/* Image column — animated */}
+            {/* Image column — animated via CSS variables */}
             <motion.div
                 className="principle-acard__image-wrapper"
                 style={{
-                    width: imageWidth,
-                    height: imageHeight,
+                    '--dynamic-width': dynamicWidth,
+                    '--dynamic-aspect': dynamicAspect,
                 }}
             >
                 <img

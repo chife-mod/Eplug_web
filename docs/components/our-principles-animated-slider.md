@@ -4,7 +4,8 @@
 **Тип:** UI-компонент (секция)  
 **Роль:** Scroll-driven expanding cards section для секции «Our Principles» на странице About Us  
 **Figma:** Node `485:1410`  
-**Тест-роут:** `/#/test-principles-animated`
+**Тест-роут:** `/#/test-principles-animated`  
+**Статус:** ✅ Done (100% код, 27% дизайн)
 
 ---
 
@@ -14,6 +15,8 @@
 
 Референс анимации: `q-industrial.com/en-de/services`
 
+**Ключевое отличие от референса**: Наша реализация полностью адаптивная (fluid), использует CSS custom properties вместо жёстких пикселей, и имеет отдельный мобильный лейаут.
+
 ---
 
 ## Структура / Состав
@@ -22,7 +25,7 @@
 OurPrinciplesAnimatedSlider/
 ├── OurPrinciplesAnimatedSlider.jsx   — Секция-обёртка: заголовок + стек карточек
 ├── AnimatedPrincipleCard.jsx          — Отдельная карточка со scroll-хуком
-└── OurPrinciplesAnimatedSlider.css   — Pixel-perfect стили (Figma 485:1410)
+└── OurPrinciplesAnimatedSlider.css   — Fluid adaptive стили
 ```
 
 ### Данные (`PRINCIPLES_DATA`)
@@ -33,7 +36,7 @@ OurPrinciplesAnimatedSlider/
 
 ## Анимация (ключевая логика)
 
-Реализована через Framer Motion `useScroll` + `useTransform` внутри каждой карточки.
+Реализована через Framer Motion `useScroll` + `useTransform` + **CSS Custom Properties** внутри каждой карточки.
 
 ```jsx
 // AnimatedPrincipleCard.jsx
@@ -44,21 +47,35 @@ const { scrollYProgress } = useScroll({
     //  scrollYProgress = 1  →  верх карточки = верх viewport ← 100% ширина
 });
 
-const imageWidth  = useTransform(scrollYProgress, [0, 1], [410, 845]);
-const imageHeight = useTransform(scrollYProgress, [0, 1], [204, 381]);
-const cardHeight  = useTransform(scrollYProgress, [0, 1], [252, 429]);
+// Fluid ширина: 32% → 66% от контейнера
+const dynamicWidth = useTransform(scrollYProgress, [0, 1], ['32%', '66%']);
+
+// Aspect Ratio: 2.01 (компакт) → 2.21 (expanded)
+const dynamicAspect = useTransform(scrollYProgress, [0, 1], [410/204, 845/381]);
+
+// Применяется как CSS custom properties:
+<motion.div style={{ '--dynamic-width': dynamicWidth, '--dynamic-aspect': dynamicAspect }}>
 ```
 
 **Ключевое правило:** `offset: ['start 1', 'start 0']` — расширение до 100% ширины происходит строго в момент касания верхней границы карточки и верхней границы экрана.
 
 ---
 
-## Figma-размеры
+## Адаптивность (Super Adaptive)
 
-| Состояние | card height | image width | image height |
-|-----------|------------|-------------|--------------|
-| Компакт   | 252px      | 410px       | 204px        |
-| Expanded  | 429px      | 845px       | 381px        |
+### Desktop (>1024px)
+- Текст: `32%` ширины контейнера, `min-width: 250px`
+- Картинка: `32%` → `66%` (анимируется при скролле через CSS custom properties)
+- Aspect ratio картинки: `~2.0` → `~2.21` (плавная анимация)
+- Типографика: `clamp()` для всех шрифтов
+
+### Tablet (≤1024px)
+- Уменьшенные `gap` и `padding`
+
+### Mobile (≤768px)
+- `flex-direction: column` — стек: Номер → Заголовок → Текст → Картинка
+- Картинка: `width: 100%`, `aspect-ratio: 4 / 3`
+- Анимация расширения отключается (CSS переопределяет custom properties)
 
 ---
 
@@ -74,6 +91,14 @@ const cardHeight  = useTransform(scrollYProgress, [0, 1], [252, 429]);
 | Card border color  | `#2E0054` (1px top) |
 | Card border-radius | 16px (image) |
 
+### Fluid Typography (clamp)
+| Элемент        | Min   | Preferred | Max   |
+|----------------|-------|-----------|-------|
+| Section title  | 32px  | 4vw       | 48px  |
+| Card number    | 20px  | 2vw       | 24px  |
+| Card title     | 24px  | 2.5vw     | 32px  |
+| Description    | 14px  | 1.5vw     | 16px  |
+
 ---
 
 ## API / Параметры `AnimatedPrincipleCard`
@@ -82,7 +107,7 @@ const cardHeight  = useTransform(scrollYProgress, [0, 1], [252, 429]);
 |---------------|----------|-------------------------------|
 | `number`      | string   | Номер принципа: `'01'`–`'06'` |
 | `title`       | string   | Заголовок принципа            |
-| `description` | string   | Описание (поддерживает `\n`)  |
+| `description` | string   | Описание                      |
 | `imageSrc`    | string   | Ссылка на изображение         |
 
 ---
@@ -91,13 +116,22 @@ const cardHeight  = useTransform(scrollYProgress, [0, 1], [252, 429]);
 
 - `framer-motion` (`useScroll`, `useTransform`, `motion.div`)
 - React `useRef`
-- Assets: `OurPrinciplesStaticCards/assets/city-urban.png` *(временная заглушка, будет заменена)*
+- CSS Houdini Custom Properties (анимируемые CSS переменные через Framer Motion)
+- Assets: `OurPrinciplesStaticCards/assets/` — 6 уникальных изображений
+
+---
+
+## История изменений
+
+| Дата       | Изменение |
+|------------|-----------|
+| 2026-03-07 | Первая реализация: фиксированные пиксели, desktop-only |
+| 2026-03-07 | Рефактор: CSS custom properties, fluid layout, mobile 4:3, clamp() typography |
+| 2026-03-07 | Выравнивание картинки по левому краю (flex-start) |
 
 ---
 
 ## Известные ограничения / TODO
 
-- Изображение `city-urban.png` — временный placeholder. Нужны 6 уникальных изображений для каждого принципа.
-- Карточки имеют фиксированную ширину `1280px` — нужна адаптация под меньшие разрешения.
 - `z-index` стекинг не применён — карточки не перекрываются (последовательный стек).
-- `.principles-slider__scroll-spacer` (60vh) обеспечивает скролл-пространство для последней карточки.
+- На очень маленьких экранах (<320px) `min-width: 250px` у текста может конфликтовать с gap.

@@ -1,12 +1,5 @@
 /* ============================================================
-   OurPrinciplesAnimatedSlider — Pixel-perfect from Figma (485:1410)
-   
-   Design tokens:
-     Graphit Black:     #0C0C0C
-     Electric Purple:   #2E0054
-     Electric Fuchsia:  #FF00C5
-     PureWhite:         #FFFFFF
-     Font family:       Montserrat
+   OurPrinciplesAnimatedSlider — Responsive & Fluid
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
@@ -18,13 +11,15 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     color: #0C0C0C;
+    overflow: hidden;
+    /* Prevent horizontal scroll */
 }
 
-/* ---- Inner centred container (max 1440px) ---- */
+/* ---- Inner centred container ---- */
 .principles-slider__inner {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 40px 80px;
+    padding: 60px 5%;
     box-sizing: border-box;
 }
 
@@ -33,7 +28,8 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    width: 627px;
+    width: 100%;
+    max-width: 627px;
     margin-bottom: 54px;
 }
 
@@ -60,7 +56,7 @@
 .principles-slider__title {
     margin: 0;
     font-weight: 700;
-    font-size: 48px;
+    font-size: clamp(32px, 4vw, 48px);
     line-height: 1.1;
     text-transform: uppercase;
     color: #000000;
@@ -82,24 +78,25 @@
 .principle-acard {
     display: flex;
     align-items: flex-start;
-    gap: 24px;
-    padding: 24px 0;
-    width: 1280px;
+    justify-content: flex-start;
+    gap: 4vw;
+    padding: 50px 0;
+    width: 100%;
     border-top: 1px solid #2E0054;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     color: #0C0C0C;
-    overflow: hidden;
 }
 
 /* ---- Text Column ---- */
 .principle-acard__text {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 411px;
+    gap: 24px;
+    /* Use a fluid width instead of fixed 411px */
+    width: 32%;
+    min-width: 250px;
     flex-shrink: 0;
-    align-self: stretch;
 }
 
 /* ---- Header group (number + title) ---- */
@@ -110,32 +107,29 @@
     width: 100%;
 }
 
-/* "01" */
 .principle-acard__number {
     margin: 0;
     font-weight: 400;
-    font-size: 24px;
+    font-size: clamp(20px, 2vw, 24px);
     line-height: 1.3;
     color: #0C0C0C;
 }
 
-/* "URBAN-ONLY" */
 .principle-acard__title {
     margin: 0;
     font-weight: 700;
-    font-size: 32px;
+    font-size: clamp(24px, 2.5vw, 32px);
     line-height: 1.1;
     text-transform: uppercase;
     color: #0C0C0C;
 }
 
-/* Description text */
 .principle-acard__description {
     margin: 0;
     font-weight: 400;
-    font-size: 16px;
+    font-size: clamp(14px, 1.5vw, 16px);
     line-height: 1.54;
-    width: 347px;
+    width: 100%;
     color: #0C0C0C;
 }
 
@@ -145,6 +139,10 @@
     border-radius: 16px;
     overflow: hidden;
     flex-shrink: 0;
+
+    /* These values are provided via inline styles by Framer Motion on desktop */
+    width: var(--dynamic-width, 32%);
+    aspect-ratio: var(--dynamic-aspect, 2.0);
 }
 
 /* ---- Image itself ---- */
@@ -155,9 +153,54 @@
     object-fit: cover;
     border-radius: 16px;
     pointer-events: none;
+    /* Smooth zoom out effect if needed, but object-fit handles it nicely */
 }
 
 /* ---- Spacer before & after section for scroll room ---- */
 .principles-slider__scroll-spacer {
-    height: 60vh;
+    height: 40vh;
+    /* Reduced a bit so we don't scroll too far into nothing */
+}
+
+/* ============================================================
+   Media Queries
+   ============================================================ */
+
+/* Tablet (Portrait & Landscape) */
+@media (max-width: 1024px) {
+    .principles-slider__inner {
+        padding: 50px 5%;
+    }
+
+    .principle-acard {
+        gap: 3vw;
+        padding: 40px 0;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .principles-slider__header {
+        margin-bottom: 40px;
+    }
+
+    .principle-acard {
+        flex-direction: column;
+        /* Stacked layout: text over image */
+        align-items: flex-start;
+        gap: 32px;
+        padding: 32px 0;
+    }
+
+    .principle-acard__text {
+        width: 100%;
+        /* Text takes full width */
+    }
+
+    /* Override custom CSS props for mobile */
+    .principle-acard__image-wrapper {
+        width: 100%;
+        /* 4:3 Aspect Ratio as requested */
+        aspect-ratio: 4 / 3;
+    }
 }
