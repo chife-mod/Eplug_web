@@ -12,7 +12,7 @@
     font-family: 'Montserrat', sans-serif;
     color: #0C0C0C;
     overflow: hidden;
-    /* Prevent horizontal scroll */
+    /* blocks horizontal scroll at page level */
 }
 
 /* ---- Inner centred container ---- */
@@ -78,12 +78,13 @@
 .principle-acard {
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
-    gap: 4vw;
-    padding: 50px 0;
+    gap: 24px;
+    padding: 24px 0;
     width: 100%;
     border-top: 1px solid #2E0054;
     box-sizing: border-box;
+    /* NO overflow:hidden here — it clips image border-radius on the right side.
+       The image-wrapper constrains itself via max-width below. */
     font-family: 'Montserrat', sans-serif;
     color: #0C0C0C;
 }
@@ -92,10 +93,11 @@
 .principle-acard__text {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    /* Use a fluid width instead of fixed 411px */
-    width: 32%;
-    min-width: 250px;
+    justify-content: space-between;
+    /* header top, description bottom */
+    align-self: stretch;
+    /* match animated card height */
+    width: 411px;
     flex-shrink: 0;
 }
 
@@ -110,7 +112,7 @@
 .principle-acard__number {
     margin: 0;
     font-weight: 400;
-    font-size: clamp(20px, 2vw, 24px);
+    font-size: 24px;
     line-height: 1.3;
     color: #0C0C0C;
 }
@@ -118,7 +120,7 @@
 .principle-acard__title {
     margin: 0;
     font-weight: 700;
-    font-size: clamp(24px, 2.5vw, 32px);
+    font-size: 32px;
     line-height: 1.1;
     text-transform: uppercase;
     color: #0C0C0C;
@@ -127,9 +129,9 @@
 .principle-acard__description {
     margin: 0;
     font-weight: 400;
-    font-size: clamp(14px, 1.5vw, 16px);
+    font-size: 16px;
     line-height: 1.54;
-    width: 100%;
+    width: 347px;
     color: #0C0C0C;
 }
 
@@ -138,11 +140,15 @@
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    flex-shrink: 0;
-
-    /* These values are provided via inline styles by Framer Motion on desktop */
-    width: var(--dynamic-width, 32%);
-    aspect-ratio: var(--dynamic-aspect, 2.0);
+    /* clips photo inside, preserves border-radius */
+    flex-shrink: 1;
+    /* can shrink when viewport is narrower */
+    min-width: 0;
+    /* required for flex-shrink to work */
+    /* Constrain so image never overflows the card on any screen.
+       Total text area = 411px width + 24px gap = 435px.
+       Remaining space is the max the image can occupy. */
+    max-width: calc(100% - 435px);
 }
 
 /* ---- Image itself ---- */
@@ -151,56 +157,70 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 16px;
     pointer-events: none;
-    /* Smooth zoom out effect if needed, but object-fit handles it nicely */
 }
 
-/* ---- Spacer before & after section for scroll room ---- */
+/* ---- Scroll spacer ---- */
 .principles-slider__scroll-spacer {
     height: 40vh;
-    /* Reduced a bit so we don't scroll too far into nothing */
 }
 
 /* ============================================================
    Media Queries
    ============================================================ */
 
-/* Tablet (Portrait & Landscape) */
-@media (max-width: 1024px) {
-    .principles-slider__inner {
-        padding: 50px 5%;
+/* Tablet (769px – 1100px): text column becomes percentage-based */
+@media (max-width: 1100px) {
+    .principle-acard__text {
+        width: 30%;
+        min-width: 200px;
+        flex-shrink: 0;
     }
 
-    .principle-acard {
-        gap: 3vw;
-        padding: 40px 0;
+    .principle-acard__description {
+        width: 100%;
+    }
+
+    /* Recalculate max-width for image wrapper with %-based text column */
+    .principle-acard__image-wrapper {
+        max-width: calc(70% - 24px);
     }
 }
 
-/* Mobile */
+/* Mobile (≤768px): stacked layout */
 @media (max-width: 768px) {
+    .principles-slider__inner {
+        padding: 40px 20px;
+    }
+
     .principles-slider__header {
-        margin-bottom: 40px;
+        margin-bottom: 32px;
     }
 
     .principle-acard {
         flex-direction: column;
-        /* Stacked layout: text over image */
-        align-items: flex-start;
-        gap: 32px;
-        padding: 32px 0;
+        height: auto !important;
+        /* override Framer Motion inline height */
+        gap: 20px;
+        padding: 24px 0;
     }
 
     .principle-acard__text {
         width: 100%;
-        /* Text takes full width */
+        align-self: auto;
+        justify-content: flex-start;
+        gap: 12px;
     }
 
-    /* Override custom CSS props for mobile */
-    .principle-acard__image-wrapper {
+    .principle-acard__description {
         width: 100%;
-        /* 4:3 Aspect Ratio as requested */
+    }
+
+    /* Override Framer Motion inline width/height, force 4:3 */
+    .principle-acard__image-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
         aspect-ratio: 4 / 3;
     }
 }
