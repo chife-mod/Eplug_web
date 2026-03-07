@@ -1,0 +1,163 @@
+/* ============================================================
+   OurPrinciplesAnimatedSlider — Pixel-perfect from Figma (485:1410)
+   
+   Design tokens:
+     Graphit Black:     #0C0C0C
+     Electric Purple:   #2E0054
+     Electric Fuchsia:  #FF00C5
+     PureWhite:         #FFFFFF
+     Font family:       Montserrat
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* ---- Section Wrapper ---- */
+.principles-slider {
+    width: 100%;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    color: #0C0C0C;
+}
+
+/* ---- Inner centred container (max 1440px) ---- */
+.principles-slider__inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px 80px;
+    box-sizing: border-box;
+}
+
+/* ---- Section Header ---- */
+.principles-slider__header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 627px;
+    margin-bottom: 54px;
+}
+
+.principles-slider__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.principles-slider__label-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.principles-slider__label-text {
+    margin: 0;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.54;
+    color: #0C0C0C;
+}
+
+.principles-slider__title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+.principles-slider__title-accent {
+    color: #FF00C5;
+}
+
+/* ---- Cards Container ---- */
+.principles-slider__cards {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* ---- Individual Card ---- */
+.principle-acard {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 24px 0;
+    width: 1280px;
+    border-top: 1px solid #2E0054;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    color: #0C0C0C;
+    overflow: hidden;
+}
+
+/* ---- Text Column ---- */
+.principle-acard__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 411px;
+    flex-shrink: 0;
+    align-self: stretch;
+}
+
+/* ---- Header group (number + title) ---- */
+.principle-acard__header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+/* "01" */
+.principle-acard__number {
+    margin: 0;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.3;
+    color: #0C0C0C;
+}
+
+/* "URBAN-ONLY" */
+.principle-acard__title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: #0C0C0C;
+}
+
+/* Description text */
+.principle-acard__description {
+    margin: 0;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.54;
+    width: 347px;
+    color: #0C0C0C;
+}
+
+/* ---- Image wrapper ---- */
+.principle-acard__image-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* ---- Image itself ---- */
+.principle-acard__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    pointer-events: none;
+}
+
+/* ---- Spacer before & after section for scroll room ---- */
+.principles-slider__scroll-spacer {
+    height: 60vh;
+}

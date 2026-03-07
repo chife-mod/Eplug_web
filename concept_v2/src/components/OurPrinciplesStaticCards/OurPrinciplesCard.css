@@ -1,0 +1,149 @@
+/* ============================================================
+   OurPrinciplesCard — Pixel-perfect from Figma (node 491:1561)
+   
+   Design tokens:
+     Graphit Black:    #0C0C0C
+     Electric Purple:  #2E0054
+     Font family:      Montserrat
+   ============================================================ */
+
+/* ---- Card Base ---- */
+.principle-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 24px 0;
+    width: 1280px;
+    border-top: 1px solid #2E0054;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    color: #0C0C0C;
+}
+
+/* ---- Default variant: fixed 252px height ---- */
+.principle-card--default {
+    height: 252px;
+}
+
+/* ---- Active variant: auto height (driven by image 381px + padding 48px = 429px) ---- */
+
+/* ---- Text Column ---- */
+.principle-card__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 411px;
+    flex-shrink: 0;
+}
+
+.principle-card--default .principle-card__text {
+    /* Fill the available height (252 - 48px padding = 204px) */
+    height: 100%;
+}
+
+.principle-card--active .principle-card__text {
+    /* Stretch to the card's full height */
+    align-self: stretch;
+}
+
+/* ---- Header group (number + title) ---- */
+.principle-card__header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+/* "01" */
+.principle-card__number {
+    margin: 0;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.3;
+    color: #0C0C0C;
+}
+
+/* "URBAN-ONLY" */
+.principle-card__title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: #0C0C0C;
+}
+
+/* Description text */
+.principle-card__description {
+    margin: 0;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.54;
+    width: 347px;
+    color: #0C0C0C;
+}
+
+/* ---- Image wrapper ---- */
+.principle-card__image-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* Default: small image */
+.principle-card--default .principle-card__image-wrapper {
+    width: 410px;
+    /* Fill remaining height inside the card (252px total - 48px padding = 204px) */
+    height: calc(100% - 0px);
+    /* Align to full card height */
+    align-self: stretch;
+}
+
+/* Active: expanded image */
+.principle-card--active .principle-card__image-wrapper {
+    width: 845px;
+    height: 381px;
+}
+
+/* ---- Image itself ---- */
+.principle-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+
+/* ============================================================
+   Demo page (test wrapper)
+   ============================================================ */
+
+.principles-demo {
+    width: 100%;
+    min-height: 100vh;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    padding: 60px 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.principles-demo__container {
+    width: 1280px;
+}
+
+.principles-demo__label {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #999;
+}
+
+.principles-demo__spacer {
+    height: 60px;
+}

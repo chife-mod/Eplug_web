@@ -6,6 +6,8 @@ import AboutHero from './components/AboutHero';
 import OurMission from './components/OurMission';
 import AppLoyalty from './components/AppLoyalty';
 import AppLoyaltySlide3 from './components/AppLoyaltySlide3';
+import OurPrinciplesStaticCards from './components/OurPrinciplesStaticCards/OurPrinciplesCard';
+import OurPrinciplesAnimatedSlider from './components/OurPrinciplesAnimatedSlider/OurPrinciplesAnimatedSlider';
 
 const TestHeaderButtons = () => (
     <div className="w-full h-screen flex items-center justify-center" style={{ backgroundColor: '#DEDCF9' }}>
@@ -51,6 +53,22 @@ const TestSlide3 = () => (
     </div>
 );
 
+const TestOurPrinciples = () => (
+    <div className="w-full min-h-screen" style={{ background: '#FFFFFF' }}>
+        <OurPrinciplesStaticCards />
+    </div>
+);
+
+const TestPrinciplesAnimated = () => (
+    <div className="w-full" style={{ background: '#FFFFFF' }}>
+        {/* Spacer so we can scroll into the section */}
+        <div style={{ height: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 20, color: '#999' }}>↓ Scroll down to see the animated slider ↓</p>
+        </div>
+        <OurPrinciplesAnimatedSlider />
+    </div>
+);
+
 function App() {
     return (
         <Router>
@@ -62,6 +80,8 @@ function App() {
                 <Route path="/test-our-mission" element={<TestOurMission />} />
                 <Route path="/test-app-loyalty" element={<TestAppLoyalty />} />
                 <Route path="/test-slide3" element={<TestSlide3 />} />
+                <Route path="/test-our-principles" element={<TestOurPrinciples />} />
+                <Route path="/test-principles-animated" element={<TestPrinciplesAnimated />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </Router>
