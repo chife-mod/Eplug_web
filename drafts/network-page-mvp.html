@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eplug Network — MVP Draft</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background: #f0f0f0; }
+    /* Override Leaflet's internal font */
+    .leaflet-container { font-family: 'Montserrat', sans-serif; }
+    .leaflet-legend, .leaflet-legend * { font-family: 'Montserrat', sans-serif; }
+
+    /* ===== TOGGLE BAR ===== */
+    .toggle-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      background: #1a1a1a; color: white; padding: 10px 20px;
+      display: flex; align-items: center; gap: 12px; height: 48px;
+    }
+    .toggle-label { font-size: 12px; opacity: 0.5; margin-right: 4px; }
+    .toggle-btn {
+      padding: 5px 16px; border: 1px solid #444; background: transparent;
+      color: white; cursor: pointer; border-radius: 4px; font-size: 13px;
+      transition: all 0.2s;
+    }
+    .toggle-btn.active { background: #FF00C5; border-color: #FF00C5; }
+    .toggle-note { font-size: 11px; color: #666; margin-left: auto; }
+    #btn3 {}
+
+    /* ===== VARIANT 3 — SPOTLIGHT ===== */
+    #variant3 { display: none; background: #f0f0f0; }
+
+    /* Map — full width */
+    #v3-map { width: 100%; height: 56vh; position: relative; }
+
+    /* Tab strip */
+    .v3-tabs {
+      background: white; border-bottom: 1px solid #e0e0e0;
+      padding: 0 32px; display: flex; gap: 0;
+      overflow-x: auto; scrollbar-width: none; position: relative; z-index: 2;
+    }
+    .v3-tabs::-webkit-scrollbar { display: none; }
+    .v3-tab {
+      flex-shrink: 0; padding: 16px 20px; cursor: pointer;
+      border-bottom: 3px solid transparent;
+      display: flex; align-items: center; gap: 8px;
+      transition: border-color 0.2s, color 0.2s;
+      font-size: 13px; color: #888; white-space: nowrap;
+    }
+    .v3-tab:hover { color: #333; }
+    .v3-tab.active { border-bottom-color: #FF00C5; color: #111; }
+    .v3-tab .tab-dot {
+      width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .v3-tab.active .tab-dot { transform: scale(1.3); }
+    .v3-tab .tab-name { font-weight: 600; }
+    .v3-tab .tab-sub  { font-size: 11px; color: #bbb; margin-left: 4px; }
+    .v3-tab.active .tab-sub { color: #999; }
+
+    /* Detail card */
+    .v3-detail-wrap {
+      padding: 32px; max-width: 960px; margin: 0 auto;
+    }
+    .v3-card {
+      background: white; border-radius: 12px;
+      padding: 32px 36px; display: grid;
+      grid-template-columns: 1fr 1fr; gap: 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      animation: cardIn 0.3s ease;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .v3-card-left {}
+    .v3-card-left .badge { margin-bottom: 14px; }
+    .v3-card-left h2 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+    .v3-card-left .addr { font-size: 13px; color: #999; margin-bottom: 16px; }
+    .v3-card-left .why {
+      font-size: 13px; color: #555; line-height: 1.7;
+      padding: 14px 16px; background: #fafafa;
+      border-left: 3px solid #FF00C5; border-radius: 4px; margin-top: 8px;
+    }
+    .v3-card-right {}
+    .v3-card-right ul { list-style: none; }
+    .v3-card-right ul li {
+      font-size: 13px; color: #444; padding: 9px 0;
+      border-bottom: 1px solid #f0f0f0; display: flex; gap: 8px;
+    }
+    .v3-card-right ul li::before { content: "✓"; color: #FF00C5; font-weight: 700; flex-shrink: 0; }
+    .v3-card-right .opening {
+      margin-top: 20px; font-size: 12px; color: #bbb;
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .v3-card-right .opening span { color: #FF00C5; font-weight: 700; }
+
+    /* Expansion strip */
+    .v3-expansion {
+      background: #0C0214; color: white;
+      padding: 48px 32px; margin-top: 8px;
+    }
+    .v3-expansion h3 { font-size: 22px; margin-bottom: 24px; }
+    .v3-timeline {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .v3-year {
+      border-left: 2px solid #333; padding-left: 16px;
+    }
+    .v3-year .yr  { font-size: 20px; font-weight: 700; color: #FF00C5; margin-bottom: 4px; }
+    .v3-year .txt { font-size: 13px; color: #888; line-height: 1.5; }
+
+    /* Mobile V3 */
+    @media (max-width: 768px) {
+      #v3-map { height: 42vh; }
+      .v3-tabs { padding: 0 12px; }
+      .v3-detail-wrap { padding: 20px 12px; }
+      .v3-card { grid-template-columns: 1fr; gap: 20px; padding: 22px 20px; }
+      .v3-expansion { padding: 36px 20px; }
+      .v3-timeline { grid-template-columns: 1fr 1fr; gap: 20px; }
+    }
+
+    /* ================================================================
+       VARIANT 4 — MAP HERO + OVERLAYS
+    ================================================================ */
+    #variant4 { display: none; }
+
+    /* Map container — full width, tall */
+    .v4-map-wrap {
+      position: relative;
+      width: 100%;
+      height: 82vh;
+      min-height: 480px;
+    }
+    #v4-map { width: 100%; height: 100%; }
+
+    /* ── TAB STRIP overlay (top of map) ── */
+    .v4-tabs {
+      position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 800;
+      background: rgba(12, 2, 20, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 40px;
+      display: flex; align-items: center;
+      padding: 4px 6px; gap: 2px;
+      white-space: nowrap;
+      box-shadow: 0 4px 24px rgba(0,0,0,.4);
+    }
+    .v4-tab {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 16px; border-radius: 32px; cursor: pointer;
+      color: rgba(255,255,255,0.5); font-size: 13px;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 500;
+    }
+    .v4-tab:hover { color: rgba(255,255,255,0.85); }
+    .v4-tab.active {
+      background: rgba(255, 0, 197, 0.18);
+      color: white;
+    }
+    .v4-tab .tdot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .v4-tab.active .tdot { transform: scale(1.4); }
+    .v4-tab .tsub {
+      font-size: 11px; color: rgba(255,255,255,0.3);
+      font-weight: 400;
+    }
+    .v4-tab.active .tsub { color: rgba(255,255,255,0.5); }
+
+    /* ── FLOATING CARD overlay (right of map) ── */
+    .v4-card-wrap {
+      position: absolute; top: 16px; right: 16px;
+      z-index: 800;
+      width: 320px;
+      height: 650px;
+      display: flex; flex-direction: column;
+      background: rgba(12, 2, 20, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #FF00C5;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,.5);
+    }
+
+    /* Photo slot */
+    .v4-card-photo {
+      width: 100%; height: 160px; flex-shrink: 0;
+      background: #1a0030;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.2); font-size: 12px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      position: relative; overflow: hidden;
+    }
+    .v4-card-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(12,2,20,0.9));
+    }
+    .v4-card-photo-label {
+      position: absolute; bottom: 12px; left: 14px; z-index: 1;
+      font-size: 11px; color: rgba(255,255,255,0.4);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+
+    /* Scrollable body */
+    .v4-card-body {
+      flex: 1; overflow-y: auto; padding: 18px 18px 20px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,0,197,0.3) transparent;
+    }
+    .v4-card-body::-webkit-scrollbar { width: 4px; }
+    .v4-card-body::-webkit-scrollbar-track { background: transparent; }
+    .v4-card-body::-webkit-scrollbar-thumb { background: rgba(255,0,197,0.4); border-radius: 2px; }
+
+    .v4-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 10px;
+    }
+    .v4b-construction { background: #FF00C5; color: white; }
+    .v4b-planned-27   { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+    .v4b-planned-28   { background: rgba(123,0,204,0.3); color: #c07fff; }
+
+    .v4-card-name  { font-size: 20px; font-weight: 700; color: white; margin-bottom: 3px; line-height: 1.2; }
+    .v4-card-addr  { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 14px; }
+    .v4-card-desc  { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.65; margin-bottom: 16px; }
+    .v4-card-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin-bottom: 14px; }
+    .v4-card-facts { display: flex; flex-direction: column; gap: 0; }
+    .v4-fact {
+      display: flex; gap: 8px; align-items: flex-start;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 12px; color: rgba(255,255,255,0.55);
+    }
+    .v4-fact::before { content: "✓"; color: #FF00C5; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .v4-fact:last-child { border-bottom: none; }
+
+    /* Card swap animation */
+    .v4-card-body.animating {
+      animation: v4CardIn 0.25s ease;
+    }
+    @keyframes v4CardIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Expansion section */
+    .v4-expansion {
+      background: #0C0214; color: white; padding: 52px 40px;
+    }
+    .v4-expansion h3 { font-size: 22px; margin-bottom: 28px; }
+    .v4-timeline {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .v4-year { border-left: 2px solid #2a0044; padding-left: 18px; }
+    .v4-year .yr  { font-size: 22px; font-weight: 700; color: #FF00C5; margin-bottom: 5px; }
+    .v4-year .txt { font-size: 13px; color: #666; line-height: 1.55; }
+    .v4-cta {
+      margin-top: 36px; padding-top: 32px; border-top: 1px solid #1a0030;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .v4-cta p { font-size: 14px; color: #666; }
+    .v4-cta a {
+      display: inline-block; padding: 11px 24px;
+      background: #FF00C5; color: white; border-radius: 6px;
+      text-decoration: none; font-size: 13px; font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .v4-cta a:hover { opacity: 0.85; }
+
+    /* ── MOBILE V4 ── */
+    @media (max-width: 768px) {
+      .v4-map-wrap { height: 44vh; min-height: 280px; }
+
+      /* Tabs move below the map */
+      .v4-tabs {
+        position: static; transform: none;
+        border-radius: 0; background: #0C0214;
+        backdrop-filter: none; border: none;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        overflow-x: auto; scrollbar-width: none;
+        padding: 6px 12px; gap: 4px;
+      }
+      .v4-tabs::-webkit-scrollbar { display: none; }
+
+      /* Card becomes full-width block below tabs */
+      .v4-card-wrap {
+        position: static;
+        width: 100%; border-radius: 0; border-left: none;
+        border-top: 3px solid #FF00C5;
+        min-height: 360px;
+      }
+      .v4-expansion { padding: 36px 20px; }
+      .v4-timeline { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .v4-cta { flex-direction: column; gap: 16px; align-items: flex-start; }
+    }
+
+    /* ===== SHARED HERO ===== */
+    .hero {
+      background: #0C0214; color: white;
+      padding: 56px 40px 48px;
+    }
+    .hero .overline {
+      text-transform: uppercase; letter-spacing: 0.18em;
+      font-size: 11px; color: #FF00C5; margin-bottom: 14px;
+    }
+    .hero h1 { font-size: 40px; font-weight: 700; line-height: 1.15; margin-bottom: 14px; }
+    .hero p { color: #888; max-width: 480px; line-height: 1.65; font-size: 15px; }
+
+    /* ===== STATUS BADGES ===== */
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .badge-construction { background: #FF00C5; color: white; }
+    .badge-planned-27   { background: #e8e8e8; color: #555; }
+    .badge-planned-28   { background: #ede8ff; color: #6B00AA; }
+
+    /* ===== LEGEND ===== */
+    .leaflet-legend {
+      background: white; border-radius: 6px; padding: 8px 12px;
+      font-size: 11px; display: flex; flex-direction: column; gap: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    }
+    .legend-row { display: flex; align-items: center; gap: 7px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ========================================================
+       VARIANT 1 — SPLIT SCREEN
+    ======================================================== */
+    #variant1 { display: block; }
+    .v1-wrap { display: flex; height: calc(100vh - 48px); overflow: hidden; }
+
+    #v1-map { flex: 0 0 60%; }
+
+    .v1-panel {
+      flex: 0 0 40%; background: white;
+      overflow-y: auto; border-left: 1px solid #e0e0e0;
+      display: flex; flex-direction: column;
+    }
+    .v1-panel-inner { padding: 28px; }
+
+    .v1-list-label {
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em;
+      color: #bbb; margin-bottom: 12px;
+    }
+
+    /* Pin list */
+    .pin-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 24px; }
+    .pin-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 10px; border-radius: 6px; cursor: pointer;
+      transition: background 0.15s; border: 1px solid transparent;
+    }
+    .pin-item:hover { background: #fafafa; }
+    .pin-item.active { background: #fff0fb; border-color: #ffc8f0; }
+    .pin-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+    .dot-c  { background: #FF00C5; }
+    .dot-p7 { background: #aaa; }
+    .dot-p8 { background: #7B00CC; }
+    .pin-item-name   { font-size: 13px; font-weight: 600; color: #222; }
+    .pin-item-sub    { font-size: 11px; color: #999; }
+
+    /* Detail area */
+    .v1-divider { border: none; border-top: 1px solid #eee; margin: 0 0 20px; }
+    .v1-detail h2   { font-size: 20px; font-weight: 700; margin: 10px 0 4px; }
+    .v1-detail .addr { font-size: 12px; color: #999; margin-bottom: 16px; }
+    .v1-detail .desc { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 16px; }
+    .v1-detail ul   { list-style: none; }
+    .v1-detail ul li {
+      font-size: 13px; color: #444; padding: 7px 0;
+      border-bottom: 1px solid #f4f4f4;
+    }
+    .v1-detail ul li::before { content: "✓ "; color: #FF00C5; font-weight: 700; }
+    .v1-default { color: #ccc; font-size: 13px; padding: 16px 0; }
+
+    /* ========================================================
+       VARIANT 2 — SCROLL STORYTELLING
+    ======================================================== */
+    #variant2 { display: none; }
+    .v2-wrap { display: flex; align-items: flex-start; }
+
+    /* LEFT — scrollable cards */
+    .v2-cards {
+      width: 42%; padding-bottom: 90vh;
+      padding-top: 0;
+    }
+    .v2-intro {
+      padding: 36px 28px 28px;
+      border-bottom: 1px solid #e0e0e0;
+      background: white; margin-bottom: 28px;
+    }
+    .v2-intro h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .v2-intro p  { font-size: 13px; color: #888; line-height: 1.6; }
+    .v2-intro .scroll-hint {
+      margin-top: 14px; font-size: 12px; color: #bbb;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .scroll-arrow { animation: bounce 1.4s infinite; display: inline-block; }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(4px); }
+    }
+
+    .loc-card {
+      margin: 0 20px 48px;
+      background: white; border-radius: 10px; padding: 24px 22px;
+      border-left: 4px solid #eee;
+      opacity: 0.45; transition: opacity 0.35s, border-color 0.35s, box-shadow 0.35s;
+    }
+    .loc-card.active {
+      border-left-color: #FF00C5;
+      box-shadow: 0 6px 28px rgba(0,0,0,.10);
+      opacity: 1;
+    }
+    .loc-card .badge { margin-bottom: 12px; }
+    .loc-card h3   { font-size: 17px; font-weight: 700; margin-bottom: 3px; }
+    .loc-card .addr { font-size: 12px; color: #aaa; margin-bottom: 14px; }
+    .loc-card .desc { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 14px; }
+    .loc-card ul   { list-style: none; }
+    .loc-card ul li {
+      font-size: 12px; color: #666; padding: 5px 0;
+      border-bottom: 1px solid #f4f4f4;
+    }
+    .loc-card ul li::before { content: "→ "; color: #FF00C5; }
+
+    /* Finale card */
+    .finale-card {
+      margin: 0 20px 80px;
+      background: #0C0214; color: white;
+      border-radius: 10px; padding: 32px 24px; text-align: center;
+    }
+    .finale-card h3  { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    .finale-card p   { font-size: 13px; color: #888; margin-bottom: 24px; }
+    .finale-stats    { display: flex; justify-content: center; gap: 28px; }
+    .finale-stat .num { font-size: 30px; font-weight: 700; color: #FF00C5; }
+    .finale-stat .lbl { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+    /* RIGHT — sticky map */
+    .v2-map-col {
+      position: sticky; top: 48px;
+      width: 58%; height: calc(100vh - 48px);
+    }
+    #v2-map { width: 100%; height: 100%; }
+
+    /* ========================================================
+       MOBILE — ≤768px
+    ======================================================== */
+    @media (max-width: 768px) {
+      .hero { padding: 40px 20px 36px; }
+      .hero h1 { font-size: 28px; }
+      .toggle-note { display: none; }
+
+      /* V1 mobile: stacked */
+      .v1-wrap { flex-direction: column; height: auto; overflow: visible; }
+      #v1-map  { height: 45vh; width: 100%; flex: none; }
+      .v1-panel { flex: none; width: 100%; border-left: none; border-top: 1px solid #e0e0e0; }
+
+      /* V2 mobile: map on top sticky, cards below */
+      .v2-wrap { flex-direction: column; }
+      .v2-map-col {
+        position: sticky; top: 48px;
+        width: 100%; height: 44vh;
+      }
+      .v2-cards { width: 100%; padding-bottom: 60vh; }
+      .v2-intro { margin-bottom: 20px; }
+      .loc-card { margin: 0 12px 32px; }
+      .finale-card { margin: 0 12px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== TOGGLE BAR ===== -->
+<div class="toggle-bar">
+  <span class="toggle-label">MVP Draft</span>
+  <button class="toggle-btn active" id="btn1" onclick="showVariant(1)">Вариант 1 — Split Screen</button>
+  <button class="toggle-btn"        id="btn2" onclick="showVariant(2)">Вариант 2 — Scroll Story</button>
+  <button class="toggle-btn"        id="btn3" onclick="showVariant(3)">Вариант 3 — Spotlight ✦</button>
+  <button class="toggle-btn"        id="btn4" onclick="showVariant(4)">Вариант 4 — Map Hero ★</button>
+  <span class="toggle-note">Без дизайна — только структура</span>
+</div>
+
+<!-- ===== HERO (shared) ===== -->
+<div style="padding-top:48px">
+  <div class="hero">
+    <div class="overline">Network</div>
+    <h1>Where We're Building<br>the Future</h1>
+    <p>First hubs launch in Brooklyn, 2026. National expansion follows fast.</p>
+  </div>
+</div>
+
+<!-- ================================================================
+     VARIANT 1 — SPLIT SCREEN
+================================================================ -->
+<div id="variant1">
+  <div class="v1-wrap">
+
+    <!-- MAP -->
+    <div id="v1-map"></div>
+
+    <!-- RIGHT PANEL -->
+    <div class="v1-panel">
+      <div class="v1-panel-inner">
+        <div class="v1-list-label">Все локации</div>
+
+        <!-- Location list -->
+        <div class="pin-list">
+          <div class="pin-item active" id="pin-0" onclick="v1Select(0)">
+            <div class="pin-dot dot-c"></div>
+            <div>
+              <div class="pin-item-name">390 Bedford Ave</div>
+              <div class="pin-item-sub">Williamsburg, Brooklyn — Under Construction</div>
+            </div>
+          </div>
+          <div class="pin-item" id="pin-1" onclick="v1Select(1)">
+            <div class="pin-dot dot-p7"></div>
+            <div>
+              <div class="pin-item-name">NYC Expansion</div>
+              <div class="pin-item-sub">Midtown Manhattan — Planned 2027</div>
+            </div>
+          </div>
+          <div class="pin-item" id="pin-2" onclick="v1Select(2)">
+            <div class="pin-dot dot-p7"></div>
+            <div>
+              <div class="pin-item-name">Los Angeles Hub</div>
+              <div class="pin-item-sub">Downtown LA — Planned 2027</div>
+            </div>
+          </div>
+          <div class="pin-item" id="pin-3" onclick="v1Select(3)">
+            <div class="pin-dot dot-p8"></div>
+            <div>
+              <div class="pin-item-name">San Francisco</div>
+              <div class="pin-item-sub">Bay Area — Planned 2028</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="v1-divider">
+
+        <!-- Detail -->
+        <div class="v1-detail" id="v1-detail">
+          <div class="v1-default">← Выбери локацию на карте или из списка выше</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================================================================
+     VARIANT 2 — SCROLL STORYTELLING
+================================================================ -->
+<div id="variant2">
+  <div class="v2-wrap">
+
+    <!-- LEFT: scrollable cards -->
+    <div class="v2-cards">
+      <div class="v2-intro">
+        <h2>Our expansion plan</h2>
+        <p>Scroll to explore every location — from our first hub in Brooklyn to national scale by 2030. The map follows your journey.</p>
+        <div class="scroll-hint">
+          <span class="scroll-arrow">↓</span>
+          Скролль вниз, карта летит к следующей точке
+        </div>
+      </div>
+
+      <!-- CARD 0 — Brooklyn -->
+      <div class="loc-card active" data-idx="0">
+        <span class="badge badge-construction">Under Construction</span>
+        <h3>390 Bedford Ave</h3>
+        <div class="addr">Williamsburg, Brooklyn — Opening 2026</div>
+        <p class="desc">
+          Our first flagship hub. High-income residents + heavy tourism + fleet density
+          + nightlife = constant turnover, all day, all night.
+        </p>
+        <ul>
+          <li>44 DC Fast chargers — 300 kW each</li>
+          <li>88 parking bays — highest urban density in NYC</li>
+          <li>Climate-controlled lounge, retail, real restrooms</li>
+          <li>Adjacent to Williamsburg Bridge — 24/7 traffic</li>
+        </ul>
+      </div>
+
+      <!-- CARD 1 — NYC -->
+      <div class="loc-card" data-idx="1">
+        <span class="badge badge-planned-27">Planned — 2027</span>
+        <h3>NYC Expansion</h3>
+        <div class="addr">Midtown Manhattan, New York</div>
+        <p class="desc">
+          Fleet corridors, transit density, and 24/7 foot traffic.
+          50+ hubs across all five boroughs.
+        </p>
+        <ul>
+          <li>50+ locations across NYC</li>
+          <li>Fleet pickup/drop-off corridors</li>
+          <li>Transit-adjacent sites</li>
+        </ul>
+      </div>
+
+      <!-- CARD 2 — LA -->
+      <div class="loc-card" data-idx="2">
+        <span class="badge badge-planned-27">Planned — 2027</span>
+        <h3>Los Angeles</h3>
+        <div class="addr">Downtown LA, California</div>
+        <p class="desc">
+          LA's massive EV adoption rate and rideshare fleet density make it
+          a natural fit for Eplug's urban model.
+        </p>
+        <ul>
+          <li>Rideshare fleet priority sites</li>
+          <li>Mixed-use retail corridors</li>
+          <li>EV adoption >8% and accelerating</li>
+        </ul>
+      </div>
+
+      <!-- CARD 3 — SF -->
+      <div class="loc-card" data-idx="3">
+        <span class="badge badge-planned-28">Planned — 2028</span>
+        <h3>San Francisco</h3>
+        <div class="addr">Bay Area, California</div>
+        <p class="desc">
+          Highest EV density in the US.
+          Partnership opportunities with tech campuses and transit agencies.
+        </p>
+        <ul>
+          <li>Highest EV adoption in the US</li>
+          <li>Tech campus partnerships</li>
+          <li>Transit agency collaboration</li>
+        </ul>
+      </div>
+
+      <!-- FINALE -->
+      <div class="finale-card">
+        <h3>1,000+ Hubs by 2030</h3>
+        <p>Across America's densest urban markets</p>
+        <div class="finale-stats">
+          <div class="finale-stat">
+            <div class="num">10</div>
+            <div class="lbl">Top metros</div>
+          </div>
+          <div class="finale-stat">
+            <div class="num">200+</div>
+            <div class="lbl">Locations by 2028</div>
+          </div>
+          <div class="finale-stat">
+            <div class="num">1,000+</div>
+            <div class="lbl">Hubs by 2030</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: sticky map -->
+    <div class="v2-map-col">
+      <div id="v2-map"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================================================================
+     VARIANT 3 — SPOTLIGHT
+================================================================ -->
+<div id="variant3">
+  <!-- Full-width map -->
+  <div id="v3-map"></div>
+
+  <!-- Tab strip -->
+  <div class="v3-tabs" id="v3-tab-strip">
+    <!-- generated by JS -->
+  </div>
+
+  <!-- Detail card -->
+  <div class="v3-detail-wrap">
+    <div id="v3-card-slot"></div>
+  </div>
+
+  <!-- Expansion timeline -->
+  <div class="v3-expansion">
+    <h3>Expansion plan</h3>
+    <div class="v3-timeline">
+      <div class="v3-year">
+        <div class="yr">2026</div>
+        <div class="txt">Brooklyn flagship hubs</div>
+      </div>
+      <div class="v3-year">
+        <div class="yr">2027</div>
+        <div class="txt">50+ locations across NYC, LA, SF</div>
+      </div>
+      <div class="v3-year">
+        <div class="yr">2028</div>
+        <div class="txt">200+ locations in top 10 metros</div>
+      </div>
+      <div class="v3-year">
+        <div class="yr">2030</div>
+        <div class="txt">1,000+ urban hubs nationwide</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     VARIANT 4 — MAP HERO + FLOATING OVERLAYS
+================================================================ -->
+<div id="variant4">
+
+  <!-- Map — full width with two overlays -->
+  <div class="v4-map-wrap">
+
+    <!-- Leaflet map -->
+    <div id="v4-map"></div>
+
+    <!-- OVERLAY 1: Tab strip (top-center) -->
+    <div class="v4-tabs" id="v4-tab-strip">
+      <!-- generated by JS -->
+    </div>
+
+    <!-- OVERLAY 2: Floating card (right) -->
+    <div class="v4-card-wrap" id="v4-card-wrap">
+      <!-- Photo -->
+      <div class="v4-card-photo" id="v4-photo">
+        <span>Photo / Rendering</span>
+        <span class="v4-card-photo-label" id="v4-photo-label">Architectural rendering</span>
+      </div>
+      <!-- Scrollable body -->
+      <div class="v4-card-body" id="v4-card-body">
+        <!-- generated by JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Expansion section (below map) -->
+  <div class="v4-expansion">
+    <h3>Expansion plan</h3>
+    <div class="v4-timeline">
+      <div class="v4-year">
+        <div class="yr">2026</div>
+        <div class="txt">Brooklyn flagship hubs. First DC Fast network in NYC.</div>
+      </div>
+      <div class="v4-year">
+        <div class="yr">2027</div>
+        <div class="txt">50+ locations across NYC, Los Angeles, San Francisco.</div>
+      </div>
+      <div class="v4-year">
+        <div class="yr">2028</div>
+        <div class="txt">200+ locations in top 10 metros nationwide.</div>
+      </div>
+      <div class="v4-year">
+        <div class="yr">2030</div>
+        <div class="txt">1,000+ urban hubs. The standard for American cities.</div>
+      </div>
+    </div>
+    <div class="v4-cta">
+      <p>Have a property? We move fast.</p>
+      <a href="#">Partner with us →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+// ===== DATA =====
+const LOCATIONS = [
+  {
+    name: "390 Bedford Ave",
+    address: "Williamsburg, Brooklyn",
+    status: "Under Construction",
+    statusClass: "badge-construction",
+    lat: 40.7135, lng: -73.9637,
+    color: "#FF00C5",
+    dotClass: "dot-c",
+    desc: "Our first flagship hub. High-income residents + heavy tourism + fleet density + nightlife = constant turnover.",
+    details: [
+      "44 DC Fast chargers — 300 kW each",
+      "88 parking bays — highest urban density in NYC",
+      "Climate-controlled lounge with WiFi & screens",
+      "Adjacent to Williamsburg Bridge — 24/7 traffic",
+      "Walking distance: Domino Park, L train, nightlife"
+    ],
+    zoom: 14
+  },
+  {
+    name: "NYC Expansion",
+    address: "Midtown Manhattan, NY",
+    status: "Planned 2027",
+    statusClass: "badge-planned-27",
+    lat: 40.7549, lng: -73.9840,
+    color: "#aaa",
+    dotClass: "dot-p7",
+    desc: "50+ hubs across all five boroughs. Fleet corridors and transit-adjacent sites.",
+    details: ["50+ locations across NYC", "Fleet priority corridors", "Transit-adjacent sites"],
+    zoom: 11
+  },
+  {
+    name: "Los Angeles Hub",
+    address: "Downtown LA, CA",
+    status: "Planned 2027",
+    statusClass: "badge-planned-27",
+    lat: 34.0522, lng: -118.2437,
+    color: "#aaa",
+    dotClass: "dot-p7",
+    desc: "LA's massive EV adoption rate and rideshare fleet density make it a natural fit.",
+    details: ["Rideshare fleet priority sites", "Mixed-use retail corridors", "EV adoption >8%"],
+    zoom: 11
+  },
+  {
+    name: "San Francisco",
+    address: "Bay Area, CA",
+    status: "Planned 2028",
+    statusClass: "badge-planned-28",
+    lat: 37.7749, lng: -122.4194,
+    color: "#7B00CC",
+    dotClass: "dot-p8",
+    desc: "Highest EV density in the US. Tech campus and transit agency partnerships.",
+    details: ["Highest EV adoption in the US", "Tech campus partnerships", "Transit agency collaboration"],
+    zoom: 11
+  }
+];
+
+// ===== MAP STATE =====
+let map1 = null, map2 = null;
+let markers1 = [], markers2 = [];
+let v2Observer = null;
+
+// ===== MARKER FACTORY =====
+function makeIcon(color, active) {
+  const size = active ? 18 : 14;
+  return L.divIcon({
+    html: `<div style="
+      width:${size}px; height:${size}px; border-radius:50%;
+      background:${color}; border:2.5px solid white;
+      box-shadow:0 0 0 2px ${color}, 0 2px 8px rgba(0,0,0,.3);
+      transition: all .3s;
+    "></div>`,
+    className: '',
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2]
+  });
+}
+
+function makeLegend(extraItems) {
+  const ctrl = L.control({ position: 'bottomleft' });
+  ctrl.onAdd = () => {
+    const div = L.DomUtil.create('div', 'leaflet-legend');
+    div.innerHTML = `
+      <div class="legend-row"><div class="legend-dot" style="background:#FF00C5"></div>Under Construction</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#aaa"></div>Planned 2027</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#7B00CC"></div>Planned 2028</div>
+    ` + (extraItems || '');
+    return div;
+  };
+  return ctrl;
+}
+
+// ================================================================
+//  VARIANT 1
+// ================================================================
+function initV1() {
+  if (map1) { map1.invalidateSize(); return; }
+
+  map1 = L.map('v1-map', { zoomControl: true }).setView([39.5, -98.35], 4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map1);
+
+  LOCATIONS.forEach((loc, i) => {
+    const m = L.marker([loc.lat, loc.lng], { icon: makeIcon(loc.color, i === 0) })
+      .addTo(map1)
+      .on('click', () => v1Select(i));
+    markers1.push(m);
+  });
+
+  makeLegend().addTo(map1);
+  v1Select(0);
+}
+
+function v1Select(i) {
+  const loc = LOCATIONS[i];
+
+  // Update pin list highlight
+  document.querySelectorAll('.pin-item').forEach((el, idx) => {
+    el.classList.toggle('active', idx === i);
+  });
+
+  // Update marker sizes
+  markers1.forEach((m, idx) => {
+    m.setIcon(makeIcon(LOCATIONS[idx].color, idx === i));
+  });
+
+  // Fly map
+  map1.flyTo([loc.lat, loc.lng], loc.zoom, { duration: 1.1, easeLinearity: 0.4 });
+
+  // Render detail
+  document.getElementById('v1-detail').innerHTML = `
+    <span class="badge ${loc.statusClass}">${loc.status}</span>
+    <h2>${loc.name}</h2>
+    <div class="addr">${loc.address}</div>
+    <p class="desc">${loc.desc}</p>
+    <ul>${loc.details.map(d => `<li>${d}</li>`).join('')}</ul>
+  `;
+}
+
+// ================================================================
+//  VARIANT 2
+// ================================================================
+function initV2() {
+  if (map2) { map2.invalidateSize(); return; }
+
+  map2 = L.map('v2-map', { zoomControl: false }).setView([39.5, -98.35], 4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map2);
+
+  LOCATIONS.forEach((loc, i) => {
+    const m = L.marker([loc.lat, loc.lng], { icon: makeIcon(loc.color, i === 0) })
+      .addTo(map2);
+    markers2.push(m);
+  });
+
+  L.control.zoom({ position: 'topright' }).addTo(map2);
+  makeLegend().addTo(map2);
+
+  setupV2Observer();
+}
+
+let currentV2 = 0;
+function setupV2Observer() {
+  const cards = document.querySelectorAll('.loc-card[data-idx]');
+
+  if (v2Observer) v2Observer.disconnect();
+
+  v2Observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const idx = parseInt(entry.target.dataset.idx);
+      if (idx === currentV2) return;
+      currentV2 = idx;
+
+      // Activate card
+      cards.forEach(c => c.classList.remove('active'));
+      entry.target.classList.add('active');
+
+      // Update markers
+      markers2.forEach((m, i) => {
+        m.setIcon(makeIcon(LOCATIONS[i].color, i === idx));
+      });
+
+      // Fly map
+      const loc = LOCATIONS[idx];
+      if (loc && map2) {
+        map2.flyTo([loc.lat, loc.lng], loc.zoom, { duration: 1.6, easeLinearity: 0.4 });
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '-15% 0px -55% 0px',
+    threshold: 0
+  });
+
+  cards.forEach(c => v2Observer.observe(c));
+}
+
+// ================================================================
+//  VARIANT 3 — SPOTLIGHT
+// ================================================================
+let map3 = null, markers3 = [];
+
+function initV3() {
+  // Build tab strip
+  const strip = document.getElementById('v3-tab-strip');
+  if (!strip.children.length) {
+    LOCATIONS.forEach((loc, i) => {
+      const tab = document.createElement('div');
+      tab.className = 'v3-tab' + (i === 0 ? ' active' : '');
+      tab.dataset.idx = i;
+      tab.innerHTML = `
+        <div class="tab-dot" style="background:${loc.color}"></div>
+        <span class="tab-name">${loc.name}</span>
+        <span class="tab-sub">${loc.status}</span>
+      `;
+      tab.onclick = () => v3Select(i);
+      strip.appendChild(tab);
+    });
+  }
+
+  if (!map3) {
+    map3 = L.map('v3-map', { zoomControl: false }).setView([40.7135, -73.9637], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map3);
+
+    LOCATIONS.forEach((loc, i) => {
+      const m = L.marker([loc.lat, loc.lng], { icon: makeIcon(loc.color, i === 0) })
+        .addTo(map3)
+        .on('click', () => v3Select(i));
+      markers3.push(m);
+    });
+
+    L.control.zoom({ position: 'topright' }).addTo(map3);
+    makeLegend().addTo(map3);
+  } else {
+    map3.invalidateSize();
+  }
+
+  v3Select(0);
+}
+
+function v3Select(idx) {
+  const loc = LOCATIONS[idx];
+
+  // Tabs
+  document.querySelectorAll('.v3-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+
+  // Markers — active pin larger, others dimmed
+  markers3.forEach((m, i) => {
+    m.setIcon(makeIcon(LOCATIONS[i].color, i === idx));
+    m.setOpacity(i === idx ? 1 : 0.35);
+  });
+
+  // Fly
+  map3.flyTo([loc.lat, loc.lng], loc.zoom, { duration: 1.0, easeLinearity: 0.4 });
+
+  // Render card
+  const slot = document.getElementById('v3-card-slot');
+  slot.innerHTML = `
+    <div class="v3-card">
+      <div class="v3-card-left">
+        <span class="badge ${loc.statusClass}">${loc.status}</span>
+        <h2>${loc.name}</h2>
+        <div class="addr">${loc.address}</div>
+        <div class="why">${loc.desc}</div>
+      </div>
+      <div class="v3-card-right">
+        <ul>${loc.details.map(d => `<li>${d}</li>`).join('')}</ul>
+        <div class="opening">Status: <span>${loc.status}</span></div>
+      </div>
+    </div>
+  `;
+}
+
+// ================================================================
+//  VARIANT 4 — MAP HERO
+// ================================================================
+let map4 = null, markers4 = [];
+
+// Badge class mapping for V4
+const V4_BADGE = {
+  'badge-construction': 'v4b-construction',
+  'badge-planned-27':   'v4b-planned-27',
+  'badge-planned-28':   'v4b-planned-28'
+};
+
+function initV4() {
+  // Build tab strip (once)
+  const strip = document.getElementById('v4-tab-strip');
+  if (!strip.children.length) {
+    LOCATIONS.forEach((loc, i) => {
+      const tab = document.createElement('div');
+      tab.className = 'v4-tab' + (i === 0 ? ' active' : '');
+      tab.dataset.idx = i;
+      tab.innerHTML = `
+        <div class="tdot" style="background:${loc.color}"></div>
+        <span>${loc.name}</span>
+        <span class="tsub">${loc.status}</span>
+      `;
+      tab.onclick = () => v4Select(i);
+      strip.appendChild(tab);
+    });
+  }
+
+  if (!map4) {
+    map4 = L.map('v4-map', { zoomControl: false })
+      .setView([40.7135, -73.9637], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map4);
+
+    LOCATIONS.forEach((loc, i) => {
+      const m = L.marker([loc.lat, loc.lng], { icon: makeIcon(loc.color, i === 0) })
+        .addTo(map4)
+        .on('click', () => v4Select(i));
+      markers4.push(m);
+    });
+
+    L.control.zoom({ position: 'topleft' }).addTo(map4);
+
+    // Legend — bottom left, compact
+    const leg = L.control({ position: 'bottomleft' });
+    leg.onAdd = () => {
+      const div = L.DomUtil.create('div', 'leaflet-legend');
+      div.innerHTML = `
+        <div class="legend-row"><div class="legend-dot" style="background:#FF00C5"></div>Under Construction</div>
+        <div class="legend-row"><div class="legend-dot" style="background:#aaa"></div>Planned 2027</div>
+        <div class="legend-row"><div class="legend-dot" style="background:#7B00CC"></div>Planned 2028</div>
+      `;
+      return div;
+    };
+    leg.addTo(map4);
+
+  } else {
+    map4.invalidateSize();
+  }
+
+  v4Select(0);
+}
+
+function v4Select(idx) {
+  const loc = LOCATIONS[idx];
+
+  // Update tabs
+  document.querySelectorAll('.v4-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+
+  // Update markers
+  markers4.forEach((m, i) => {
+    m.setIcon(makeIcon(LOCATIONS[i].color, i === idx));
+    m.setOpacity(i === idx ? 1 : 0.3);
+  });
+
+  // Fly map
+  map4.flyTo([loc.lat, loc.lng], loc.zoom, { duration: 1.0, easeLinearity: 0.4 });
+
+  // Update card photo tint
+  const photo = document.getElementById('v4-photo');
+  const photoColors = ['#3D0030', '#1a1a2e', '#1a2e1a', '#1e1a2e'];
+  photo.style.background = `linear-gradient(135deg, ${photoColors[idx]}, #0C0214)`;
+  document.getElementById('v4-photo-label').textContent =
+    idx === 0 ? 'Architectural rendering' : 'Site planned';
+
+  // Update card body with animation
+  const body = document.getElementById('v4-card-body');
+  body.classList.remove('animating');
+  void body.offsetWidth; // reflow to restart animation
+  body.classList.add('animating');
+
+  const badgeClass = V4_BADGE[loc.statusClass] || 'v4b-planned-27';
+
+  body.innerHTML = `
+    <span class="v4-badge ${badgeClass}">${loc.status}</span>
+    <div class="v4-card-name">${loc.name}</div>
+    <div class="v4-card-addr">${loc.address}</div>
+    <p class="v4-card-desc">${loc.desc}</p>
+    <hr class="v4-card-divider">
+    <div class="v4-card-facts">
+      ${loc.details.map(d => `<div class="v4-fact">${d}</div>`).join('')}
+    </div>
+  `;
+}
+
+// ================================================================
+//  VARIANT TOGGLE
+// ================================================================
+function showVariant(n) {
+  ['variant1','variant2','variant3','variant4'].forEach((id, i) => {
+    document.getElementById(id).style.display = (i + 1 === n) ? 'block' : 'none';
+  });
+  ['btn1','btn2','btn3','btn4'].forEach((id, i) => {
+    document.getElementById(id).classList.toggle('active', i + 1 === n);
+  });
+
+  if (n === 1) setTimeout(() => initV1(), 60);
+  if (n === 2) setTimeout(() => initV2(), 60);
+  if (n === 3) setTimeout(() => initV3(), 60);
+  if (n === 4) setTimeout(() => initV4(), 60);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ================================================================
+//  INIT
+// ================================================================
+window.addEventListener('load', () => {
+  const hash = window.location.hash;
+  if      (hash === '#v1') showVariant(1);
+  else if (hash === '#v2') showVariant(2);
+  else if (hash === '#v3') showVariant(3);
+  else                     showVariant(4); // default
+});
+</script>
+</body>
+</html>

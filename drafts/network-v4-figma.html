@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eplug Network — V4 Figma Export</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background: #f0f0f0; width: 1440px; }
+
+    /* ── HERO ── */
+    .hero {
+      background: #0C0214; color: white;
+      padding: 56px 60px 48px;
+    }
+    .hero .overline {
+      text-transform: uppercase; letter-spacing: 0.18em;
+      font-size: 11px; color: #FF00C5; margin-bottom: 14px; font-weight: 700;
+    }
+    .hero h1 { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 14px; }
+    .hero p  { color: #666; max-width: 500px; line-height: 1.65; font-size: 15px; }
+
+    /* ── MAP WRAP ── */
+    .map-wrap {
+      position: relative;
+      width: 100%; height: 680px;
+      overflow: hidden;
+    }
+
+    /* Fake dark city map */
+    .map-bg {
+      position: absolute; inset: 0;
+      background: #1a2a1a;
+      background-image:
+        /* Major roads - horizontal */
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.04) 59px, rgba(255,255,255,0.04) 60px),
+        /* Major roads - vertical */
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.04) 79px, rgba(255,255,255,0.04) 80px),
+        /* Small roads - horizontal */
+        repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255,255,255,0.02) 19px, rgba(255,255,255,0.02) 20px),
+        /* Small roads - vertical */
+        repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255,255,255,0.02) 19px, rgba(255,255,255,0.02) 20px);
+    }
+    /* Water / park blobs */
+    .map-bg::before {
+      content: '';
+      position: absolute;
+      left: 55%; top: 35%; width: 260px; height: 180px;
+      background: rgba(30, 60, 90, 0.6);
+      border-radius: 40% 60% 55% 45% / 50% 40% 60% 50%;
+    }
+    .map-bg::after {
+      content: '';
+      position: absolute;
+      left: 18%; top: 55%; width: 180px; height: 120px;
+      background: rgba(20, 50, 30, 0.5);
+      border-radius: 60% 40% 50% 50% / 40% 55% 45% 60%;
+    }
+
+    /* Road highlight - bridge/main */
+    .map-road {
+      position: absolute;
+      background: rgba(255,255,255,0.07);
+    }
+    .road-h { height: 3px; left: 0; right: 0; }
+    .road-v { width: 3px; top: 0; bottom: 0; }
+    .road-diagonal {
+      position: absolute;
+      height: 3px; width: 340px;
+      background: rgba(255,255,255,0.06);
+      transform-origin: left center;
+    }
+
+    /* ── TAB STRIP overlay ── */
+    .map-tabs {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(12, 2, 20, 0.90);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 40px;
+      display: flex; align-items: center;
+      padding: 5px 7px; gap: 2px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.45);
+      white-space: nowrap;
+    }
+    .mtab {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 18px; border-radius: 32px;
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      cursor: default;
+    }
+    .mtab.active {
+      background: rgba(255, 0, 197, 0.16);
+      color: white;
+    }
+    .tdot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .tsub { font-size: 11px; color: rgba(255,255,255,0.3); font-weight: 400; }
+    .mtab.active .tsub { color: rgba(255,255,255,0.45); }
+
+    /* ── MAP PINS ── */
+    .map-pin {
+      position: absolute;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .pin-dot {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px var(--c), 0 2px 12px rgba(0,0,0,.4);
+      background: var(--c);
+      z-index: 2;
+    }
+    .pin-dot.active { width: 22px; height: 22px; }
+    .pin-label {
+      margin-top: 6px; font-size: 10px; font-weight: 700;
+      color: white; background: rgba(12,2,20,0.8);
+      padding: 2px 8px; border-radius: 4px;
+      white-space: nowrap; letter-spacing: 0.04em;
+    }
+    /* Pulse ring on active */
+    .pin-pulse {
+      position: absolute; top: -6px; left: -6px;
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid rgba(255,0,197,0.4);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    /* ── FLOATING CARD ── */
+    .float-card {
+      position: absolute; top: 20px; right: 20px;
+      width: 320px; height: 650px;
+      background: rgba(12, 2, 20, 0.93);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #FF00C5;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: 0 8px 48px rgba(0,0,0,.55);
+      z-index: 10;
+    }
+    .card-photo {
+      width: 100%; height: 160px; flex-shrink: 0;
+      background: linear-gradient(135deg, #3D0030, #0C0214);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-photo-lbl {
+      position: absolute; bottom: 12px; left: 14px;
+      font-size: 10px; color: rgba(255,255,255,0.35);
+      text-transform: uppercase; letter-spacing: 0.12em;
+    }
+    /* Fake architectural rendering lines */
+    .card-photo svg { opacity: 0.15; }
+
+    .card-body { padding: 20px 18px; display: flex; flex-direction: column; gap: 0; }
+    .card-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 12px;
+      background: #FF00C5; color: white;
+    }
+    .card-name { font-size: 20px; font-weight: 800; color: white; margin-bottom: 3px; line-height: 1.2; }
+    .card-addr { font-size: 12px; color: rgba(255,255,255,0.32); margin-bottom: 14px; }
+    .card-desc { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 16px; }
+    .card-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin-bottom: 14px; }
+    .card-facts { display: flex; flex-direction: column; }
+    .card-fact {
+      display: flex; gap: 8px; align-items: flex-start;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 12px; color: rgba(255,255,255,0.52);
+    }
+    .card-fact::before { content: "✓"; color: #FF00C5; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .card-fact:last-child { border-bottom: none; }
+
+    /* ── LEGEND ── */
+    .map-legend {
+      position: absolute; bottom: 20px; left: 20px; z-index: 10;
+      background: rgba(255,255,255,0.95);
+      border-radius: 8px; padding: 10px 14px;
+      font-size: 11px; display: flex; flex-direction: column; gap: 6px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.15);
+    }
+    .leg-row { display: flex; align-items: center; gap: 7px; color: #333; }
+    .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── EXPANSION ── */
+    .expansion {
+      background: #0C0214; color: white; padding: 52px 60px;
+    }
+    .expansion h3 { font-size: 22px; font-weight: 700; margin-bottom: 28px; }
+    .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .yr-block { border-left: 2px solid #1e0035; padding-left: 20px; }
+    .yr-block .yr { font-size: 24px; font-weight: 800; color: #FF00C5; margin-bottom: 6px; }
+    .yr-block .txt { font-size: 13px; color: #555; line-height: 1.55; }
+    .exp-cta {
+      margin-top: 36px; padding-top: 32px; border-top: 1px solid #1a0030;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .exp-cta p { font-size: 14px; color: #555; }
+    .exp-cta-btn {
+      display: inline-block; padding: 12px 28px;
+      background: #FF00C5; color: white; border-radius: 6px;
+      font-size: 13px; font-weight: 700; text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="overline">Network</div>
+    <h1>Where We're Building<br>the Future</h1>
+    <p>First hubs launch in Brooklyn, 2026. National expansion follows fast.</p>
+  </div>
+
+  <!-- MAP + OVERLAYS -->
+  <div class="map-wrap">
+
+    <!-- Fake map background -->
+    <div class="map-bg"></div>
+    <!-- Road highlights -->
+    <div class="map-road road-h" style="top:38%"></div>
+    <div class="map-road road-h" style="top:62%"></div>
+    <div class="map-road road-v" style="left:30%"></div>
+    <div class="map-road road-v" style="left:58%"></div>
+    <div class="map-road road-diagonal" style="top:44%;left:28%;transform:rotate(-22deg)"></div>
+
+    <!-- Pins -->
+    <!-- Brooklyn — ACTIVE -->
+    <div class="map-pin" style="left:32%;top:48%">
+      <div class="pin-pulse"></div>
+      <div class="pin-dot active" style="--c:#FF00C5"></div>
+      <div class="pin-label">390 Bedford Ave</div>
+    </div>
+    <!-- NYC -->
+    <div class="map-pin" style="left:42%;top:28%">
+      <div class="pin-dot" style="--c:#888;opacity:0.35"></div>
+    </div>
+    <!-- LA -->
+    <div class="map-pin" style="left:14%;top:55%">
+      <div class="pin-dot" style="--c:#888;opacity:0.35"></div>
+    </div>
+    <!-- SF -->
+    <div class="map-pin" style="left:8%;top:35%">
+      <div class="pin-dot" style="--c:#7B00CC;opacity:0.35"></div>
+    </div>
+
+    <!-- TAB STRIP -->
+    <div class="map-tabs">
+      <div class="mtab active">
+        <div class="tdot" style="background:#FF00C5"></div>
+        <span>390 Bedford Ave</span>
+        <span class="tsub">Under Construction</span>
+      </div>
+      <div class="mtab">
+        <div class="tdot" style="background:#888"></div>
+        <span>NYC Expansion</span>
+        <span class="tsub">Planned 2027</span>
+      </div>
+      <div class="mtab">
+        <div class="tdot" style="background:#888"></div>
+        <span>Los Angeles</span>
+        <span class="tsub">Planned 2027</span>
+      </div>
+      <div class="mtab">
+        <div class="tdot" style="background:#7B00CC"></div>
+        <span>San Francisco</span>
+        <span class="tsub">Planned 2028</span>
+      </div>
+    </div>
+
+    <!-- FLOATING CARD -->
+    <div class="float-card">
+      <div class="card-photo">
+        <!-- Architectural rendering placeholder -->
+        <svg width="240" height="130" viewBox="0 0 240 130" fill="none">
+          <rect x="20" y="60" width="60" height="70" stroke="white" stroke-width="1"/>
+          <rect x="90" y="30" width="80" height="100" stroke="white" stroke-width="1"/>
+          <rect x="180" y="50" width="50" height="80" stroke="white" stroke-width="1"/>
+          <line x1="0" y1="130" x2="240" y2="130" stroke="white" stroke-width="1"/>
+          <rect x="100" y="45" width="20" height="25" stroke="#FF00C5" stroke-width="0.8"/>
+          <rect x="125" y="50" width="15" height="20" stroke="white" stroke-width="0.5"/>
+          <line x1="110" y1="35" x2="110" y2="45" stroke="#FF00C5" stroke-width="1"/>
+        </svg>
+        <div class="card-photo-lbl">Architectural rendering</div>
+      </div>
+      <div class="card-body">
+        <span class="card-badge">Under Construction</span>
+        <div class="card-name">390 Bedford Ave</div>
+        <div class="card-addr">Williamsburg, Brooklyn</div>
+        <p class="card-desc">
+          High-income residents + heavy tourism + fleet density + nightlife
+          = constant turnover, all day, all night.
+        </p>
+        <hr class="card-divider">
+        <div class="card-facts">
+          <div class="card-fact">44 DC Fast chargers — 300 kW each</div>
+          <div class="card-fact">88 parking bays — highest urban density in NYC</div>
+          <div class="card-fact">Climate-controlled lounge with WiFi & screens</div>
+          <div class="card-fact">Adjacent to Williamsburg Bridge — 24/7 traffic</div>
+          <div class="card-fact">Walking distance: Domino Park, L train, nightlife</div>
+          <div class="card-fact">24/7 security · LED-lit · open-layout design</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="map-legend">
+      <div class="leg-row"><div class="leg-dot" style="background:#FF00C5"></div>Under Construction</div>
+      <div class="leg-row"><div class="leg-dot" style="background:#888"></div>Planned 2027</div>
+      <div class="leg-row"><div class="leg-dot" style="background:#7B00CC"></div>Planned 2028</div>
+    </div>
+
+  </div>
+
+  <!-- EXPANSION -->
+  <div class="expansion">
+    <h3>Expansion plan</h3>
+    <div class="timeline">
+      <div class="yr-block"><div class="yr">2026</div><div class="txt">Brooklyn flagship hubs. First DC Fast network in NYC.</div></div>
+      <div class="yr-block"><div class="yr">2027</div><div class="txt">50+ locations across NYC, Los Angeles, San Francisco.</div></div>
+      <div class="yr-block"><div class="yr">2028</div><div class="txt">200+ locations in top 10 metros nationwide.</div></div>
+      <div class="yr-block"><div class="yr">2030</div><div class="txt">1,000+ urban hubs. The standard for American cities.</div></div>
+    </div>
+    <div class="exp-cta">
+      <p>Have a property? We move fast.</p>
+      <a class="exp-cta-btn" href="#">Partner with us →</a>
+    </div>
+  </div>
+
+</body>
+</html>
