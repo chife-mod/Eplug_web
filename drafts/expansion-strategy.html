@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eplug — Expansion Strategy Drafts</title>
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fuchsia: #FF00C5;
+      --purple:  #2E0054;
+      --violet:  #0C0214;
+      --grey:    #DEDCF9;
+      --white:   #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background: #111; }
+
+    /* ── TOGGLE BAR ── */
+    .bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      background: #0a0a0a; border-bottom: 1px solid #222;
+      padding: 10px 24px; display: flex; align-items: center; gap: 10px; height: 48px;
+    }
+    .bar-label { font-size: 11px; color: #444; font-family: 'Montserrat', sans-serif; }
+    .bar-btn {
+      padding: 5px 16px; border: 1px solid #333; background: transparent;
+      color: #888; cursor: pointer; border-radius: 4px; font-size: 12px;
+      font-family: 'Montserrat', sans-serif; font-weight: 600; transition: all .2s;
+    }
+    .bar-btn.active { background: var(--fuchsia); border-color: var(--fuchsia); color: white; }
+
+    .variant { display: none; padding-top: 48px; }
+    .variant.show { display: block; }
+
+
+    /* ════════════════════════════════════════════════
+       VARIANT A — THE COUNTDOWN
+       Dark · Cinematic · Timeline as data track
+    ════════════════════════════════════════════════ */
+    .va {
+      background: var(--violet);
+      padding: 100px 80px;
+      min-height: 100vh;
+    }
+
+    .va-top {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: end; margin-bottom: 80px;
+    }
+    .va-overline {
+      font-size: 10px; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--fuchsia); margin-bottom: 20px;
+    }
+    .va-headline {
+      font-size: 72px; font-weight: 900; color: white; line-height: .95;
+      letter-spacing: -.03em; text-transform: uppercase;
+    }
+    .va-headline em { font-style: italic; color: var(--fuchsia); }
+    .va-body {
+      font-size: 18px; color: rgba(255,255,255,.45); line-height: 1.7;
+      font-weight: 500; align-self: end;
+    }
+    .va-body strong { color: white; font-weight: 800; }
+
+    /* Criteria pills */
+    .va-criteria-label {
+      font-size: 10px; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 16px;
+    }
+    .va-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 80px; }
+    .va-pill {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 16px; border: 1px solid rgba(255,0,197,.2);
+      border-radius: 32px; font-size: 12px; font-weight: 600;
+      color: rgba(255,255,255,.7);
+    }
+    .va-pill::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--fuchsia); flex-shrink: 0;
+    }
+
+    /* Timeline track */
+    .va-timeline {
+      position: relative;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin-bottom: 64px;
+    }
+    .va-timeline::before {
+      content: '';
+      position: absolute; top: 28px; left: 0; right: 0; height: 2px;
+      background: rgba(255,255,255,.07);
+    }
+    .va-tline-fill {
+      position: absolute; top: 28px; left: 0; width: 10%; height: 2px;
+      background: var(--fuchsia);
+      box-shadow: 0 0 12px var(--fuchsia);
+    }
+    .va-year-block { padding-top: 52px; padding-right: 24px; position: relative; }
+    .va-year-node {
+      position: absolute; top: 20px; left: 0;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--violet); border: 2px solid rgba(255,255,255,.15);
+    }
+    .va-year-block.active .va-year-node {
+      background: var(--fuchsia); border-color: var(--fuchsia);
+      box-shadow: 0 0 16px var(--fuchsia);
+    }
+    .va-year-num {
+      font-size: 36px; font-weight: 900; color: rgba(255,255,255,.12);
+      letter-spacing: -.02em; margin-bottom: 8px;
+    }
+    .va-year-block.active .va-year-num { color: var(--fuchsia); }
+    .va-year-desc { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.55; font-weight: 500; }
+    .va-year-block.active .va-year-desc { color: rgba(255,255,255,.75); }
+
+    /* CTA */
+    .va-cta {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 36px;
+      border: 1px solid rgba(255,0,197,.15);
+      border-radius: 8px;
+      background: rgba(255,0,197,.04);
+    }
+    .va-cta-text { font-size: 18px; font-weight: 700; color: rgba(255,255,255,.6); }
+    .va-cta-text strong { color: white; }
+    .va-cta-btn {
+      padding: 14px 32px; background: var(--fuchsia); color: white;
+      border-radius: 6px; font-size: 14px; font-weight: 700;
+      text-decoration: none; letter-spacing: .02em;
+      box-shadow: 0 0 32px rgba(255,0,197,.3);
+    }
+
+
+    /* ════════════════════════════════════════════════
+       VARIANT B — SPLIT MANIFESTO
+       Editorial · Light/Dark split · Giant years
+    ════════════════════════════════════════════════ */
+    .vb { min-height: 100vh; display: grid; grid-template-columns: 420px 1fr; }
+
+    /* Left dark column */
+    .vb-left {
+      background: var(--violet); padding: 80px 48px;
+      display: flex; flex-direction: column;
+    }
+    .vb-left-overline {
+      font-size: 10px; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--fuchsia); margin-bottom: 32px;
+    }
+    .vb-left-head {
+      font-size: 40px; font-weight: 900; color: white; line-height: 1.05;
+      text-transform: uppercase; letter-spacing: -.02em; margin-bottom: 16px;
+    }
+    .vb-left-sub {
+      font-size: 14px; color: rgba(255,255,255,.35); line-height: 1.7;
+      margin-bottom: 48px; font-weight: 500;
+    }
+    .vb-left-sub strong { color: white; }
+    .vb-criteria-title {
+      font-size: 9px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(255,255,255,.2); margin-bottom: 16px;
+    }
+    .vb-criterion {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .vb-criterion:last-child { border: none; }
+    .vb-bar-wrap { flex: 1; height: 2px; background: rgba(255,255,255,.06); border-radius: 2px; }
+    .vb-bar-fill { height: 100%; background: var(--fuchsia); border-radius: 2px; }
+    .vb-crit-text { font-size: 11px; color: rgba(255,255,255,.5); font-weight: 600; width: 200px; }
+    .vb-left-cta {
+      margin-top: auto; padding-top: 48px;
+      font-size: 13px; color: rgba(255,255,255,.35); font-weight: 600;
+    }
+    .vb-left-cta a { color: var(--fuchsia); text-decoration: none; }
+
+    /* Right light column */
+    .vb-right { background: var(--grey); padding: 80px 64px; }
+    .vb-right-label {
+      font-size: 10px; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: rgba(46,0,84,.35); margin-bottom: 0;
+    }
+    .vb-year-item {
+      position: relative; padding: 32px 0; border-bottom: 1px solid rgba(46,0,84,.08);
+      display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center;
+    }
+    .vb-year-item:last-child { border: none; }
+    .vb-year-bg {
+      font-size: 100px; font-weight: 900; color: rgba(46,0,84,.06);
+      letter-spacing: -.04em; line-height: 1; position: relative;
+      user-select: none; min-width: 220px;
+    }
+    .vb-year-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .vb-year-num-sm {
+      font-size: 28px; font-weight: 900; color: var(--purple);
+      letter-spacing: -.02em; line-height: 1;
+    }
+    .vb-year-desc-r {
+      font-size: 15px; color: rgba(46,0,84,.65); line-height: 1.6; font-weight: 500;
+    }
+    .vb-year-item.now .vb-year-num-sm { color: var(--fuchsia); }
+    .vb-year-item.now .vb-year-bg { color: rgba(255,0,197,.06); }
+    .vb-year-item.now .vb-year-desc-r { color: var(--purple); font-weight: 700; }
+
+
+    /* ════════════════════════════════════════════════
+       VARIANT C — SIGNAL TOWER
+       Awwwards · Network topology · Dark
+    ════════════════════════════════════════════════ */
+    .vc {
+      background: var(--violet);
+      padding: 100px 80px; min-height: 100vh;
+    }
+
+    /* Hero headline */
+    .vc-hero { text-align: center; margin-bottom: 80px; position: relative; }
+    .vc-tagline {
+      font-size: 11px; font-weight: 700; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--fuchsia); margin-bottom: 20px;
+    }
+    .vc-headline {
+      font-size: 80px; font-weight: 900; color: white;
+      line-height: .9; letter-spacing: -.04em; text-transform: uppercase;
+    }
+    .vc-headline .accent { color: var(--fuchsia); }
+    .vc-sub {
+      margin-top: 24px; font-size: 18px; color: rgba(255,255,255,.35);
+      font-weight: 600; font-style: italic;
+    }
+    .vc-sub strong { color: white; font-style: normal; }
+
+    /* Main 2-col layout */
+    .vc-body {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+
+    /* Left: criteria as signal cards */
+    .vc-col-label {
+      font-size: 9px; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: rgba(255,255,255,.2); margin-bottom: 20px;
+    }
+    .vc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .vc-signal-card {
+      padding: 18px 16px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+      transition: border-color .2s;
+    }
+    .vc-signal-card:hover { border-color: rgba(255,0,197,.3); }
+    .vc-signal-bars {
+      display: flex; gap: 3px; align-items: flex-end;
+      height: 16px; margin-bottom: 12px;
+    }
+    .vc-bar {
+      width: 4px; border-radius: 2px;
+      background: rgba(255,255,255,.1);
+    }
+    .vc-bar.lit { background: var(--fuchsia); }
+    .vc-signal-text {
+      font-size: 11px; font-weight: 600;
+      color: rgba(255,255,255,.55); line-height: 1.5;
+    }
+
+    /* Right: tower timeline */
+    .vc-tower { position: relative; padding-left: 32px; }
+    .vc-tower-line {
+      position: absolute; left: 8px; top: 16px; bottom: 16px;
+      width: 2px; background: rgba(255,255,255,.07);
+    }
+    .vc-tower-progress {
+      position: absolute; left: 8px; top: 16px;
+      width: 2px; height: 15%;
+      background: linear-gradient(to bottom, var(--fuchsia), rgba(255,0,197,.2));
+      box-shadow: 0 0 8px var(--fuchsia);
+    }
+    .vc-node {
+      position: relative; padding: 0 0 48px 32px;
+    }
+    .vc-node-dot {
+      position: absolute; left: -26px; top: 3px;
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.1);
+      background: var(--violet);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .vc-node-dot::after {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,.15);
+    }
+    .vc-node.active .vc-node-dot {
+      border-color: var(--fuchsia);
+      box-shadow: 0 0 16px rgba(255,0,197,.5);
+    }
+    .vc-node.active .vc-node-dot::after { background: var(--fuchsia); }
+    .vc-node-year {
+      font-size: 13px; font-weight: 800; letter-spacing: .05em;
+      text-transform: uppercase; margin-bottom: 6px;
+      color: rgba(255,255,255,.2);
+    }
+    .vc-node.active .vc-node-year { color: var(--fuchsia); }
+    .vc-node-desc {
+      font-size: 20px; font-weight: 700; color: rgba(255,255,255,.25);
+      line-height: 1.3;
+    }
+    .vc-node.active .vc-node-desc { color: white; }
+
+    /* CTA bar */
+    .vc-cta {
+      margin-top: 72px;
+      display: flex; align-items: center; gap: 24px;
+    }
+    .vc-cta-line { flex: 1; height: 1px; background: rgba(255,255,255,.06); }
+    .vc-cta-inner {
+      display: flex; align-items: center; gap: 24px;
+    }
+    .vc-cta-text {
+      font-size: 16px; font-weight: 700; color: rgba(255,255,255,.4);
+    }
+    .vc-cta-text strong { color: white; }
+    .vc-cta-btn {
+      white-space: nowrap;
+      padding: 14px 32px; background: transparent;
+      border: 1px solid var(--fuchsia); color: var(--fuchsia);
+      border-radius: 6px; font-size: 14px; font-weight: 700;
+      text-decoration: none; letter-spacing: .02em;
+      font-family: 'Montserrat', sans-serif;
+      transition: all .2s;
+    }
+    .vc-cta-btn:hover { background: var(--fuchsia); color: white; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .va { padding: 60px 24px; }
+      .va-top { grid-template-columns: 1fr; gap: 32px; }
+      .va-headline { font-size: 48px; }
+      .va-timeline { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .va-timeline::before { display: none; }
+
+      .vb { grid-template-columns: 1fr; }
+      .vb-right { padding: 48px 24px; }
+      .vb-year-bg { font-size: 64px; min-width: 140px; }
+      .vb-left { padding: 60px 24px; }
+
+      .vc { padding: 60px 24px; }
+      .vc-headline { font-size: 48px; }
+      .vc-body { grid-template-columns: 1fr; gap: 48px; }
+      .vc-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOGGLE -->
+<div class="bar">
+  <span class="bar-label">Expansion Strategy</span>
+  <button class="bar-btn active" id="ba" onclick="show('a')">A — Countdown</button>
+  <button class="bar-btn"        id="bb" onclick="show('b')">B — Split Manifesto</button>
+  <button class="bar-btn"        id="bc" onclick="show('c')">C — Signal Tower</button>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     VARIANT A — THE COUNTDOWN
+══════════════════════════════════════ -->
+<div class="variant show" id="va">
+<section class="va">
+
+  <div class="va-top">
+    <div>
+      <div class="va-overline">Expansion Strategy</div>
+      <h2 class="va-headline">How We<br><em>Scale</em><br>Faster</h2>
+    </div>
+    <p class="va-body">
+      We don't chase highways.<br>
+      <strong>We chase density.</strong><br><br>
+      Every site we choose is selected against six hard criteria —
+      no exceptions, no compromises.
+    </p>
+  </div>
+
+  <div class="va-criteria-label">Site selection criteria</div>
+  <div class="va-pills">
+    <div class="va-pill">Population density &gt;10,000/sq mi</div>
+    <div class="va-pill">High multifamily housing</div>
+    <div class="va-pill">Fleet pickup/dropoff corridors</div>
+    <div class="va-pill">Mixed-use retail clusters</div>
+    <div class="va-pill">Transit-adjacent locations</div>
+    <div class="va-pill">EV adoption &gt;5% and accelerating</div>
+  </div>
+
+  <div class="va-timeline">
+    <div class="va-tline-fill"></div>
+    <div class="va-year-block active">
+      <div class="va-year-node"></div>
+      <div class="va-year-num">2026</div>
+      <div class="va-year-desc">Brooklyn flagship hubs. First DC Fast network in NYC.</div>
+    </div>
+    <div class="va-year-block">
+      <div class="va-year-node"></div>
+      <div class="va-year-num">2027</div>
+      <div class="va-year-desc">50+ locations across NYC, Los Angeles, San Francisco.</div>
+    </div>
+    <div class="va-year-block">
+      <div class="va-year-node"></div>
+      <div class="va-year-num">2028</div>
+      <div class="va-year-desc">200+ locations in top 10 metros nationwide.</div>
+    </div>
+    <div class="va-year-block">
+      <div class="va-year-node"></div>
+      <div class="va-year-num">2030</div>
+      <div class="va-year-desc">1,000+ urban hubs. The standard for American cities.</div>
+    </div>
+  </div>
+
+  <div class="va-cta">
+    <p class="va-cta-text"><strong>Have a property?</strong> Let's move fast.</p>
+    <a class="va-cta-btn" href="#">Contact Us →</a>
+  </div>
+
+</section>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     VARIANT B — SPLIT MANIFESTO
+══════════════════════════════════════ -->
+<div class="variant" id="vb">
+<section class="vb">
+
+  <!-- LEFT: dark criteria column -->
+  <div class="vb-left">
+    <div class="vb-left-overline">Expansion Strategy</div>
+    <h2 class="vb-left-head">How We<br>Scale<br>Faster</h2>
+    <p class="vb-left-sub">
+      We don't chase highways.<br>
+      <strong>We chase density.</strong>
+    </p>
+
+    <div class="vb-criteria-title">Site selection criteria</div>
+
+    <div class="vb-criterion">
+      <div class="vb-crit-text">Population density</div>
+      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:92%"></div></div>
+    </div>
+    <div class="vb-criterion">
+      <div class="vb-crit-text">Multifamily housing</div>
+      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="vb-criterion">
+      <div class="vb-crit-text">Fleet corridors</div>
+      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:78%"></div></div>
+    </div>
+    <div class="vb-criterion">
+      <div class="vb-crit-text">Mixed-use retail</div>
+      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:88%"></div></div>
+    </div>
+    <div class="vb-criterion">
+      <div class="vb-crit-text">Transit-adjacent</div>
+      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:95%"></div></div>
+    </div>
+    <div class="vb-criterion">
+      <div class="vb-crit-text">EV adoption &gt;5%</div>
+      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:70%"></div></div>
+    </div>
+
+    <div class="vb-left-cta">
+      Have a property?<br>
+      <a href="#">Let's move fast →</a>
+    </div>
+  </div>
+
+  <!-- RIGHT: giant year numbers -->
+  <div class="vb-right">
+    <div class="vb-right-label">Target deployment speed</div>
+
+    <div class="vb-year-item now">
+      <div class="vb-year-bg">
+        2026
+        <div class="vb-year-overlay">
+          <div class="vb-year-num-sm">2026</div>
+        </div>
+      </div>
+      <div class="vb-year-desc-r">Brooklyn flagship hubs.<br>First DC Fast network in NYC.</div>
+    </div>
+
+    <div class="vb-year-item">
+      <div class="vb-year-bg">
+        2027
+        <div class="vb-year-overlay">
+          <div class="vb-year-num-sm">2027</div>
+        </div>
+      </div>
+      <div class="vb-year-desc-r">50+ locations across<br>NYC, Los Angeles, San Francisco.</div>
+    </div>
+
+    <div class="vb-year-item">
+      <div class="vb-year-bg">
+        2028
+        <div class="vb-year-overlay">
+          <div class="vb-year-num-sm">2028</div>
+        </div>
+      </div>
+      <div class="vb-year-desc-r">200+ locations in<br>top 10 metros nationwide.</div>
+    </div>
+
+    <div class="vb-year-item">
+      <div class="vb-year-bg">
+        2030
+        <div class="vb-year-overlay">
+          <div class="vb-year-num-sm">2030</div>
+        </div>
+      </div>
+      <div class="vb-year-desc-r">1,000+ urban hubs.<br>The standard for American cities.</div>
+    </div>
+  </div>
+
+</section>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     VARIANT C — SIGNAL TOWER
+══════════════════════════════════════ -->
+<div class="variant" id="vc">
+<section class="vc">
+
+  <div class="vc-hero">
+    <div class="vc-tagline">Expansion Strategy</div>
+    <h2 class="vc-headline">How We <span class="accent">Scale</span><br>Faster</h2>
+    <p class="vc-sub">We don't chase highways. <strong>We chase density.</strong></p>
+  </div>
+
+  <div class="vc-body">
+
+    <!-- LEFT: criteria signal cards -->
+    <div>
+      <div class="vc-col-label">Site selection criteria</div>
+      <div class="vc-grid">
+
+        <div class="vc-signal-card">
+          <div class="vc-signal-bars">
+            <div class="vc-bar lit" style="height:6px"></div>
+            <div class="vc-bar lit" style="height:9px"></div>
+            <div class="vc-bar lit" style="height:12px"></div>
+            <div class="vc-bar lit" style="height:15px"></div>
+            <div class="vc-bar"     style="height:16px"></div>
+          </div>
+          <div class="vc-signal-text">Population density &gt;10,000/sq mi</div>
+        </div>
+
+        <div class="vc-signal-card">
+          <div class="vc-signal-bars">
+            <div class="vc-bar lit" style="height:6px"></div>
+            <div class="vc-bar lit" style="height:9px"></div>
+            <div class="vc-bar lit" style="height:12px"></div>
+            <div class="vc-bar"     style="height:15px"></div>
+            <div class="vc-bar"     style="height:16px"></div>
+          </div>
+          <div class="vc-signal-text">High multifamily housing concentration</div>
+        </div>
+
+        <div class="vc-signal-card">
+          <div class="vc-signal-bars">
+            <div class="vc-bar lit" style="height:6px"></div>
+            <div class="vc-bar lit" style="height:9px"></div>
+            <div class="vc-bar lit" style="height:12px"></div>
+            <div class="vc-bar lit" style="height:15px"></div>
+            <div class="vc-bar"     style="height:16px"></div>
+          </div>
+          <div class="vc-signal-text">Fleet pickup / dropoff corridors</div>
+        </div>
+
+        <div class="vc-signal-card">
+          <div class="vc-signal-bars">
+            <div class="vc-bar lit" style="height:6px"></div>
+            <div class="vc-bar lit" style="height:9px"></div>
+            <div class="vc-bar lit" style="height:12px"></div>
+            <div class="vc-bar lit" style="height:15px"></div>
+            <div class="vc-bar lit" style="height:16px"></div>
+          </div>
+          <div class="vc-signal-text">Mixed-use retail clusters</div>
+        </div>
+
+        <div class="vc-signal-card">
+          <div class="vc-signal-bars">
+            <div class="vc-bar lit" style="height:6px"></div>
+            <div class="vc-bar lit" style="height:9px"></div>
+            <div class="vc-bar lit" style="height:12px"></div>
+            <div class="vc-bar lit" style="height:15px"></div>
+            <div class="vc-bar lit" style="height:16px"></div>
+          </div>
+          <div class="vc-signal-text">Transit-adjacent locations</div>
+        </div>
+
+        <div class="vc-signal-card">
+          <div class="vc-signal-bars">
+            <div class="vc-bar lit" style="height:6px"></div>
+            <div class="vc-bar lit" style="height:9px"></div>
+            <div class="vc-bar lit" style="height:12px"></div>
+            <div class="vc-bar"     style="height:15px"></div>
+            <div class="vc-bar"     style="height:16px"></div>
+          </div>
+          <div class="vc-signal-text">EV adoption &gt;5% and accelerating</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: tower timeline -->
+    <div>
+      <div class="vc-col-label">Target deployment speed</div>
+      <div class="vc-tower">
+        <div class="vc-tower-line"></div>
+        <div class="vc-tower-progress"></div>
+
+        <div class="vc-node active">
+          <div class="vc-node-dot"></div>
+          <div class="vc-node-year">Now · 2026</div>
+          <div class="vc-node-desc">Brooklyn flagship hubs</div>
+        </div>
+        <div class="vc-node">
+          <div class="vc-node-dot"></div>
+          <div class="vc-node-year">2027</div>
+          <div class="vc-node-desc">50+ locations — NYC, LA, SF</div>
+        </div>
+        <div class="vc-node">
+          <div class="vc-node-dot"></div>
+          <div class="vc-node-year">2028</div>
+          <div class="vc-node-desc">200+ locations in top 10 metros</div>
+        </div>
+        <div class="vc-node">
+          <div class="vc-node-dot"></div>
+          <div class="vc-node-year">2030</div>
+          <div class="vc-node-desc">1,000+ urban hubs nationwide</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="vc-cta">
+    <div class="vc-cta-line"></div>
+    <div class="vc-cta-inner">
+      <p class="vc-cta-text"><strong>Have a property?</strong> Let's move fast.</p>
+      <a class="vc-cta-btn" href="#">Contact Us →</a>
+    </div>
+    <div class="vc-cta-line"></div>
+  </div>
+
+</section>
+</div>
+
+<script>
+function show(v) {
+  document.querySelectorAll('.variant').forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.bar-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('v' + v).classList.add('show');
+  document.getElementById('b' + v).classList.add('active');
+  const h = { a: '#a', b: '#b', c: '#c' };
+  history.replaceState(null, '', h[v]);
+}
+window.addEventListener('load', () => {
+  const h = window.location.hash;
+  if (h === '#b') show('b');
+  else if (h === '#c') show('c');
+  else show('a');
+});
+</script>
+</body>
+</html>
