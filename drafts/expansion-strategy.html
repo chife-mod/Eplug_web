@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,34 +8,78 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --fuchsia: #FF00C5;
-      --purple:  #2E0054;
-      --violet:  #0C0214;
-      --grey:    #DEDCF9;
-      --white:   #FFFFFF;
+      --purple: #2E0054;
+      --violet: #0C0214;
+      --grey: #DEDCF9;
+      --white: #FFFFFF;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Montserrat', sans-serif; background: #111; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #111;
+    }
 
     /* ── TOGGLE BAR ── */
     .bar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
-      background: #0a0a0a; border-bottom: 1px solid #222;
-      padding: 10px 24px; display: flex; align-items: center; gap: 10px; height: 48px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background: #0a0a0a;
+      border-bottom: 1px solid #222;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 48px;
     }
-    .bar-label { font-size: 11px; color: #444; font-family: 'Montserrat', sans-serif; }
-    .bar-btn {
-      padding: 5px 16px; border: 1px solid #333; background: transparent;
-      color: #888; cursor: pointer; border-radius: 4px; font-size: 12px;
-      font-family: 'Montserrat', sans-serif; font-weight: 600; transition: all .2s;
-    }
-    .bar-btn.active { background: var(--fuchsia); border-color: var(--fuchsia); color: white; }
 
-    .variant { display: none; padding-top: 48px; }
-    .variant.show { display: block; }
+    .bar-label {
+      font-size: 11px;
+      color: #444;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .bar-btn {
+      padding: 5px 16px;
+      border: 1px solid #333;
+      background: transparent;
+      color: #888;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      transition: all .2s;
+    }
+
+    .bar-btn.active {
+      background: var(--fuchsia);
+      border-color: var(--fuchsia);
+      color: white;
+    }
+
+    .variant {
+      display: none;
+      padding-top: 48px;
+    }
+
+    .variant.show {
+      display: block;
+    }
 
 
     /* ════════════════════════════════════════════════
@@ -48,90 +93,193 @@
     }
 
     .va-top {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: end; margin-bottom: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 80px;
     }
+
     .va-overline {
-      font-size: 10px; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--fuchsia); margin-bottom: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--fuchsia);
+      margin-bottom: 20px;
     }
+
     .va-headline {
-      font-size: 72px; font-weight: 900; color: white; line-height: .95;
-      letter-spacing: -.03em; text-transform: uppercase;
+      font-size: 72px;
+      font-weight: 900;
+      color: white;
+      line-height: .95;
+      letter-spacing: -.03em;
+      text-transform: uppercase;
     }
-    .va-headline em { font-style: italic; color: var(--fuchsia); }
+
+    .va-headline em {
+      font-style: italic;
+      color: var(--fuchsia);
+    }
+
     .va-body {
-      font-size: 18px; color: rgba(255,255,255,.45); line-height: 1.7;
-      font-weight: 500; align-self: end;
+      font-size: 18px;
+      color: rgba(255, 255, 255, .45);
+      line-height: 1.7;
+      font-weight: 500;
+      align-self: end;
     }
-    .va-body strong { color: white; font-weight: 800; }
+
+    .va-body strong {
+      color: white;
+      font-weight: 800;
+    }
 
     /* Criteria pills */
     .va-criteria-label {
-      font-size: 10px; font-weight: 700; letter-spacing: .15em;
-      text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 16px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .25);
+      margin-bottom: 16px;
     }
-    .va-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 80px; }
+
+    .va-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 80px;
+    }
+
     .va-pill {
-      display: flex; align-items: center; gap: 7px;
-      padding: 8px 16px; border: 1px solid rgba(255,0,197,.2);
-      border-radius: 32px; font-size: 12px; font-weight: 600;
-      color: rgba(255,255,255,.7);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 0, 197, .2);
+      border-radius: 32px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .7);
     }
+
     .va-pill::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--fuchsia); flex-shrink: 0;
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--fuchsia);
+      flex-shrink: 0;
     }
 
     /* Timeline track */
     .va-timeline {
       position: relative;
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 0; margin-bottom: 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-bottom: 64px;
     }
+
     .va-timeline::before {
       content: '';
-      position: absolute; top: 28px; left: 0; right: 0; height: 2px;
-      background: rgba(255,255,255,.07);
+      position: absolute;
+      top: 28px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(255, 255, 255, .07);
     }
+
     .va-tline-fill {
-      position: absolute; top: 28px; left: 0; width: 10%; height: 2px;
+      position: absolute;
+      top: 28px;
+      left: 0;
+      width: 10%;
+      height: 2px;
       background: var(--fuchsia);
       box-shadow: 0 0 12px var(--fuchsia);
     }
-    .va-year-block { padding-top: 52px; padding-right: 24px; position: relative; }
-    .va-year-node {
-      position: absolute; top: 20px; left: 0;
-      width: 16px; height: 16px; border-radius: 50%;
-      background: var(--violet); border: 2px solid rgba(255,255,255,.15);
+
+    .va-year-block {
+      padding-top: 52px;
+      padding-right: 24px;
+      position: relative;
     }
+
+    .va-year-node {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--violet);
+      border: 2px solid rgba(255, 255, 255, .15);
+    }
+
     .va-year-block.active .va-year-node {
-      background: var(--fuchsia); border-color: var(--fuchsia);
+      background: var(--fuchsia);
+      border-color: var(--fuchsia);
       box-shadow: 0 0 16px var(--fuchsia);
     }
+
     .va-year-num {
-      font-size: 36px; font-weight: 900; color: rgba(255,255,255,.12);
-      letter-spacing: -.02em; margin-bottom: 8px;
+      font-size: 36px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, .12);
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
     }
-    .va-year-block.active .va-year-num { color: var(--fuchsia); }
-    .va-year-desc { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.55; font-weight: 500; }
-    .va-year-block.active .va-year-desc { color: rgba(255,255,255,.75); }
+
+    .va-year-block.active .va-year-num {
+      color: var(--fuchsia);
+    }
+
+    .va-year-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .45);
+      line-height: 1.55;
+      font-weight: 500;
+    }
+
+    .va-year-block.active .va-year-desc {
+      color: rgba(255, 255, 255, .75);
+    }
 
     /* CTA */
     .va-cta {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 28px 36px;
-      border: 1px solid rgba(255,0,197,.15);
+      border: 1px solid rgba(255, 0, 197, .15);
       border-radius: 8px;
-      background: rgba(255,0,197,.04);
+      background: rgba(255, 0, 197, .04);
     }
-    .va-cta-text { font-size: 18px; font-weight: 700; color: rgba(255,255,255,.6); }
-    .va-cta-text strong { color: white; }
+
+    .va-cta-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .6);
+    }
+
+    .va-cta-text strong {
+      color: white;
+    }
+
     .va-cta-btn {
-      padding: 14px 32px; background: var(--fuchsia); color: white;
-      border-radius: 6px; font-size: 14px; font-weight: 700;
-      text-decoration: none; letter-spacing: .02em;
-      box-shadow: 0 0 32px rgba(255,0,197,.3);
+      padding: 14px 32px;
+      background: var(--fuchsia);
+      color: white;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: .02em;
+      box-shadow: 0 0 32px rgba(255, 0, 197, .3);
     }
 
 
@@ -139,74 +287,180 @@
        VARIANT B — SPLIT MANIFESTO
        Editorial · Light/Dark split · Giant years
     ════════════════════════════════════════════════ */
-    .vb { min-height: 100vh; display: grid; grid-template-columns: 420px 1fr; }
+    .vb {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+    }
 
     /* Left dark column */
     .vb-left {
-      background: var(--violet); padding: 80px 48px;
-      display: flex; flex-direction: column;
+      background: var(--violet);
+      padding: 80px 48px;
+      display: flex;
+      flex-direction: column;
     }
+
     .vb-left-overline {
-      font-size: 10px; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--fuchsia); margin-bottom: 32px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--fuchsia);
+      margin-bottom: 32px;
     }
+
     .vb-left-head {
-      font-size: 40px; font-weight: 900; color: white; line-height: 1.05;
-      text-transform: uppercase; letter-spacing: -.02em; margin-bottom: 16px;
+      font-size: 40px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+      margin-bottom: 16px;
     }
+
     .vb-left-sub {
-      font-size: 14px; color: rgba(255,255,255,.35); line-height: 1.7;
-      margin-bottom: 48px; font-weight: 500;
+      font-size: 14px;
+      color: rgba(255, 255, 255, .35);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      font-weight: 500;
     }
-    .vb-left-sub strong { color: white; }
+
+    .vb-left-sub strong {
+      color: white;
+    }
+
     .vb-criteria-title {
-      font-size: 9px; font-weight: 700; letter-spacing: .18em;
-      text-transform: uppercase; color: rgba(255,255,255,.2); margin-bottom: 16px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .2);
+      margin-bottom: 16px;
     }
+
     .vb-criterion {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .05);
     }
-    .vb-criterion:last-child { border: none; }
-    .vb-bar-wrap { flex: 1; height: 2px; background: rgba(255,255,255,.06); border-radius: 2px; }
-    .vb-bar-fill { height: 100%; background: var(--fuchsia); border-radius: 2px; }
-    .vb-crit-text { font-size: 11px; color: rgba(255,255,255,.5); font-weight: 600; width: 200px; }
+
+    .vb-criterion:last-child {
+      border: none;
+    }
+
+    .vb-bar-wrap {
+      flex: 1;
+      height: 2px;
+      background: rgba(255, 255, 255, .06);
+      border-radius: 2px;
+    }
+
+    .vb-bar-fill {
+      height: 100%;
+      background: var(--fuchsia);
+      border-radius: 2px;
+    }
+
+    .vb-crit-text {
+      font-size: 11px;
+      color: rgba(255, 255, 255, .5);
+      font-weight: 600;
+      width: 200px;
+    }
+
     .vb-left-cta {
-      margin-top: auto; padding-top: 48px;
-      font-size: 13px; color: rgba(255,255,255,.35); font-weight: 600;
+      margin-top: auto;
+      padding-top: 48px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, .35);
+      font-weight: 600;
     }
-    .vb-left-cta a { color: var(--fuchsia); text-decoration: none; }
+
+    .vb-left-cta a {
+      color: var(--fuchsia);
+      text-decoration: none;
+    }
 
     /* Right light column */
-    .vb-right { background: var(--grey); padding: 80px 64px; }
+    .vb-right {
+      background: var(--grey);
+      padding: 80px 64px;
+    }
+
     .vb-right-label {
-      font-size: 10px; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: rgba(46,0,84,.35); margin-bottom: 0;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(46, 0, 84, .35);
+      margin-bottom: 0;
     }
+
     .vb-year-item {
-      position: relative; padding: 32px 0; border-bottom: 1px solid rgba(46,0,84,.08);
-      display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center;
+      position: relative;
+      padding: 32px 0;
+      border-bottom: 1px solid rgba(46, 0, 84, .08);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 32px;
+      align-items: center;
     }
-    .vb-year-item:last-child { border: none; }
+
+    .vb-year-item:last-child {
+      border: none;
+    }
+
     .vb-year-bg {
-      font-size: 100px; font-weight: 900; color: rgba(46,0,84,.06);
-      letter-spacing: -.04em; line-height: 1; position: relative;
-      user-select: none; min-width: 220px;
+      font-size: 100px;
+      font-weight: 900;
+      color: rgba(46, 0, 84, .06);
+      letter-spacing: -.04em;
+      line-height: 1;
+      position: relative;
+      user-select: none;
+      min-width: 220px;
     }
+
     .vb-year-overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; justify-content: center;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+
     .vb-year-num-sm {
-      font-size: 28px; font-weight: 900; color: var(--purple);
-      letter-spacing: -.02em; line-height: 1;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--purple);
+      letter-spacing: -.02em;
+      line-height: 1;
     }
+
     .vb-year-desc-r {
-      font-size: 15px; color: rgba(46,0,84,.65); line-height: 1.6; font-weight: 500;
+      font-size: 15px;
+      color: rgba(46, 0, 84, .65);
+      line-height: 1.6;
+      font-weight: 500;
     }
-    .vb-year-item.now .vb-year-num-sm { color: var(--fuchsia); }
-    .vb-year-item.now .vb-year-bg { color: rgba(255,0,197,.06); }
-    .vb-year-item.now .vb-year-desc-r { color: var(--purple); font-weight: 700; }
+
+    .vb-year-item.now .vb-year-num-sm {
+      color: var(--fuchsia);
+    }
+
+    .vb-year-item.now .vb-year-bg {
+      color: rgba(255, 0, 197, .06);
+    }
+
+    .vb-year-item.now .vb-year-desc-r {
+      color: var(--purple);
+      font-weight: 700;
+    }
 
 
     /* ════════════════════════════════════════════════
@@ -215,464 +469,1600 @@
     ════════════════════════════════════════════════ */
     .vc {
       background: var(--violet);
-      padding: 100px 80px; min-height: 100vh;
+      padding: 100px 80px;
+      min-height: 100vh;
     }
 
     /* Hero headline */
-    .vc-hero { text-align: center; margin-bottom: 80px; position: relative; }
+    .vc-hero {
+      text-align: center;
+      margin-bottom: 80px;
+      position: relative;
+    }
+
     .vc-tagline {
-      font-size: 11px; font-weight: 700; letter-spacing: .25em;
-      text-transform: uppercase; color: var(--fuchsia); margin-bottom: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--fuchsia);
+      margin-bottom: 20px;
     }
+
     .vc-headline {
-      font-size: 80px; font-weight: 900; color: white;
-      line-height: .9; letter-spacing: -.04em; text-transform: uppercase;
+      font-size: 80px;
+      font-weight: 900;
+      color: white;
+      line-height: .9;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
     }
-    .vc-headline .accent { color: var(--fuchsia); }
+
+    .vc-headline .accent {
+      color: var(--fuchsia);
+    }
+
     .vc-sub {
-      margin-top: 24px; font-size: 18px; color: rgba(255,255,255,.35);
-      font-weight: 600; font-style: italic;
+      margin-top: 24px;
+      font-size: 18px;
+      color: rgba(255, 255, 255, .35);
+      font-weight: 600;
+      font-style: italic;
     }
-    .vc-sub strong { color: white; font-style: normal; }
+
+    .vc-sub strong {
+      color: white;
+      font-style: normal;
+    }
 
     /* Main 2-col layout */
     .vc-body {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: start;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
     }
 
     /* Left: criteria as signal cards */
     .vc-col-label {
-      font-size: 9px; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: rgba(255,255,255,.2); margin-bottom: 20px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .2);
+      margin-bottom: 20px;
     }
-    .vc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .vc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
     .vc-signal-card {
       padding: 18px 16px;
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid rgba(255, 255, 255, .06);
       border-radius: 10px;
       transition: border-color .2s;
     }
-    .vc-signal-card:hover { border-color: rgba(255,0,197,.3); }
+
+    .vc-signal-card:hover {
+      border-color: rgba(255, 0, 197, .3);
+    }
+
     .vc-signal-bars {
-      display: flex; gap: 3px; align-items: flex-end;
-      height: 16px; margin-bottom: 12px;
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+      height: 16px;
+      margin-bottom: 12px;
     }
+
     .vc-bar {
-      width: 4px; border-radius: 2px;
-      background: rgba(255,255,255,.1);
+      width: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, .1);
     }
-    .vc-bar.lit { background: var(--fuchsia); }
+
+    .vc-bar.lit {
+      background: var(--fuchsia);
+    }
+
     .vc-signal-text {
-      font-size: 11px; font-weight: 600;
-      color: rgba(255,255,255,.55); line-height: 1.5;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .55);
+      line-height: 1.5;
     }
 
     /* Right: tower timeline */
-    .vc-tower { position: relative; padding-left: 32px; }
-    .vc-tower-line {
-      position: absolute; left: 8px; top: 16px; bottom: 16px;
-      width: 2px; background: rgba(255,255,255,.07);
+    .vc-tower {
+      position: relative;
+      padding-left: 32px;
     }
+
+    .vc-tower-line {
+      position: absolute;
+      left: 8px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: rgba(255, 255, 255, .07);
+    }
+
     .vc-tower-progress {
-      position: absolute; left: 8px; top: 16px;
-      width: 2px; height: 15%;
-      background: linear-gradient(to bottom, var(--fuchsia), rgba(255,0,197,.2));
+      position: absolute;
+      left: 8px;
+      top: 16px;
+      width: 2px;
+      height: 15%;
+      background: linear-gradient(to bottom, var(--fuchsia), rgba(255, 0, 197, .2));
       box-shadow: 0 0 8px var(--fuchsia);
     }
+
     .vc-node {
-      position: relative; padding: 0 0 48px 32px;
+      position: relative;
+      padding: 0 0 48px 32px;
     }
+
     .vc-node-dot {
-      position: absolute; left: -26px; top: 3px;
-      width: 18px; height: 18px; border-radius: 50%;
-      border: 2px solid rgba(255,255,255,.1);
+      position: absolute;
+      left: -26px;
+      top: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, .1);
       background: var(--violet);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
     .vc-node-dot::after {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(255,255,255,.15);
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .15);
     }
+
     .vc-node.active .vc-node-dot {
       border-color: var(--fuchsia);
-      box-shadow: 0 0 16px rgba(255,0,197,.5);
+      box-shadow: 0 0 16px rgba(255, 0, 197, .5);
     }
-    .vc-node.active .vc-node-dot::after { background: var(--fuchsia); }
+
+    .vc-node.active .vc-node-dot::after {
+      background: var(--fuchsia);
+    }
+
     .vc-node-year {
-      font-size: 13px; font-weight: 800; letter-spacing: .05em;
-      text-transform: uppercase; margin-bottom: 6px;
-      color: rgba(255,255,255,.2);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, .2);
     }
-    .vc-node.active .vc-node-year { color: var(--fuchsia); }
+
+    .vc-node.active .vc-node-year {
+      color: var(--fuchsia);
+    }
+
     .vc-node-desc {
-      font-size: 20px; font-weight: 700; color: rgba(255,255,255,.25);
+      font-size: 20px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .25);
       line-height: 1.3;
     }
-    .vc-node.active .vc-node-desc { color: white; }
+
+    .vc-node.active .vc-node-desc {
+      color: white;
+    }
 
     /* CTA bar */
     .vc-cta {
       margin-top: 72px;
-      display: flex; align-items: center; gap: 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
     }
-    .vc-cta-line { flex: 1; height: 1px; background: rgba(255,255,255,.06); }
+
+    .vc-cta-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, .06);
+    }
+
     .vc-cta-inner {
-      display: flex; align-items: center; gap: 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
     }
+
     .vc-cta-text {
-      font-size: 16px; font-weight: 700; color: rgba(255,255,255,.4);
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .4);
     }
-    .vc-cta-text strong { color: white; }
+
+    .vc-cta-text strong {
+      color: white;
+    }
+
     .vc-cta-btn {
       white-space: nowrap;
-      padding: 14px 32px; background: transparent;
-      border: 1px solid var(--fuchsia); color: var(--fuchsia);
-      border-radius: 6px; font-size: 14px; font-weight: 700;
-      text-decoration: none; letter-spacing: .02em;
+      padding: 14px 32px;
+      background: transparent;
+      border: 1px solid var(--fuchsia);
+      color: var(--fuchsia);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: .02em;
       font-family: 'Montserrat', sans-serif;
       transition: all .2s;
     }
-    .vc-cta-btn:hover { background: var(--fuchsia); color: white; }
+
+    .vc-cta-btn:hover {
+      background: var(--fuchsia);
+      color: white;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       VARIANT D — ORBITAL MAP
+       Radial data-art · Concentric rings · Radar criteria
+    ════════════════════════════════════════════════ */
+    .vd {
+      background: #05010D;
+      min-height: 100vh;
+      padding: 100px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background noise texture */
+    .vd::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(255, 0, 197, .06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .vd-header {
+      text-align: center;
+      margin-bottom: 72px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .vd-overline {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--fuchsia);
+      margin-bottom: 20px;
+    }
+
+    .vd-headline {
+      font-size: 64px;
+      font-weight: 900;
+      color: white;
+      line-height: .92;
+      letter-spacing: -.03em;
+      text-transform: uppercase;
+    }
+
+    .vd-headline span {
+      color: var(--fuchsia);
+    }
+
+    .vd-sub {
+      margin-top: 20px;
+      font-size: 16px;
+      color: rgba(255, 255, 255, .35);
+      font-weight: 500;
+      font-style: italic;
+    }
+
+    .vd-sub strong {
+      color: white;
+      font-style: normal;
+    }
+
+    /* Main orbital layout */
+    .vd-stage {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Left: Radar criteria */
+    .vd-radar-wrap {
+      position: relative;
+      width: 340px;
+      height: 340px;
+    }
+
+    .vd-radar-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .vd-radar-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .2);
+      margin-bottom: 20px;
+    }
+
+    .vd-criteria-list {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .vd-crit-tag {
+      padding: 6px 14px;
+      background: rgba(255, 0, 197, .06);
+      border: 1px solid rgba(255, 0, 197, .12);
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .55);
+      letter-spacing: .02em;
+    }
+
+    /* Right: Orbital rings */
+    .vd-orbit-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .vd-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .04);
+    }
+
+    .vd-ring-1 {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .vd-ring-2 {
+      width: 72%;
+      height: 72%;
+      top: 14%;
+      left: 14%;
+      border-color: rgba(255, 255, 255, .06);
+    }
+
+    .vd-ring-3 {
+      width: 44%;
+      height: 44%;
+      top: 28%;
+      left: 28%;
+      border-color: rgba(255, 255, 255, .08);
+    }
+
+    .vd-ring-4 {
+      width: 20%;
+      height: 20%;
+      top: 40%;
+      left: 40%;
+      border-color: var(--fuchsia);
+      background: rgba(255, 0, 197, .08);
+      box-shadow: 0 0 48px rgba(255, 0, 197, .15), inset 0 0 24px rgba(255, 0, 197, .1);
+    }
+
+    /* Center label */
+    .vd-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 3;
+    }
+
+    .vd-center-num {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--fuchsia);
+      letter-spacing: -.02em;
+    }
+
+    .vd-center-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .4);
+    }
+
+    /* Orbital nodes */
+    .vd-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 4;
+    }
+
+    .vd-node-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #05010D;
+      border: 2px solid rgba(255, 255, 255, .15);
+      margin: 0 auto 8px;
+    }
+
+    .vd-node.active .vd-node-dot {
+      border-color: var(--fuchsia);
+      background: var(--fuchsia);
+      box-shadow: 0 0 20px rgba(255, 0, 197, .6);
+    }
+
+    .vd-node-card {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 10px;
+      padding: 14px 18px;
+      min-width: 180px;
+      backdrop-filter: blur(12px);
+    }
+
+    .vd-node.active .vd-node-card {
+      border-color: rgba(255, 0, 197, .25);
+      background: rgba(255, 0, 197, .06);
+    }
+
+    .vd-node-year {
+      font-size: 20px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, .15);
+      letter-spacing: -.02em;
+    }
+
+    .vd-node.active .vd-node-year {
+      color: var(--fuchsia);
+    }
+
+    .vd-node-text {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .4);
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    .vd-node.active .vd-node-text {
+      color: rgba(255, 255, 255, .8);
+    }
+
+    /* Connecting lines */
+    .vd-connector {
+      position: absolute;
+      z-index: 2;
+    }
+
+    .vd-connector line {
+      stroke: rgba(255, 0, 197, .1);
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+    }
+
+    /* CTA */
+    .vd-cta {
+      margin-top: 64px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .vd-cta-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--fuchsia), #8800FF);
+      color: white;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: .03em;
+      box-shadow: 0 4px 32px rgba(255, 0, 197, .3);
+      font-family: 'Montserrat', sans-serif;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .vd-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 48px rgba(255, 0, 197, .45);
+    }
+
+    .vd-cta-hint {
+      margin-top: 12px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, .25);
+      font-weight: 500;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       VARIANT E — CINEMATIC BANDS
+       Full-bleed · Diagonal slashes · Giant year typography
+    ════════════════════════════════════════════════ */
+    .ve {
+      background: var(--violet);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Hero intro */
+    .ve-hero {
+      padding: 120px 80px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ve-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--violet));
+    }
+
+    .ve-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: end;
+    }
+
+    .ve-overline {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--fuchsia);
+      margin-bottom: 20px;
+    }
+
+    .ve-headline {
+      font-size: 96px;
+      font-weight: 900;
+      color: white;
+      line-height: .85;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+
+    .ve-headline em {
+      font-style: italic;
+      -webkit-text-stroke: 1px var(--fuchsia);
+      color: transparent;
+    }
+
+    .ve-hero-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-bottom: 8px;
+    }
+
+    .ve-stat {
+      text-align: right;
+    }
+
+    .ve-stat-num {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--fuchsia);
+      letter-spacing: -.03em;
+      line-height: 1;
+    }
+
+    .ve-stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .3);
+    }
+
+    /* Criteria ribbon */
+    .ve-ribbon {
+      background: rgba(255, 0, 197, .05);
+      border-top: 1px solid rgba(255, 0, 197, .1);
+      border-bottom: 1px solid rgba(255, 0, 197, .1);
+      padding: 20px 80px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      overflow-x: auto;
+    }
+
+    .ve-ribbon-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .25);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ve-ribbon-divider {
+      width: 1px;
+      height: 24px;
+      background: rgba(255, 0, 197, .2);
+      flex-shrink: 0;
+    }
+
+    .ve-ribbon-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ve-ribbon-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--fuchsia);
+      flex-shrink: 0;
+    }
+
+    .ve-ribbon-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .55);
+    }
+
+    /* Year bands */
+    .ve-bands {
+      position: relative;
+    }
+
+    .ve-band {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 260px;
+      overflow: hidden;
+    }
+
+    .ve-band:nth-child(even) {
+      direction: rtl;
+    }
+
+    .ve-band:nth-child(even)>* {
+      direction: ltr;
+    }
+
+    .ve-band-bg {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .ve-band:nth-child(1) .ve-band-bg {
+      background: rgba(255, 0, 197, .04);
+    }
+
+    .ve-band:nth-child(2) .ve-band-bg {
+      background: rgba(255, 0, 197, .07);
+    }
+
+    .ve-band:nth-child(3) .ve-band-bg {
+      background: rgba(255, 0, 197, .10);
+    }
+
+    .ve-band:nth-child(4) .ve-band-bg {
+      background: rgba(255, 0, 197, .14);
+    }
+
+    .ve-band-year {
+      font-size: 180px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, .04);
+      letter-spacing: -.06em;
+      line-height: 1;
+      user-select: none;
+      position: absolute;
+    }
+
+    .ve-band-content {
+      padding: 48px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .ve-band-year-sm {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--fuchsia);
+      margin-bottom: 8px;
+    }
+
+    .ve-band-title {
+      font-size: 32px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 12px;
+    }
+
+    .ve-band-desc {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .45);
+      line-height: 1.6;
+    }
+
+    .ve-band-metric {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid rgba(255, 0, 197, .2);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--fuchsia);
+      letter-spacing: .05em;
+    }
+
+    /* Diagonal slash overlay */
+    .ve-band-bg::after {
+      content: '';
+      position: absolute;
+      top: -20%;
+      bottom: -20%;
+      width: 80px;
+      background: var(--violet);
+      transform: skewX(-6deg);
+    }
+
+    .ve-band:nth-child(odd) .ve-band-bg::after {
+      right: -30px;
+    }
+
+    .ve-band:nth-child(even) .ve-band-bg::after {
+      left: -30px;
+    }
+
+    /* Progress bar under bands */
+    .ve-progress {
+      padding: 0 80px;
+      margin-top: 48px;
+    }
+
+    .ve-progress-track {
+      height: 3px;
+      background: rgba(255, 255, 255, .05);
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .ve-progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--fuchsia), #8800FF);
+      width: 22%;
+      box-shadow: 0 0 12px rgba(255, 0, 197, .4);
+    }
+
+    .ve-progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .ve-progress-yr {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .15);
+    }
+
+    .ve-progress-yr.active {
+      color: var(--fuchsia);
+    }
+
+    /* CTA */
+    .ve-cta {
+      padding: 56px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ve-cta-text {
+      font-size: 24px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, .5);
+    }
+
+    .ve-cta-text strong {
+      color: white;
+    }
+
+    .ve-cta-btn {
+      padding: 16px 36px;
+      background: var(--fuchsia);
+      color: white;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: .02em;
+      font-family: 'Montserrat', sans-serif;
+      box-shadow: 0 0 32px rgba(255, 0, 197, .3);
+      transition: all .2s;
+    }
+
+    .ve-cta-btn:hover {
+      box-shadow: 0 0 48px rgba(255, 0, 197, .5);
+      transform: translateY(-1px);
+    }
 
     /* ── MOBILE ── */
     @media (max-width: 900px) {
-      .va { padding: 60px 24px; }
-      .va-top { grid-template-columns: 1fr; gap: 32px; }
-      .va-headline { font-size: 48px; }
-      .va-timeline { grid-template-columns: 1fr 1fr; gap: 32px; }
-      .va-timeline::before { display: none; }
+      .va {
+        padding: 60px 24px;
+      }
 
-      .vb { grid-template-columns: 1fr; }
-      .vb-right { padding: 48px 24px; }
-      .vb-year-bg { font-size: 64px; min-width: 140px; }
-      .vb-left { padding: 60px 24px; }
+      .va-top {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
 
-      .vc { padding: 60px 24px; }
-      .vc-headline { font-size: 48px; }
-      .vc-body { grid-template-columns: 1fr; gap: 48px; }
-      .vc-grid { grid-template-columns: 1fr 1fr; }
+      .va-headline {
+        font-size: 48px;
+      }
+
+      .va-timeline {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .va-timeline::before {
+        display: none;
+      }
+
+      .vb {
+        grid-template-columns: 1fr;
+      }
+
+      .vb-right {
+        padding: 48px 24px;
+      }
+
+      .vb-year-bg {
+        font-size: 64px;
+        min-width: 140px;
+      }
+
+      .vb-left {
+        padding: 60px 24px;
+      }
+
+      .vc {
+        padding: 60px 24px;
+      }
+
+      .vc-headline {
+        font-size: 48px;
+      }
+
+      .vc-body {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .vc-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .vd {
+        padding: 60px 24px;
+      }
+
+      .vd-headline {
+        font-size: 40px;
+      }
+
+      .vd-stage {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .vd-radar-wrap {
+        width: 280px;
+        height: 280px;
+        margin: 0 auto;
+      }
+
+      .vd-orbit-wrap {
+        max-width: 340px;
+      }
+
+      .vd-node-card {
+        min-width: 140px;
+        padding: 10px 14px;
+      }
+
+      .vd-node-year {
+        font-size: 16px;
+      }
+
+      .vd-node-text {
+        font-size: 10px;
+      }
+
+      .ve-hero {
+        padding: 80px 24px 60px;
+      }
+
+      .ve-headline {
+        font-size: 48px;
+      }
+
+      .ve-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .ve-hero-stats {
+        flex-direction: row;
+        gap: 32px;
+      }
+
+      .ve-stat {
+        text-align: left;
+      }
+
+      .ve-stat-num {
+        font-size: 32px;
+      }
+
+      .ve-ribbon {
+        padding: 16px 24px;
+        gap: 20px;
+      }
+
+      .ve-band {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .ve-band:nth-child(even) {
+        direction: ltr;
+      }
+
+      .ve-band-bg {
+        min-height: 140px;
+      }
+
+      .ve-band-bg::after {
+        display: none;
+      }
+
+      .ve-band-content {
+        padding: 32px 24px;
+      }
+
+      .ve-band-title {
+        font-size: 24px;
+      }
+
+      .ve-band-year {
+        font-size: 100px;
+      }
+
+      .ve-progress {
+        padding: 0 24px;
+      }
+
+      .ve-cta {
+        padding: 40px 24px;
+        flex-direction: column;
+        gap: 24px;
+        text-align: center;
+      }
+
+      .ve-cta-text {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- TOGGLE -->
-<div class="bar">
-  <span class="bar-label">Expansion Strategy</span>
-  <button class="bar-btn active" id="ba" onclick="show('a')">A — Countdown</button>
-  <button class="bar-btn"        id="bb" onclick="show('b')">B — Split Manifesto</button>
-  <button class="bar-btn"        id="bc" onclick="show('c')">C — Signal Tower</button>
-</div>
+  <!-- TOGGLE -->
+  <div class="bar">
+    <span class="bar-label">Expansion Strategy</span>
+    <button class="bar-btn active" id="ba" onclick="show('a')">A — Countdown</button>
+    <button class="bar-btn" id="bb" onclick="show('b')">B — Split Manifesto</button>
+    <button class="bar-btn"        id="bc" onclick="show('c')">C — Signal Tower</button>
+  <button class="bar-btn"        id="bd" onclick="show('d')">D — Orbital Map</button>
+  <button class="bar-btn"        id="be" onclick="show('e')">E — Cinematic Bands</button>
+  </div>
 
 
-<!-- ══════════════════════════════════════
+  <!-- ══════════════════════════════════════
      VARIANT A — THE COUNTDOWN
 ══════════════════════════════════════ -->
-<div class="variant show" id="va">
-<section class="va">
+  <div class="variant show" id="va">
+    <section class="va">
 
-  <div class="va-top">
-    <div>
-      <div class="va-overline">Expansion Strategy</div>
-      <h2 class="va-headline">How We<br><em>Scale</em><br>Faster</h2>
-    </div>
-    <p class="va-body">
-      We don't chase highways.<br>
-      <strong>We chase density.</strong><br><br>
-      Every site we choose is selected against six hard criteria —
-      no exceptions, no compromises.
-    </p>
+      <div class="va-top">
+        <div>
+          <div class="va-overline">Expansion Strategy</div>
+          <h2 class="va-headline">How We<br><em>Scale</em><br>Faster</h2>
+        </div>
+        <p class="va-body">
+          We don't chase highways.<br>
+          <strong>We chase density.</strong><br><br>
+          Every site we choose is selected against six hard criteria —
+          no exceptions, no compromises.
+        </p>
+      </div>
+
+      <div class="va-criteria-label">Site selection criteria</div>
+      <div class="va-pills">
+        <div class="va-pill">Population density &gt;10,000/sq mi</div>
+        <div class="va-pill">High multifamily housing</div>
+        <div class="va-pill">Fleet pickup/dropoff corridors</div>
+        <div class="va-pill">Mixed-use retail clusters</div>
+        <div class="va-pill">Transit-adjacent locations</div>
+        <div class="va-pill">EV adoption &gt;5% and accelerating</div>
+      </div>
+
+      <div class="va-timeline">
+        <div class="va-tline-fill"></div>
+        <div class="va-year-block active">
+          <div class="va-year-node"></div>
+          <div class="va-year-num">2026</div>
+          <div class="va-year-desc">Brooklyn flagship hubs. First DC Fast network in NYC.</div>
+        </div>
+        <div class="va-year-block">
+          <div class="va-year-node"></div>
+          <div class="va-year-num">2027</div>
+          <div class="va-year-desc">50+ locations across NYC, Los Angeles, San Francisco.</div>
+        </div>
+        <div class="va-year-block">
+          <div class="va-year-node"></div>
+          <div class="va-year-num">2028</div>
+          <div class="va-year-desc">200+ locations in top 10 metros nationwide.</div>
+        </div>
+        <div class="va-year-block">
+          <div class="va-year-node"></div>
+          <div class="va-year-num">2030</div>
+          <div class="va-year-desc">1,000+ urban hubs. The standard for American cities.</div>
+        </div>
+      </div>
+
+      <div class="va-cta">
+        <p class="va-cta-text"><strong>Have a property?</strong> Let's move fast.</p>
+        <a class="va-cta-btn" href="#">Contact Us →</a>
+      </div>
+
+    </section>
   </div>
 
-  <div class="va-criteria-label">Site selection criteria</div>
-  <div class="va-pills">
-    <div class="va-pill">Population density &gt;10,000/sq mi</div>
-    <div class="va-pill">High multifamily housing</div>
-    <div class="va-pill">Fleet pickup/dropoff corridors</div>
-    <div class="va-pill">Mixed-use retail clusters</div>
-    <div class="va-pill">Transit-adjacent locations</div>
-    <div class="va-pill">EV adoption &gt;5% and accelerating</div>
-  </div>
 
-  <div class="va-timeline">
-    <div class="va-tline-fill"></div>
-    <div class="va-year-block active">
-      <div class="va-year-node"></div>
-      <div class="va-year-num">2026</div>
-      <div class="va-year-desc">Brooklyn flagship hubs. First DC Fast network in NYC.</div>
-    </div>
-    <div class="va-year-block">
-      <div class="va-year-node"></div>
-      <div class="va-year-num">2027</div>
-      <div class="va-year-desc">50+ locations across NYC, Los Angeles, San Francisco.</div>
-    </div>
-    <div class="va-year-block">
-      <div class="va-year-node"></div>
-      <div class="va-year-num">2028</div>
-      <div class="va-year-desc">200+ locations in top 10 metros nationwide.</div>
-    </div>
-    <div class="va-year-block">
-      <div class="va-year-node"></div>
-      <div class="va-year-num">2030</div>
-      <div class="va-year-desc">1,000+ urban hubs. The standard for American cities.</div>
-    </div>
-  </div>
-
-  <div class="va-cta">
-    <p class="va-cta-text"><strong>Have a property?</strong> Let's move fast.</p>
-    <a class="va-cta-btn" href="#">Contact Us →</a>
-  </div>
-
-</section>
-</div>
-
-
-<!-- ══════════════════════════════════════
+  <!-- ══════════════════════════════════════
      VARIANT B — SPLIT MANIFESTO
 ══════════════════════════════════════ -->
-<div class="variant" id="vb">
-<section class="vb">
+  <div class="variant" id="vb">
+    <section class="vb">
 
-  <!-- LEFT: dark criteria column -->
-  <div class="vb-left">
-    <div class="vb-left-overline">Expansion Strategy</div>
-    <h2 class="vb-left-head">How We<br>Scale<br>Faster</h2>
-    <p class="vb-left-sub">
-      We don't chase highways.<br>
-      <strong>We chase density.</strong>
-    </p>
+      <!-- LEFT: dark criteria column -->
+      <div class="vb-left">
+        <div class="vb-left-overline">Expansion Strategy</div>
+        <h2 class="vb-left-head">How We<br>Scale<br>Faster</h2>
+        <p class="vb-left-sub">
+          We don't chase highways.<br>
+          <strong>We chase density.</strong>
+        </p>
 
-    <div class="vb-criteria-title">Site selection criteria</div>
+        <div class="vb-criteria-title">Site selection criteria</div>
 
-    <div class="vb-criterion">
-      <div class="vb-crit-text">Population density</div>
-      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:92%"></div></div>
-    </div>
-    <div class="vb-criterion">
-      <div class="vb-crit-text">Multifamily housing</div>
-      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:85%"></div></div>
-    </div>
-    <div class="vb-criterion">
-      <div class="vb-crit-text">Fleet corridors</div>
-      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:78%"></div></div>
-    </div>
-    <div class="vb-criterion">
-      <div class="vb-crit-text">Mixed-use retail</div>
-      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:88%"></div></div>
-    </div>
-    <div class="vb-criterion">
-      <div class="vb-crit-text">Transit-adjacent</div>
-      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:95%"></div></div>
-    </div>
-    <div class="vb-criterion">
-      <div class="vb-crit-text">EV adoption &gt;5%</div>
-      <div class="vb-bar-wrap"><div class="vb-bar-fill" style="width:70%"></div></div>
-    </div>
+        <div class="vb-criterion">
+          <div class="vb-crit-text">Population density</div>
+          <div class="vb-bar-wrap">
+            <div class="vb-bar-fill" style="width:92%"></div>
+          </div>
+        </div>
+        <div class="vb-criterion">
+          <div class="vb-crit-text">Multifamily housing</div>
+          <div class="vb-bar-wrap">
+            <div class="vb-bar-fill" style="width:85%"></div>
+          </div>
+        </div>
+        <div class="vb-criterion">
+          <div class="vb-crit-text">Fleet corridors</div>
+          <div class="vb-bar-wrap">
+            <div class="vb-bar-fill" style="width:78%"></div>
+          </div>
+        </div>
+        <div class="vb-criterion">
+          <div class="vb-crit-text">Mixed-use retail</div>
+          <div class="vb-bar-wrap">
+            <div class="vb-bar-fill" style="width:88%"></div>
+          </div>
+        </div>
+        <div class="vb-criterion">
+          <div class="vb-crit-text">Transit-adjacent</div>
+          <div class="vb-bar-wrap">
+            <div class="vb-bar-fill" style="width:95%"></div>
+          </div>
+        </div>
+        <div class="vb-criterion">
+          <div class="vb-crit-text">EV adoption &gt;5%</div>
+          <div class="vb-bar-wrap">
+            <div class="vb-bar-fill" style="width:70%"></div>
+          </div>
+        </div>
 
-    <div class="vb-left-cta">
-      Have a property?<br>
-      <a href="#">Let's move fast →</a>
-    </div>
+        <div class="vb-left-cta">
+          Have a property?<br>
+          <a href="#">Let's move fast →</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: giant year numbers -->
+      <div class="vb-right">
+        <div class="vb-right-label">Target deployment speed</div>
+
+        <div class="vb-year-item now">
+          <div class="vb-year-bg">
+            2026
+            <div class="vb-year-overlay">
+              <div class="vb-year-num-sm">2026</div>
+            </div>
+          </div>
+          <div class="vb-year-desc-r">Brooklyn flagship hubs.<br>First DC Fast network in NYC.</div>
+        </div>
+
+        <div class="vb-year-item">
+          <div class="vb-year-bg">
+            2027
+            <div class="vb-year-overlay">
+              <div class="vb-year-num-sm">2027</div>
+            </div>
+          </div>
+          <div class="vb-year-desc-r">50+ locations across<br>NYC, Los Angeles, San Francisco.</div>
+        </div>
+
+        <div class="vb-year-item">
+          <div class="vb-year-bg">
+            2028
+            <div class="vb-year-overlay">
+              <div class="vb-year-num-sm">2028</div>
+            </div>
+          </div>
+          <div class="vb-year-desc-r">200+ locations in<br>top 10 metros nationwide.</div>
+        </div>
+
+        <div class="vb-year-item">
+          <div class="vb-year-bg">
+            2030
+            <div class="vb-year-overlay">
+              <div class="vb-year-num-sm">2030</div>
+            </div>
+          </div>
+          <div class="vb-year-desc-r">1,000+ urban hubs.<br>The standard for American cities.</div>
+        </div>
+      </div>
+
+    </section>
   </div>
 
-  <!-- RIGHT: giant year numbers -->
-  <div class="vb-right">
-    <div class="vb-right-label">Target deployment speed</div>
 
-    <div class="vb-year-item now">
-      <div class="vb-year-bg">
-        2026
-        <div class="vb-year-overlay">
-          <div class="vb-year-num-sm">2026</div>
-        </div>
-      </div>
-      <div class="vb-year-desc-r">Brooklyn flagship hubs.<br>First DC Fast network in NYC.</div>
-    </div>
-
-    <div class="vb-year-item">
-      <div class="vb-year-bg">
-        2027
-        <div class="vb-year-overlay">
-          <div class="vb-year-num-sm">2027</div>
-        </div>
-      </div>
-      <div class="vb-year-desc-r">50+ locations across<br>NYC, Los Angeles, San Francisco.</div>
-    </div>
-
-    <div class="vb-year-item">
-      <div class="vb-year-bg">
-        2028
-        <div class="vb-year-overlay">
-          <div class="vb-year-num-sm">2028</div>
-        </div>
-      </div>
-      <div class="vb-year-desc-r">200+ locations in<br>top 10 metros nationwide.</div>
-    </div>
-
-    <div class="vb-year-item">
-      <div class="vb-year-bg">
-        2030
-        <div class="vb-year-overlay">
-          <div class="vb-year-num-sm">2030</div>
-        </div>
-      </div>
-      <div class="vb-year-desc-r">1,000+ urban hubs.<br>The standard for American cities.</div>
-    </div>
-  </div>
-
-</section>
-</div>
-
-
-<!-- ══════════════════════════════════════
+  <!-- ══════════════════════════════════════
      VARIANT C — SIGNAL TOWER
 ══════════════════════════════════════ -->
-<div class="variant" id="vc">
-<section class="vc">
+  <div class="variant" id="vc">
+    <section class="vc">
 
-  <div class="vc-hero">
-    <div class="vc-tagline">Expansion Strategy</div>
-    <h2 class="vc-headline">How We <span class="accent">Scale</span><br>Faster</h2>
-    <p class="vc-sub">We don't chase highways. <strong>We chase density.</strong></p>
-  </div>
+      <div class="vc-hero">
+        <div class="vc-tagline">Expansion Strategy</div>
+        <h2 class="vc-headline">How We <span class="accent">Scale</span><br>Faster</h2>
+        <p class="vc-sub">We don't chase highways. <strong>We chase density.</strong></p>
+      </div>
 
-  <div class="vc-body">
+      <div class="vc-body">
 
-    <!-- LEFT: criteria signal cards -->
-    <div>
-      <div class="vc-col-label">Site selection criteria</div>
-      <div class="vc-grid">
+        <!-- LEFT: criteria signal cards -->
+        <div>
+          <div class="vc-col-label">Site selection criteria</div>
+          <div class="vc-grid">
 
-        <div class="vc-signal-card">
-          <div class="vc-signal-bars">
-            <div class="vc-bar lit" style="height:6px"></div>
-            <div class="vc-bar lit" style="height:9px"></div>
-            <div class="vc-bar lit" style="height:12px"></div>
-            <div class="vc-bar lit" style="height:15px"></div>
-            <div class="vc-bar"     style="height:16px"></div>
+            <div class="vc-signal-card">
+              <div class="vc-signal-bars">
+                <div class="vc-bar lit" style="height:6px"></div>
+                <div class="vc-bar lit" style="height:9px"></div>
+                <div class="vc-bar lit" style="height:12px"></div>
+                <div class="vc-bar lit" style="height:15px"></div>
+                <div class="vc-bar" style="height:16px"></div>
+              </div>
+              <div class="vc-signal-text">Population density &gt;10,000/sq mi</div>
+            </div>
+
+            <div class="vc-signal-card">
+              <div class="vc-signal-bars">
+                <div class="vc-bar lit" style="height:6px"></div>
+                <div class="vc-bar lit" style="height:9px"></div>
+                <div class="vc-bar lit" style="height:12px"></div>
+                <div class="vc-bar" style="height:15px"></div>
+                <div class="vc-bar" style="height:16px"></div>
+              </div>
+              <div class="vc-signal-text">High multifamily housing concentration</div>
+            </div>
+
+            <div class="vc-signal-card">
+              <div class="vc-signal-bars">
+                <div class="vc-bar lit" style="height:6px"></div>
+                <div class="vc-bar lit" style="height:9px"></div>
+                <div class="vc-bar lit" style="height:12px"></div>
+                <div class="vc-bar lit" style="height:15px"></div>
+                <div class="vc-bar" style="height:16px"></div>
+              </div>
+              <div class="vc-signal-text">Fleet pickup / dropoff corridors</div>
+            </div>
+
+            <div class="vc-signal-card">
+              <div class="vc-signal-bars">
+                <div class="vc-bar lit" style="height:6px"></div>
+                <div class="vc-bar lit" style="height:9px"></div>
+                <div class="vc-bar lit" style="height:12px"></div>
+                <div class="vc-bar lit" style="height:15px"></div>
+                <div class="vc-bar lit" style="height:16px"></div>
+              </div>
+              <div class="vc-signal-text">Mixed-use retail clusters</div>
+            </div>
+
+            <div class="vc-signal-card">
+              <div class="vc-signal-bars">
+                <div class="vc-bar lit" style="height:6px"></div>
+                <div class="vc-bar lit" style="height:9px"></div>
+                <div class="vc-bar lit" style="height:12px"></div>
+                <div class="vc-bar lit" style="height:15px"></div>
+                <div class="vc-bar lit" style="height:16px"></div>
+              </div>
+              <div class="vc-signal-text">Transit-adjacent locations</div>
+            </div>
+
+            <div class="vc-signal-card">
+              <div class="vc-signal-bars">
+                <div class="vc-bar lit" style="height:6px"></div>
+                <div class="vc-bar lit" style="height:9px"></div>
+                <div class="vc-bar lit" style="height:12px"></div>
+                <div class="vc-bar" style="height:15px"></div>
+                <div class="vc-bar" style="height:16px"></div>
+              </div>
+              <div class="vc-signal-text">EV adoption &gt;5% and accelerating</div>
+            </div>
+
           </div>
-          <div class="vc-signal-text">Population density &gt;10,000/sq mi</div>
         </div>
 
-        <div class="vc-signal-card">
-          <div class="vc-signal-bars">
-            <div class="vc-bar lit" style="height:6px"></div>
-            <div class="vc-bar lit" style="height:9px"></div>
-            <div class="vc-bar lit" style="height:12px"></div>
-            <div class="vc-bar"     style="height:15px"></div>
-            <div class="vc-bar"     style="height:16px"></div>
-          </div>
-          <div class="vc-signal-text">High multifamily housing concentration</div>
-        </div>
+        <!-- RIGHT: tower timeline -->
+        <div>
+          <div class="vc-col-label">Target deployment speed</div>
+          <div class="vc-tower">
+            <div class="vc-tower-line"></div>
+            <div class="vc-tower-progress"></div>
 
-        <div class="vc-signal-card">
-          <div class="vc-signal-bars">
-            <div class="vc-bar lit" style="height:6px"></div>
-            <div class="vc-bar lit" style="height:9px"></div>
-            <div class="vc-bar lit" style="height:12px"></div>
-            <div class="vc-bar lit" style="height:15px"></div>
-            <div class="vc-bar"     style="height:16px"></div>
+            <div class="vc-node active">
+              <div class="vc-node-dot"></div>
+              <div class="vc-node-year">Now · 2026</div>
+              <div class="vc-node-desc">Brooklyn flagship hubs</div>
+            </div>
+            <div class="vc-node">
+              <div class="vc-node-dot"></div>
+              <div class="vc-node-year">2027</div>
+              <div class="vc-node-desc">50+ locations — NYC, LA, SF</div>
+            </div>
+            <div class="vc-node">
+              <div class="vc-node-dot"></div>
+              <div class="vc-node-year">2028</div>
+              <div class="vc-node-desc">200+ locations in top 10 metros</div>
+            </div>
+            <div class="vc-node">
+              <div class="vc-node-dot"></div>
+              <div class="vc-node-year">2030</div>
+              <div class="vc-node-desc">1,000+ urban hubs nationwide</div>
+            </div>
           </div>
-          <div class="vc-signal-text">Fleet pickup / dropoff corridors</div>
-        </div>
-
-        <div class="vc-signal-card">
-          <div class="vc-signal-bars">
-            <div class="vc-bar lit" style="height:6px"></div>
-            <div class="vc-bar lit" style="height:9px"></div>
-            <div class="vc-bar lit" style="height:12px"></div>
-            <div class="vc-bar lit" style="height:15px"></div>
-            <div class="vc-bar lit" style="height:16px"></div>
-          </div>
-          <div class="vc-signal-text">Mixed-use retail clusters</div>
-        </div>
-
-        <div class="vc-signal-card">
-          <div class="vc-signal-bars">
-            <div class="vc-bar lit" style="height:6px"></div>
-            <div class="vc-bar lit" style="height:9px"></div>
-            <div class="vc-bar lit" style="height:12px"></div>
-            <div class="vc-bar lit" style="height:15px"></div>
-            <div class="vc-bar lit" style="height:16px"></div>
-          </div>
-          <div class="vc-signal-text">Transit-adjacent locations</div>
-        </div>
-
-        <div class="vc-signal-card">
-          <div class="vc-signal-bars">
-            <div class="vc-bar lit" style="height:6px"></div>
-            <div class="vc-bar lit" style="height:9px"></div>
-            <div class="vc-bar lit" style="height:12px"></div>
-            <div class="vc-bar"     style="height:15px"></div>
-            <div class="vc-bar"     style="height:16px"></div>
-          </div>
-          <div class="vc-signal-text">EV adoption &gt;5% and accelerating</div>
         </div>
 
       </div>
+
+      <div class="vc-cta">
+        <div class="vc-cta-line"></div>
+        <div class="vc-cta-inner">
+          <p class="vc-cta-text"><strong>Have a property?</strong> Let's move fast.</p>
+          <a class="vc-cta-btn" href="#">Contact Us →</a>
+        </div>
+        <div class="vc-cta-line"></div>
+      </div>
+
+    </section>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       VARIANT D — ORBITAL MAP
+  ══════════════════════════════════════ -->
+  <div class="variant" id="vd">
+  <section class="vd">
+
+    <div class="vd-header">
+      <div class="vd-overline">Expansion Strategy</div>
+      <h2 class="vd-headline">How We <span>Scale</span><br>Faster</h2>
+      <p class="vd-sub">We don't chase highways. <strong>We chase density.</strong></p>
     </div>
 
-    <!-- RIGHT: tower timeline -->
-    <div>
-      <div class="vc-col-label">Target deployment speed</div>
-      <div class="vc-tower">
-        <div class="vc-tower-line"></div>
-        <div class="vc-tower-progress"></div>
+    <div class="vd-stage">
 
-        <div class="vc-node active">
-          <div class="vc-node-dot"></div>
-          <div class="vc-node-year">Now · 2026</div>
-          <div class="vc-node-desc">Brooklyn flagship hubs</div>
+      <!-- Left: Radar chart + criteria tags -->
+      <div>
+        <div class="vd-radar-label">Site selection criteria</div>
+        <div class="vd-radar-wrap">
+          <svg class="vd-radar-svg" viewBox="0 0 340 340">
+            <!-- Hexagonal grid rings -->
+            <polygon points="170,30 290,100 290,240 170,310 50,240 50,100" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <polygon points="170,70 260,120 260,220 170,270 80,220 80,120" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+            <polygon points="170,110 230,140 230,200 170,230 110,200 110,140" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+            <!-- Radar fill -->
+            <polygon points="170,45 278,112 260,225 170,260 82,210 68,108" fill="rgba(255,0,197,.08)" stroke="var(--fuchsia)" stroke-width="1.5"/>
+            <!-- Axis lines -->
+            <line x1="170" y1="30" x2="170" y2="310" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <line x1="50" y1="100" x2="290" y2="240" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <line x1="290" y1="100" x2="50" y2="240" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <!-- Data points -->
+            <circle cx="170" cy="45" r="4" fill="var(--fuchsia)"/>
+            <circle cx="278" cy="112" r="4" fill="var(--fuchsia)"/>
+            <circle cx="260" cy="225" r="4" fill="var(--fuchsia)"/>
+            <circle cx="170" cy="260" r="4" fill="var(--fuchsia)"/>
+            <circle cx="82" cy="210" r="3" fill="var(--fuchsia)" opacity=".6"/>
+            <circle cx="68" cy="108" r="3" fill="var(--fuchsia)" opacity=".6"/>
+            <!-- Labels -->
+            <text x="170" y="18" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="8" font-weight="700" font-family="Montserrat" letter-spacing=".08em">DENSITY</text>
+            <text x="302" y="98" text-anchor="start" fill="rgba(255,255,255,.35)" font-size="8" font-weight="700" font-family="Montserrat" letter-spacing=".08em">HOUSING</text>
+            <text x="302" y="248" text-anchor="start" fill="rgba(255,255,255,.35)" font-size="8" font-weight="700" font-family="Montserrat" letter-spacing=".08em">FLEET</text>
+            <text x="170" y="334" text-anchor="middle" fill="rgba(255,255,255,.35)" font-size="8" font-weight="700" font-family="Montserrat" letter-spacing=".08em">RETAIL</text>
+            <text x="38" y="248" text-anchor="end" fill="rgba(255,255,255,.35)" font-size="8" font-weight="700" font-family="Montserrat" letter-spacing=".08em">TRANSIT</text>
+            <text x="38" y="98" text-anchor="end" fill="rgba(255,255,255,.35)" font-size="8" font-weight="700" font-family="Montserrat" letter-spacing=".08em">EV RATE</text>
+          </svg>
         </div>
-        <div class="vc-node">
-          <div class="vc-node-dot"></div>
-          <div class="vc-node-year">2027</div>
-          <div class="vc-node-desc">50+ locations — NYC, LA, SF</div>
+        <div class="vd-criteria-list">
+          <span class="vd-crit-tag">Population density &gt;10K/sq mi</span>
+          <span class="vd-crit-tag">High multifamily housing</span>
+          <span class="vd-crit-tag">Fleet corridors</span>
+          <span class="vd-crit-tag">Mixed-use retail</span>
+          <span class="vd-crit-tag">Transit-adjacent</span>
+          <span class="vd-crit-tag">EV adoption &gt;5%</span>
         </div>
-        <div class="vc-node">
-          <div class="vc-node-dot"></div>
-          <div class="vc-node-year">2028</div>
-          <div class="vc-node-desc">200+ locations in top 10 metros</div>
+      </div>
+
+      <!-- Right: Orbital rings with milestone nodes -->
+      <div class="vd-orbit-wrap">
+        <div class="vd-ring vd-ring-1"></div>
+        <div class="vd-ring vd-ring-2"></div>
+        <div class="vd-ring vd-ring-3"></div>
+        <div class="vd-ring vd-ring-4"></div>
+
+        <div class="vd-center">
+          <div class="vd-center-num">NYC</div>
+          <div class="vd-center-label">Origin hub</div>
         </div>
-        <div class="vc-node">
-          <div class="vc-node-dot"></div>
-          <div class="vc-node-year">2030</div>
-          <div class="vc-node-desc">1,000+ urban hubs nationwide</div>
+
+        <!-- Node 1: 2026 — top right of ring 3 -->
+        <div class="vd-node active" style="top:28%;left:72%">
+          <div class="vd-node-dot"></div>
+          <div class="vd-node-card">
+            <div class="vd-node-year">2026</div>
+            <div class="vd-node-text">Brooklyn flagship hubs.<br>First DC Fast network.</div>
+          </div>
+        </div>
+
+        <!-- Node 2: 2027 — bottom right of ring 2 -->
+        <div class="vd-node" style="top:74%;left:82%">
+          <div class="vd-node-dot"></div>
+          <div class="vd-node-card">
+            <div class="vd-node-year">2027</div>
+            <div class="vd-node-text">50+ locations — NYC, LA, SF</div>
+          </div>
+        </div>
+
+        <!-- Node 3: 2028 — bottom left of ring 1 -->
+        <div class="vd-node" style="top:82%;left:22%">
+          <div class="vd-node-dot"></div>
+          <div class="vd-node-card">
+            <div class="vd-node-year">2028</div>
+            <div class="vd-node-text">200+ locations in top 10 metros</div>
+          </div>
+        </div>
+
+        <!-- Node 4: 2030 — top left of ring 1 -->
+        <div class="vd-node" style="top:15%;left:18%">
+          <div class="vd-node-dot"></div>
+          <div class="vd-node-card">
+            <div class="vd-node-year">2030</div>
+            <div class="vd-node-text">1,000+ urban hubs nationwide</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vd-cta">
+      <a class="vd-cta-btn" href="#">Have a property? Let's move fast →</a>
+      <div class="vd-cta-hint">We respond within 24 hours</div>
+    </div>
+
+  </section>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       VARIANT E — CINEMATIC BANDS
+  ══════════════════════════════════════ -->
+  <div class="variant" id="ve">
+  <section class="ve">
+
+    <!-- Hero -->
+    <div class="ve-hero">
+      <div class="ve-hero-grid">
+        <div>
+          <div class="ve-overline">Expansion Strategy</div>
+          <h2 class="ve-headline">How We<br><em>Scale</em><br>Faster</h2>
+        </div>
+        <div class="ve-hero-stats">
+          <div class="ve-stat">
+            <div class="ve-stat-num">1K+</div>
+            <div class="ve-stat-label">Target hubs by 2030</div>
+          </div>
+          <div class="ve-stat">
+            <div class="ve-stat-num">10</div>
+            <div class="ve-stat-label">Metro areas</div>
+          </div>
         </div>
       </div>
     </div>
 
-  </div>
-
-  <div class="vc-cta">
-    <div class="vc-cta-line"></div>
-    <div class="vc-cta-inner">
-      <p class="vc-cta-text"><strong>Have a property?</strong> Let's move fast.</p>
-      <a class="vc-cta-btn" href="#">Contact Us →</a>
+    <!-- Criteria ribbon -->
+    <div class="ve-ribbon">
+      <span class="ve-ribbon-label">Site criteria</span>
+      <div class="ve-ribbon-divider"></div>
+      <div class="ve-ribbon-item"><div class="ve-ribbon-dot"></div><span class="ve-ribbon-text">Population density &gt;10K</span></div>
+      <div class="ve-ribbon-item"><div class="ve-ribbon-dot"></div><span class="ve-ribbon-text">High multifamily housing</span></div>
+      <div class="ve-ribbon-item"><div class="ve-ribbon-dot"></div><span class="ve-ribbon-text">Fleet corridors</span></div>
+      <div class="ve-ribbon-item"><div class="ve-ribbon-dot"></div><span class="ve-ribbon-text">Mixed-use retail</span></div>
+      <div class="ve-ribbon-item"><div class="ve-ribbon-dot"></div><span class="ve-ribbon-text">Transit-adjacent</span></div>
+      <div class="ve-ribbon-item"><div class="ve-ribbon-dot"></div><span class="ve-ribbon-text">EV adoption &gt;5%</span></div>
     </div>
-    <div class="vc-cta-line"></div>
+
+    <!-- Year bands -->
+    <div class="ve-bands">
+
+      <div class="ve-band">
+        <div class="ve-band-bg">
+          <span class="ve-band-year">2026</span>
+        </div>
+        <div class="ve-band-content">
+          <div class="ve-band-year-sm">Now · 2026</div>
+          <div class="ve-band-title">Brooklyn Flagship</div>
+          <div class="ve-band-desc">First DC Fast network deployed across New York City. Urban charging redefined.</div>
+          <span class="ve-band-metric">● ACTIVE NOW</span>
+        </div>
+      </div>
+
+      <div class="ve-band">
+        <div class="ve-band-bg">
+          <span class="ve-band-year">2027</span>
+        </div>
+        <div class="ve-band-content">
+          <div class="ve-band-year-sm">2027</div>
+          <div class="ve-band-title">Coast to Coast</div>
+          <div class="ve-band-desc">50+ locations across NYC, Los Angeles, and San Francisco. Three-city saturation strategy.</div>
+          <span class="ve-band-metric">50+ LOCATIONS</span>
+        </div>
+      </div>
+
+      <div class="ve-band">
+        <div class="ve-band-bg">
+          <span class="ve-band-year">2028</span>
+        </div>
+        <div class="ve-band-content">
+          <div class="ve-band-year-sm">2028</div>
+          <div class="ve-band-title">Metro Domination</div>
+          <div class="ve-band-desc">200+ locations in the top 10 metropolitan areas nationwide. Density-first rollout.</div>
+          <span class="ve-band-metric">200+ LOCATIONS</span>
+        </div>
+      </div>
+
+      <div class="ve-band">
+        <div class="ve-band-bg">
+          <span class="ve-band-year">2030</span>
+        </div>
+        <div class="ve-band-content">
+          <div class="ve-band-year-sm">2030</div>
+          <div class="ve-band-title">The New Standard</div>
+          <div class="ve-band-desc">1,000+ urban hubs. The standard for American cities. EV charging, everywhere.</div>
+          <span class="ve-band-metric">1,000+ HUBS</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Progress bar -->
+    <div class="ve-progress">
+      <div class="ve-progress-track">
+        <div class="ve-progress-fill"></div>
+      </div>
+      <div class="ve-progress-labels">
+        <span class="ve-progress-yr active">2026</span>
+        <span class="ve-progress-yr">2027</span>
+        <span class="ve-progress-yr">2028</span>
+        <span class="ve-progress-yr">2030</span>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="ve-cta">
+      <p class="ve-cta-text"><strong>Have a property?</strong> Let's move fast.</p>
+      <a class="ve-cta-btn" href="#">Contact Us →</a>
+    </div>
+
+  </section>
   </div>
 
-</section>
-</div>
-
-<script>
-function show(v) {
-  document.querySelectorAll('.variant').forEach(el => el.classList.remove('show'));
-  document.querySelectorAll('.bar-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById('v' + v).classList.add('show');
-  document.getElementById('b' + v).classList.add('active');
-  const h = { a: '#a', b: '#b', c: '#c' };
-  history.replaceState(null, '', h[v]);
-}
-window.addEventListener('load', () => {
-  const h = window.location.hash;
-  if (h === '#b') show('b');
-  else if (h === '#c') show('c');
-  else show('a');
-});
-</script>
+  <script>
+    function show(v) {
+      document.querySelectorAll('.variant').forEach(el => el.classList.remove('show'));
+      document.querySelectorAll('.bar-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('v' + v).classList.add('show');
+      document.getElementById('b' + v).classList.add('active');
+      history.replaceState(null, '', '#' + v);
+    }
+    window.addEventListener('load', () => {
+      const h = window.location.hash.replace('#', '');
+      if (['a','b','c','d','e'].includes(h)) show(h);
+      else show('a');
+    });
+  </script>
 </body>
+
 </html>

@@ -469,7 +469,7 @@
     }
     #eplug-header .eh-stat-fill { height: 100%; border-radius: 2px; }
     #eplug-header .eh-stat-fill.ux     { background: #5ce08c; width: 100%; }
-    #eplug-header .eh-stat-fill.design { background: #5c8ce0; width: 20%; }
+    #eplug-header .eh-stat-fill.design { background: #5c8ce0; width: 60%; }
     #eplug-header .eh-stat-fill.deploy { background: rgba(255,255,255,0.12); width: 0%; }
     #eplug-header .eh-stat-pct {
       font-size: 9px !important;
@@ -507,7 +507,7 @@
           <div class="eh-stat">
             <span class="eh-stat-label">Design</span>
             <div class="eh-stat-bar"><div class="eh-stat-fill design"></div></div>
-            <span class="eh-stat-pct">20%</span>
+            <span class="eh-stat-pct">60%</span>
           </div>
           <div class="eh-stat">
             <span class="eh-stat-label">Deploy</span>
