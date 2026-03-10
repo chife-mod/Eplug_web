@@ -5,6 +5,34 @@ Eplug Web — корпоративный сайт для компании Eplug 
 
 ---
 
+## 2026-03-10 (вечер) — Partners Variant F: Реализация и полировка
+
+### Variant F — Video + Glass Cards (standalone)
+
+**Новый файл:** `drafts/partners/variant-f.html` — полностью standalone вариант, эволюция Variant D.
+
+**Ключевые компоненты:**
+- **Sticky Video Frame (Leitwind-style):** `position: sticky`, `60vh`, `top: 20vh` — вертикально центрирован. 4 слоя с curtain-reveal (height 0%→100% снизу вверх)
+- **Glass Cards Track:** карточки в правой колонке, `backdrop-filter: blur(24px)`, `margin-top: calc(-100vh + 240px)`, `padding-top: 100vh` для задержанного появления
+- **Background Color Interpolation:** `lerpColor()` — плавная интерполяция фона между 4 цветами секций (#2E0054 → rgb(138,0,106) → #DEDCF9 → #FFFFFF)
+- **Bottom Nav Pill:** fixed pill с dropdown, синхронизирован со скроллом
+
+### Hero Section — нижний градиент
+- Добавлен `::after` на `.hero` — 200px градиент от прозрачного к `#2E0054`
+- Обеспечивает бесшовный визуальный переход от hero к partners stage
+- Убраны ранее добавленные `::before` на `.partners-stage` и `::after` на `#video-frame` — вернули чистый видеофрейм с `border-radius: 20px`
+
+### Smart Navbar (скролл-зависимый)
+- При скролле **вниз** (>100px): логотип + центральное меню плавно уезжают вверх (`.nav-hidden`)
+- Кнопки **App** и **Contact Us** остаются всегда видимыми
+- При скролле **вверх**: логотип и меню плавно возвращаются (`transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1)`)
+
+### Документация
+- Создан `docs/components/partners.md` — полная документация реализации Variant F
+- Обновлён `history/HISTORY.md`
+
+---
+
 ## 2026-03-10 — Partners Page UX Research
 
 ### UX-ресёрч — страница Partners

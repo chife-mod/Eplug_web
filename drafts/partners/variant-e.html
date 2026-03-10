@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eplug Partners — Variant E · Streamlined Scroll</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Figma design tokens */
+            --fuchsia: #FF00C5;
+            --purple: #2E0054;
+            --ice: #DEDCF9;
+            --graphit: #0C0C0C;
+            --white: #FFFFFF;
+            --dark: #0C0214;
+
+            /* Section accent colors */
+            --fleet-bg: #0a0118;
+            --fleet-accent: rgba(255, 255, 255, 0.28);
+            --prop-bg: #120830;
+            --prop-accent: #C9B8E8;
+            --retail-bg: #0f0520;
+            --retail-accent: var(--fuchsia);
+            --muni-bg: #060010;
+            --muni-accent: var(--fuchsia);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════════════════════════════════
+       TOGGLE BAR (for variant switching)
+    ═══════════════════════════════════════════════ */
+        #toggle-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10000;
+            background: #0d0d0d;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 20px;
+            height: 44px;
+            border-bottom: 1px solid #1e1e1e;
+        }
+
+        .t-label {
+            font-size: 10px;
+            color: #444;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-right: 4px;
+        }
+
+        .t-btn {
+            padding: 5px 14px;
+            border: 1px solid #2a2a2a;
+            background: transparent;
+            color: #666;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 11px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .t-btn:hover {
+            border-color: #555;
+            color: #aaa;
+        }
+
+        .t-btn.active {
+            background: var(--fuchsia);
+            border-color: var(--fuchsia);
+            color: white;
+            pointer-events: none;
+        }
+
+        .t-note {
+            margin-left: auto;
+            font-size: 10px;
+            color: #2a2a2a;
+        }
+
+        /* ═══════════════════════════════════════════════
+       TOP NAV
+    ═══════════════════════════════════════════════ */
+        .top-nav {
+            position: fixed;
+            top: 44px;
+            left: 0;
+            right: 0;
+            z-index: 900;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 80px;
+            height: 56px;
+            background: rgba(12, 2, 20, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.35s;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span {
+            color: var(--fuchsia);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: white;
+        }
+
+        .nav-cta {
+            padding: 12px 24px;
+            background: var(--fuchsia);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+        }
+
+        /* ═══════════════════════════════════════════════
+       HERO — Full-screen video
+    ═══════════════════════════════════════════════ */
+        .hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            margin-top: 44px;
+            /* offset for toggle bar */
+        }
+
+        .hero-vid {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, #0C0214 0%, #1c0848 40%, #0a0228 70%, #0C0214 100%);
+            background-size: 300% 300%;
+            animation: gradDrift 14s ease infinite alternate;
+        }
+
+        .hero-vid::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 55% 45% at 75% 55%, rgba(255, 0, 197, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 50% at 25% 30%, rgba(123, 0, 204, 0.12) 0%, transparent 60%);
+        }
+
+        @keyframes gradDrift {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 60%;
+            }
+
+            100% {
+                background-position: 40% 100%;
+            }
+        }
+
+        .hero-vignette {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            z-index: 2;
+            background: linear-gradient(to top, rgba(12, 2, 20, 0.85) 0%, transparent 100%);
+        }
+
+        .hero-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.04);
+            white-space: nowrap;
+        }
+
+        .hero-content {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 80px 100px;
+        }
+
+        .hero-overline {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.54;
+            color: var(--fuchsia);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-overline svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-h1 {
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.1;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            max-width: 820px;
+        }
+
+        .hero-h1 em {
+            color: var(--fuchsia);
+            font-style: normal;
+        }
+
+        .hero-sub {
+            margin-top: 20px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 500px;
+            line-height: 1.54;
+            font-weight: 400;
+        }
+
+        .hero-play {
+            position: absolute;
+            bottom: 100px;
+            right: 80px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2.5s ease infinite;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 28px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: .3
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        /* ═══════════════════════════════════════════════
+       BOTTOM FLOATING NAV — pill menu (fluid.glass style)
+    ═══════════════════════════════════════════════ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ── Dropdown panel (opens above the pill) ── */
+        .bn-dropdown {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(12px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            background: rgba(12, 2, 20, 0.96);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px 32px;
+            min-width: 280px;
+        }
+
+        .bottom-nav.open .bn-dropdown {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .bn-dropdown-title {
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.25);
+            margin-bottom: 16px;
+        }
+
+        .bn-dropdown-items {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bn-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            background: transparent;
+            font-family: 'Montserrat', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .bn-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .bn-item.active {
+            background: rgba(255, 0, 197, 0.1);
+        }
+
+        .bn-item-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .bn-item-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .bn-item-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.2;
+        }
+
+        .bn-item.active .bn-item-label {
+            color: white;
+        }
+
+        /* Icon background per section */
+        .bn-item[data-s="fleet"] .bn-item-icon {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .bn-item[data-s="property"] .bn-item-icon {
+            background: rgba(201, 184, 232, 0.15);
+        }
+
+        .bn-item[data-s="retail"] .bn-item-icon {
+            background: rgba(255, 0, 197, 0.12);
+        }
+
+        .bn-item[data-s="muni"] .bn-item-icon {
+            background: rgba(255, 0, 197, 0.08);
+        }
+
+        .bn-item[data-s="fleet"] .bn-item-icon svg {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .bn-item[data-s="property"] .bn-item-icon svg {
+            color: #C9B8E8;
+        }
+
+        .bn-item[data-s="retail"] .bn-item-icon svg {
+            color: var(--fuchsia);
+        }
+
+        .bn-item[data-s="muni"] .bn-item-icon svg {
+            color: var(--fuchsia);
+        }
+
+        /* ── The pill trigger ── */
+        .bn-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px 10px 14px;
+            background: rgba(12, 2, 20, 0.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.25s;
+            user-select: none;
+        }
+
+        .bn-pill:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .bottom-nav.open .bn-pill {
+            border-color: rgba(255, 0, 197, 0.3);
+        }
+
+        .bn-pill-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .bn-pill-icon svg {
+            width: 16px;
+            height: 16px;
+            transition: color 0.3s;
+        }
+
+        .bn-pill-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 0.02em;
+            transition: color 0.3s;
+            white-space: nowrap;
+        }
+
+        .bn-pill-toggle {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+            transition: transform 0.3s;
+        }
+
+        .bn-pill-toggle svg {
+            width: 14px;
+            height: 14px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .bottom-nav.open .bn-pill-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* ── Close button (shown when open) ── */
+        .bn-close {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+        }
+
+        /* Scrim overlay */
+        .bn-scrim {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 8999;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .bn-scrim.visible {
+            display: block;
+        }
+
+        /* ═══════════════════════════════════════════════
+       LEAD-GEN CTA
+    ═══════════════════════════════════════════════ */
+        .lead-gen {
+            padding: 80px 80px;
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .lead-gen-h2 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .lead-gen-h2 em {
+            color: var(--fuchsia);
+            font-style: normal;
+        }
+
+        .lead-gen-sub {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.54;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .lead-gen-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: var(--fuchsia);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .lead-gen-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(255, 0, 197, 0.35);
+        }
+
+        /* ═══════════════════════════════════════════════
+       CONTENT SECTIONS — image left + cards right
+    ═══════════════════════════════════════════════ */
+        .partner-section {
+            min-height: 100vh;
+            padding: 80px 80px;
+            transition: background 0.6s;
+            scroll-margin-top: 152px;
+        }
+
+        .partner-section .section-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        /* Left column — sticky image */
+        .section-media {
+            position: sticky;
+            top: 172px;
+        }
+
+        .media-frame {
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(145deg, #1a0540, #0C0214);
+            background-size: 300% 300%;
+            animation: gradDrift 12s ease infinite alternate;
+        }
+
+        .media-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-label {
+            position: absolute;
+            bottom: 16px;
+            left: 20px;
+            z-index: 2;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .media-watermark {
+            font-size: clamp(40px, 5vw, 72px);
+            font-weight: 700;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.04);
+            margin-top: 16px;
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        /* Right column — content cards */
+        .section-content {}
+
+        .sc-tag {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.54;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sc-tag-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .sc-h2 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .sc-intro {
+            font-size: 16px;
+            line-height: 1.54;
+            margin-bottom: 32px;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .sc-label {
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Check list */
+        .check-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            line-height: 1.54;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .ck {
+            flex-shrink: 0;
+            margin-top: 2px;
+            font-size: 14px;
+        }
+
+        /* Tags */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        /* Quote */
+        .quote-block {
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            border-left: 3px solid var(--fuchsia);
+            border-radius: 0 16px 16px 0;
+            font-size: 14px;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .quote-author {
+            margin-top: 10px;
+            font-style: normal;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        /* Partnership model cards */
+        .model-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .model-card {
+            padding: 20px 24px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .mc-num {
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .mc-title {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+
+        .mc-text {
+            font-size: 14px;
+            line-height: 1.54;
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 8px;
+        }
+
+        .mc-best {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 400;
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+
+        /* Stat grid (Retail) */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            padding: 24px 16px;
+            border-radius: 16px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: 1px;
+        }
+
+        /* Muni list */
+        .muni-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .muni-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.2;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* CTA button */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--fuchsia);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(255, 0, 197, 0.35);
+        }
+
+        /* ── SECTION THEMES ─────────────────────── */
+        /* Fleet */
+        #fleet {
+            background: var(--fleet-bg);
+        }
+
+        #fleet .sc-tag {
+            color: var(--fleet-accent);
+        }
+
+        #fleet .sc-tag-dot {
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        #fleet .sc-h2 {
+            color: white;
+        }
+
+        #fleet .ck {
+            color: var(--fuchsia);
+        }
+
+        #fleet .tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        #fleet .quote-block {
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        #fleet .media-frame {
+            background: linear-gradient(145deg, #0C0214, #1c0848);
+        }
+
+        /* Property */
+        #property {
+            background: var(--prop-bg);
+        }
+
+        #property .sc-tag {
+            color: var(--prop-accent);
+        }
+
+        #property .sc-tag-dot {
+            background: #C9B8E8;
+        }
+
+        #property .sc-h2 {
+            color: white;
+        }
+
+        #property .ck {
+            color: #C9B8E8;
+        }
+
+        #property .tag {
+            background: rgba(201, 184, 232, 0.08);
+            color: #C9B8E8;
+            border: 1px solid rgba(201, 184, 232, 0.15);
+        }
+
+        #property .quote-block {
+            border-left-color: #C9B8E8;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(201, 184, 232, 0.04);
+        }
+
+        #property .btn-primary {
+            background: #7B4FAF;
+        }
+
+        #property .model-card {
+            border-color: rgba(201, 184, 232, 0.1);
+        }
+
+        #property .mc-num {
+            color: #C9B8E8;
+        }
+
+        #property .mc-best {
+            background: rgba(201, 184, 232, 0.1);
+            color: #C9B8E8;
+        }
+
+        #property .media-frame {
+            background: linear-gradient(145deg, #160640, #2a1068);
+        }
+
+        /* Retail */
+        #retail {
+            background: var(--retail-bg);
+        }
+
+        #retail .sc-tag {
+            color: rgba(255, 255, 255, 0.28);
+        }
+
+        #retail .sc-tag-dot {
+            background: var(--fuchsia);
+        }
+
+        #retail .sc-h2 {
+            color: white;
+        }
+
+        #retail .ck {
+            color: var(--fuchsia);
+        }
+
+        #retail .tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        #retail .stat-number {
+            color: var(--fuchsia);
+        }
+
+        #retail .stat-label {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #retail .media-frame {
+            background: linear-gradient(145deg, #0a0220, #220045);
+        }
+
+        /* Municipality */
+        #muni {
+            background: var(--muni-bg);
+            background-image: radial-gradient(ellipse 55% 50% at 10% 50%, rgba(255, 0, 197, 0.06) 0%, transparent 65%);
+        }
+
+        #muni .sc-tag {
+            color: var(--fuchsia);
+        }
+
+        #muni .sc-tag-dot {
+            background: var(--fuchsia);
+        }
+
+        #muni .sc-h2 {
+            color: white;
+        }
+
+        #muni .ck {
+            color: var(--fuchsia);
+        }
+
+        #muni .tag {
+            background: rgba(255, 0, 197, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 0, 197, 0.12);
+        }
+
+        #muni .muni-row {
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        #muni .media-frame {
+            background: linear-gradient(145deg, #060010, #1a0038);
+        }
+
+        /* ═══════════════════════════════════════════════
+       FINAL CTA
+    ═══════════════════════════════════════════════ */
+        .final-cta {
+            padding: 100px 80px;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--dark), var(--ice));
+        }
+
+        .final-cta h2 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+            text-transform: uppercase;
+            color: var(--graphit);
+            margin-bottom: 12px;
+        }
+
+        .final-cta h2 em {
+            color: var(--fuchsia);
+            font-style: normal;
+        }
+
+        .final-cta p {
+            font-size: 16px;
+            color: rgba(12, 12, 12, 0.55);
+            line-height: 1.54;
+            margin-bottom: 32px;
+        }
+
+        .final-cta .btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-outline {
+            padding: 16px 24px;
+            border: 2px solid var(--purple);
+            color: var(--purple);
+            background: transparent;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--purple);
+            color: white;
+        }
+
+        /* ═══════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════ */
+        .footer {
+            background: linear-gradient(to bottom, #2E0054, #101223);
+            border-radius: 16px 16px 0 0;
+            padding: 64px 80px 32px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.54;
+        }
+
+        .footer-col-title {
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* ═══════════════════════════════════════════════
+       MOBILE
+    ═══════════════════════════════════════════════ */
+        @media (max-width: 1024px) {
+
+            .top-nav,
+            .partner-section,
+            .lead-gen,
+            .final-cta,
+            .footer {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .hero-content {
+                padding: 0 24px 80px;
+            }
+
+            .hero-h1 {
+                font-size: clamp(32px, 8vw, 56px);
+            }
+
+            .hero-play {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .partner-section .section-inner {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .section-media {
+                position: relative;
+                top: 0;
+            }
+
+            .media-frame {
+                aspect-ratio: 16/9;
+            }
+
+            .media-watermark {
+                display: none;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .sc-h2 {
+                font-size: 32px;
+            }
+
+            .bn-dropdown {
+                min-width: 240px;
+                padding: 20px 24px;
+            }
+
+            .bn-pill {
+                padding: 8px 18px 8px 10px;
+            }
+
+            .bn-pill-label {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ─── TOGGLE BAR ──────────────────────────────── -->
+    <div id="toggle-bar">
+        <span class="t-label">Variant</span>
+        <a href="index.html" class="t-btn">A — Ecosystem</a>
+        <a href="index.html" class="t-btn">B — Chapter</a>
+        <a href="index.html" class="t-btn">C — Sidebar</a>
+        <a href="variant-d.html" class="t-btn">D — Video Hero</a>
+        <span class="t-btn active">E — Streamlined</span>
+        <span class="t-note">⚡ Recommended — реалист. 4-5 ч реализация</span>
+    </div>
+
+    <!-- ─── TOP NAV ──────────────────────────────────── -->
+    <nav class="top-nav">
+        <div class="nav-logo">E<span>plug</span></div>
+        <ul class="nav-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Network</a></li>
+            <li><a href="#" class="active">Partners</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <button class="nav-cta">Contact Us</button>
+    </nav>
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="hero">
+        <div class="hero-vid"></div>
+        <div class="hero-vignette"></div>
+        <div class="hero-placeholder">[ VIDEO — DRONE: BROOKLYN FLEET HUB · CAFÉ · ROOFTOP CHARGING · CITY HALL ]</div>
+        <div class="hero-content">
+            <div class="hero-overline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+                Partners
+            </div>
+            <h1 class="hero-h1">We Don't Build <em>Alone.</em><br>We Build With Cities.</h1>
+            <p class="hero-sub">Property owners. Fleets. Retailers. Municipalities. Let's move fast together.</p>
+        </div>
+        <button class="hero-play">▶ &nbsp;Play Reel</button>
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ═══════ BOTTOM FLOATING NAV ═══════ -->
+    <div class="bn-scrim" id="bn-scrim"></div>
+    <nav class="bottom-nav" id="bottom-nav">
+        <!-- Dropdown panel -->
+        <div class="bn-dropdown">
+            <div class="bn-dropdown-title">Sections</div>
+            <div class="bn-dropdown-items">
+                <a href="#fleet" class="bn-item active" data-s="fleet">
+                    <span class="bn-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+                            <circle cx="7" cy="17" r="2" />
+                            <circle cx="17" cy="17" r="2" />
+                        </svg>
+                    </span>
+                    <span class="bn-item-label">Fleet Operators</span>
+                </a>
+                <a href="#property" class="bn-item" data-s="property">
+                    <span class="bn-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18" />
+                            <path d="M5 21V7l8-4v18" />
+                            <path d="M19 21V11l-6-4" />
+                            <path d="M9 9v.01" />
+                            <path d="M9 12v.01" />
+                            <path d="M9 15v.01" />
+                            <path d="M9 18v.01" />
+                        </svg>
+                    </span>
+                    <span class="bn-item-label">Property Owners</span>
+                </a>
+                <a href="#retail" class="bn-item" data-s="retail">
+                    <span class="bn-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                            <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+                            <path d="M2 7h20" />
+                            <path
+                                d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7" />
+                        </svg>
+                    </span>
+                    <span class="bn-item-label">Retail Businesses</span>
+                </a>
+                <a href="#muni" class="bn-item" data-s="muni">
+                    <span class="bn-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+                            <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+                            <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+                            <path d="M10 6h4" />
+                            <path d="M10 10h4" />
+                            <path d="M10 14h4" />
+                            <path d="M10 18h4" />
+                        </svg>
+                    </span>
+                    <span class="bn-item-label">Municipalities</span>
+                </a>
+            </div>
+        </div>
+        <!-- Pill trigger -->
+        <div class="bn-pill" id="bn-pill">
+            <span class="bn-pill-icon" id="bn-pill-icon">
+                <!-- Default: fleet car icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                        d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+                    <circle cx="7" cy="17" r="2" />
+                    <circle cx="17" cy="17" r="2" />
+                </svg>
+            </span>
+            <span class="bn-pill-label" id="bn-pill-label">Fleet Operators</span>
+            <span class="bn-pill-toggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="m18 15-6-6-6 6" />
+                </svg>
+            </span>
+        </div>
+    </nav>
+
+    <!-- ═══════ LEAD-GEN CTA ═══════ -->
+    <section class="lead-gen">
+        <h2 class="lead-gen-h2">Faster Together.<br><em>Stronger Together.</em></h2>
+        <p class="lead-gen-sub">Whether you manage 5 vehicles or 5,000 parking spots — we have a partnership model that
+            works. Zero upfront cost. Revenue from day one.</p>
+        <button class="lead-gen-cta">Explore Partnership Options ↓</button>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+     SECTION 1: FLEET OPERATORS
+═══════════════════════════════════════════════ -->
+    <section class="partner-section" id="fleet">
+        <div class="section-inner">
+
+            <div class="section-media">
+                <div class="media-frame">
+                    <div class="media-label">01 / 04 — Fleet Operators</div>
+                </div>
+                <div class="media-watermark">FLEET</div>
+            </div>
+
+            <div class="section-content">
+                <div class="sc-tag"><span class="sc-tag-dot"></span> 01 — Fleet Operators</div>
+                <h2 class="sc-h2">Charging Infrastructure That Pays for Itself</h2>
+                <p class="sc-intro">If your drivers lose 2 hours a day to slow charging, you're losing money. Eplug
+                    fixes that.</p>
+
+                <div class="sc-label">What Eplug Delivers:</div>
+                <ul class="check-list">
+                    <li><span class="ck">✓</span><span><strong>DC Fast turnaround</strong> — 15–25 min, not 4
+                            hours</span></li>
+                    <li><span class="ck">✓</span><span><strong>Fleet-exclusive pricing</strong> — lower rates than
+                            retail</span></li>
+                    <li><span class="ck">✓</span><span><strong>Reserved stall access</strong> — no waiting, no
+                            downtime</span></li>
+                    <li><span class="ck">✓</span><span><strong>Consolidated billing</strong> — one invoice, all
+                            vehicles</span></li>
+                    <li><span class="ck">✓</span><span><strong>Predictive uptime monitoring</strong> — 99%+ reliability
+                            guaranteed</span></li>
+                    <li><span class="ck">✓</span><span><strong>Locations optimized</strong> for pickup/drop-off
+                            zones</span></li>
+                    <li><span class="ck">✓</span><span><strong>Lower TCO than ICE fleets</strong> — fuel + maintenance
+                            savings</span></li>
+                </ul>
+
+                <div class="sc-label">Ideal For:</div>
+                <div class="tag-row">
+                    <span class="tag">Uber / Lyft</span><span class="tag">Amazon Flex</span>
+                    <span class="tag">UPS / FedEx</span><span class="tag">DoorDash</span>
+                    <span class="tag">UberEats</span><span class="tag">Grubhub</span>
+                    <span class="tag">HVAC / Plumbing</span><span class="tag">Zipcar</span>
+                    <span class="tag">Enterprise</span>
+                </div>
+
+                <div class="quote-block">
+                    "We switched our 50-vehicle delivery fleet to Eplug. Downtime dropped 60%. Costs dropped 40%. Best
+                    infrastructure decision we've made."
+                    <div class="quote-author">— Fleet Manager, Major Delivery Co (placeholder)</div>
+                </div>
+
+                <button class="btn-primary">Fleet Partnership Inquiry →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+     SECTION 2: PROPERTY OWNERS
+═══════════════════════════════════════════════ -->
+    <section class="partner-section" id="property">
+        <div class="section-inner">
+
+            <div class="section-media">
+                <div class="media-frame">
+                    <div class="media-label">02 / 04 — Property Owners</div>
+                </div>
+                <div class="media-watermark">PROPERTY</div>
+            </div>
+
+            <div class="section-content">
+                <div class="sc-tag"><span class="sc-tag-dot"></span> 02 — Property Owners & Landlords</div>
+                <h2 class="sc-h2">Turn Parking Into Profit.<br>Zero Upfront Cost.</h2>
+                <p class="sc-intro">EV charging is no longer optional. It's a tenant amenity, a revenue stream, and a
+                    regulatory requirement.</p>
+
+                <div class="sc-label">What Eplug Provides:</div>
+                <ul class="check-list">
+                    <li><span class="ck">✓</span><span><strong>New recurring income</strong> — profit-sharing or lease
+                            payments</span></li>
+                    <li><span class="ck">✓</span><span><strong>Zero CapEx</strong> — we finance, install,
+                            maintain</span></li>
+                    <li><span class="ck">✓</span><span><strong>Higher tenant satisfaction</strong> — modern amenity
+                            drives retention</span></li>
+                    <li><span class="ck">✓</span><span><strong>Increased property value</strong> — EV-ready = premium
+                            rents</span></li>
+                    <li><span class="ck">✓</span><span><strong>Code compliance</strong> — meet EV-ready building
+                            mandates</span></li>
+                    <li><span class="ck">✓</span><span><strong>Fast installation</strong> — weeks, not months</span>
+                    </li>
+                    <li><span class="ck">✓</span><span><strong>Full-service operations</strong> — we handle
+                            everything</span></li>
+                </ul>
+
+                <div class="sc-label">Partnership Models:</div>
+                <div class="model-cards">
+                    <div class="model-card">
+                        <div class="mc-num">01</div>
+                        <div class="mc-title">Profit Sharing</div>
+                        <div class="mc-text">Eplug installs & operates. You receive monthly revenue share.</div>
+                        <span class="mc-best">Best for: Multifamily, mixed-use</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="mc-num">02</div>
+                        <div class="mc-title">Parking Spot Lease</div>
+                        <div class="mc-text">We lease dedicated parking bays. You get predictable monthly income.</div>
+                        <span class="mc-best">Best for: Commercial garages, offices</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="mc-num">03</div>
+                        <div class="mc-title">Co-Investment</div>
+                        <div class="mc-text">Shared upfront investment, shared long-term returns.</div>
+                        <span class="mc-best">Best for: Large campuses</span>
+                    </div>
+                    <div class="model-card">
+                        <div class="mc-num">04</div>
+                        <div class="mc-title">Full Eplug Deployment</div>
+                        <div class="mc-text">We own, finance, build, operate — you get amenity + optional revenue share.
+                        </div>
+                        <span class="mc-best">Best for: Zero involvement, max benefit</span>
+                    </div>
+                </div>
+
+                <div class="quote-block">
+                    "Eplug turned our underutilized parking garage into a $15K/month revenue stream. Installation took 3
+                    weeks. Tenants love it."
+                    <div class="quote-author">— Property Manager, Brooklyn Multifamily (placeholder)</div>
+                </div>
+
+                <button class="btn-primary" style="background:#7B4FAF;">Property Partnership Inquiry →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+     SECTION 3: RETAIL
+═══════════════════════════════════════════════ -->
+    <section class="partner-section" id="retail">
+        <div class="section-inner">
+
+            <div class="section-media">
+                <div class="media-frame">
+                    <div class="media-label">03 / 04 — Retail Businesses</div>
+                </div>
+                <div class="media-watermark">RETAIL</div>
+            </div>
+
+            <div class="section-content">
+                <div class="sc-tag"><span class="sc-tag-dot"></span> 03 — Retail Businesses</div>
+                <h2 class="sc-h2">15–25 Minutes =<br>Captive Customers</h2>
+                <p class="sc-intro">Drivers don't just charge. They spend.</p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">88+</div>
+                        <div class="stat-label">Drivers / day per station</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">20-40%</div>
+                        <div class="stat-label">Transaction increase</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15-25</div>
+                        <div class="stat-label">Min dwell time</div>
+                    </div>
+                </div>
+
+                <div class="sc-label">The Eplug Retail Advantage:</div>
+                <ul class="check-list">
+                    <li><span class="ck">✓</span><span><strong>Guaranteed foot traffic</strong> — 88 drivers/day per
+                            station minimum</span></li>
+                    <li><span class="ck">✓</span><span><strong>High dwell time</strong> — customers aren't rushing in
+                            and out</span></li>
+                    <li><span class="ck">✓</span><span><strong>Predictable conversion</strong> — "while charging"
+                            purchases are impulse-driven</span></li>
+                    <li><span class="ck">✓</span><span><strong>Loyalty integration</strong> — Eplug app promotes your
+                            business</span></li>
+                    <li><span class="ck">✓</span><span><strong>High-visibility branding</strong> — hubs become
+                            neighborhood landmarks</span></li>
+                    <li><span class="ck">✓</span><span><strong>Co-marketing</strong> — joint promotions,
+                            member-exclusive deals</span></li>
+                </ul>
+
+                <div class="sc-label">Ideal For:</div>
+                <div class="tag-row">
+                    <span class="tag">Coffee shops</span><span class="tag">Delis</span>
+                    <span class="tag">Convenience stores</span><span class="tag">QSR restaurants</span>
+                    <span class="tag">Grab-and-go</span><span class="tag">Gyms</span>
+                    <span class="tag">Laundromats</span><span class="tag">Pharmacies</span>
+                </div>
+
+                <button class="btn-primary">Retail Partnership Inquiry →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+     SECTION 4: MUNICIPALITIES
+═══════════════════════════════════════════════ -->
+    <section class="partner-section" id="muni">
+        <div class="section-inner">
+
+            <div class="section-media">
+                <div class="media-frame">
+                    <div class="media-label">04 / 04 — Municipalities</div>
+                </div>
+                <div class="media-watermark">CITY</div>
+            </div>
+
+            <div class="section-content">
+                <div class="sc-tag"><span class="sc-tag-dot"></span> 04 — Municipalities & Developers</div>
+                <h2 class="sc-h2">Fast Charging as Public Infrastructure</h2>
+                <p class="sc-intro">Cities that don't invest in EV infrastructure today will lose residents, businesses,
+                    and competitiveness tomorrow.</p>
+
+                <div class="sc-label">Eplug works with:</div>
+                <div class="muni-list">
+                    <div class="muni-row"><span class="ck" style="color:var(--fuchsia);">→</span> City planning
+                        departments</div>
+                    <div class="muni-row"><span class="ck" style="color:var(--fuchsia);">→</span> Transit authorities
+                    </div>
+                    <div class="muni-row"><span class="ck" style="color:var(--fuchsia);">→</span> Economic development
+                        agencies</div>
+                    <div class="muni-row"><span class="ck" style="color:var(--fuchsia);">→</span> Master-planned
+                        communities</div>
+                    <div class="muni-row"><span class="ck" style="color:var(--fuchsia);">→</span> Public-private
+                        partnerships</div>
+                </div>
+
+                <div class="sc-label">What we bring:</div>
+                <ul class="check-list">
+                    <li><span class="ck">✓</span><span><strong>Turnkey deployment</strong> — permitting, installation,
+                            operations</span></li>
+                    <li><span class="ck">✓</span><span><strong>Job creation</strong> — local construction, maintenance,
+                            support</span></li>
+                    <li><span class="ck">✓</span><span><strong>Equity-focused site selection</strong> — prioritize
+                            underserved neighborhoods</span></li>
+                    <li><span class="ck">✓</span><span><strong>Revenue generation</strong> for public land leases</span>
+                    </li>
+                    <li><span class="ck">✓</span><span><strong>Climate action plan</strong> compliance</span></li>
+                </ul>
+
+                <button class="btn-primary">Municipal Partnership Inquiry →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ FINAL CTA ═══════ -->
+    <section class="final-cta">
+        <h2>The Future Is <em>Urban</em> ⚡<br>The Future Is <em>Fast</em></h2>
+        <p>Ready to build the charging infrastructure your city deserves?</p>
+        <div class="btn-row">
+            <button class="btn-outline">I'm a Property Owner</button>
+            <button class="btn-primary">I'm a Fleet Operator</button>
+        </div>
+    </section>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-brand-name">⚡ Eplug</div>
+                <p class="footer-tagline">Faster to ⚡ Charge<br>Urban charging infrastructure, designed for density,
+                    scale, and long-term impact.</p>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Navigation</div>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Network</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">For Drivers</div>
+                <ul>
+                    <li><a href="#">Join the Waitlist</a></li>
+                    <li><a href="#">Download App™</a></li>
+                    <li><a href="#">Loyalty Program</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">For Partners</div>
+                <ul>
+                    <li><a href="#">Fleet Partnerships</a></li>
+                    <li><a href="#">Property Owners</a></li>
+                    <li><a href="#">Retail Partners</a></li>
+                    <li><a href="#">Municipalities</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">Legal</div>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Eplug Inc. All rights reserved.</span>
+            <span>LinkedIn · Instagram · X</span>
+        </div>
+    </footer>
+
+    <!-- ═══════ SCRIPT ═══════ -->
+    <script>
+        // ═══ Bottom floating nav logic ═══
+        const bottomNav = document.getElementById('bottom-nav');
+        const bnPill = document.getElementById('bn-pill');
+        const bnPillIcon = document.getElementById('bn-pill-icon');
+        const bnPillLabel = document.getElementById('bn-pill-label');
+        const bnScrim = document.getElementById('bn-scrim');
+        const bnItems = document.querySelectorAll('.bn-item');
+        const sections = document.querySelectorAll('.partner-section');
+
+        // Section data: icons as SVG strings
+        const sectionData = {
+            fleet: {
+                label: 'Fleet Operators',
+                iconBg: 'rgba(255,255,255,0.08)',
+                iconColor: 'rgba(255,255,255,0.6)',
+                svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>'
+            },
+            property: {
+                label: 'Property Owners',
+                iconBg: 'rgba(201,184,232,0.15)',
+                iconColor: '#C9B8E8',
+                svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>'
+            },
+            retail: {
+                label: 'Retail Businesses',
+                iconBg: 'rgba(255,0,197,0.12)',
+                iconColor: '#FF00C5',
+                svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"/></svg>'
+            },
+            muni: {
+                label: 'Municipalities',
+                iconBg: 'rgba(255,0,197,0.08)',
+                iconColor: '#FF00C5',
+                svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>'
+            }
+        };
+
+        // Toggle open/close
+        function toggleNav() {
+            const isOpen = bottomNav.classList.toggle('open');
+            bnScrim.classList.toggle('visible', isOpen);
+        }
+
+        function closeNav() {
+            bottomNav.classList.remove('open');
+            bnScrim.classList.remove('visible');
+        }
+
+        bnPill.addEventListener('click', toggleNav);
+        bnScrim.addEventListener('click', closeNav);
+
+        // Update pill appearance based on active section
+        function updatePill(sectionId) {
+            const data = sectionData[sectionId];
+            if (!data) return;
+            bnPillLabel.textContent = data.label;
+            bnPillIcon.innerHTML = data.svg;
+            bnPillIcon.style.background = data.iconBg;
+            bnPillIcon.querySelector('svg').style.color = data.iconColor;
+
+            // Update active state in dropdown
+            bnItems.forEach(item => {
+                item.classList.toggle('active', item.dataset.s === sectionId);
+            });
+        }
+
+        // Intersection Observer — track which section is in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    updatePill(entry.target.id);
+                }
+            });
+        }, { rootMargin: '-30% 0px -60% 0px' });
+
+        sections.forEach(s => observer.observe(s));
+
+        // Click on dropdown item → smooth scroll + close
+        bnItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(item.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                closeNav();
+            });
+        });
+
+        // Lead-gen CTA scroll
+        document.querySelector('.lead-gen-cta')?.addEventListener('click', () => {
+            document.getElementById('fleet')?.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // ESC to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeNav();
+        });
+    </script>
+
+</body>
+
+</html>

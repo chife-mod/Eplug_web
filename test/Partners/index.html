@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1440">
+  <title>Partners Hero — ePlug</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #000;
+      min-width: 1440px;
+    }
+
+    /* ================================================================
+       HERO — node 600:750
+       Frame: 1440 × 800px
+    ================================================================ */
+    .hero {
+      position: relative;
+      width: 1440px;
+      height: 800px;
+      overflow: hidden;
+      background: #dedcf9;
+    }
+
+    /* ── Background layers ─────────────────────────────────────── */
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero__bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero__bg-gradient {
+      position: absolute;
+      inset: 0;
+      background-image:
+        /* Gradient 1 — darkens top:   0–78% transparent → top 100% rgba(12,2,20,.7) */
+        linear-gradient(0deg, rgba(12,2,20,0) 78.375%, rgba(12,2,20,0.7) 100%),
+        /* Gradient 2 — darkens left:  left 0% rgba(12,2,20,.5) → 46% transparent   */
+        linear-gradient(90deg, rgba(12,2,20,0.5) 0%, rgba(12,2,20,0) 46.007%),
+        /* Gradient 3 — darkens bottom: bottom 7% rgba(12,2,20,.9) → 54% transparent */
+        linear-gradient(0deg, rgba(12,2,20,0.9) 7.375%, rgba(12,2,20,0) 53.812%);
+    }
+
+    /* ── Logo — node 83:142  (219 × 80 at left:80 top:32) ─────── */
+    .logo {
+      position: absolute;
+      width: 219px;
+      height: 80px;
+      left: 80px;
+      top: 32px;
+    }
+
+    /* Wrapper divs are positioned by inset; imgs fill wrappers */
+    .logo__v3,
+    .logo__v2,
+    .logo__v1 { position: absolute; }
+
+    .logo__v3 img,
+    .logo__v2 img,
+    .logo__v1 img {
+      display: block;
+      max-width: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* imgVector2 — bull+bolt icon — fills left ~50% at full height */
+    .logo__v3 { top: 0; right: 50.2%; bottom: 0; left: 0; }
+
+    /* imgVector1 — "ePlug" wordmark */
+    .logo__v2 { top: 42.94%; right: 9.61%; bottom: 22.54%; left: 43.64%; }
+
+    /* imgVector — "It's faster" tagline (top-right) */
+    .logo__v1 { top: 31.45%; right: 0; bottom: 57.15%; left: 74.3%; }
+
+    /* ── Center Navigation — node 600:756 ─────────────────────── */
+    .nav {
+      position: absolute;
+      top: 16px;
+      left: calc(50% + 0.5px);
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      height: 56px;
+      padding: 20px 24px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 8px;
+    }
+
+    .nav__item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1;
+      color: #fff;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .nav__item--about   { width: 51px; }
+    .nav__item--network { width: 70px; }
+    .nav__item--partners {
+      width: 70px;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .nav__item--contact { width: 65px; }
+
+    /* Active indicator dot: 6×6 px, centered below the item */
+    .nav__dot {
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      display: block;
+    }
+
+    /* ── Button Switcher — node 600:753 ────────────────────────── */
+    .btn-switcher {
+      position: absolute;
+      top: 16px;
+      right: 80px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 12px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 48px;
+      padding: 16px 24px 16px 16px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 1;
+      color: #fff;
+      white-space: nowrap;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .btn--app     { background: transparent; }
+    .btn--contact { background: #FF00C5; }
+
+    /* Icon wrapper: 24×24 overflow-hidden container */
+    .btn__icon {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* App icon: group at 25%/12.5% inset, image bleeds by ~4% */
+    .btn__icon--app .icon-inner {
+      position: absolute;
+      bottom: 12.5%; left: 25%; right: 25%; top: 12.5%;
+    }
+    .btn__icon--app .icon-inner .icon-img-wrap {
+      position: absolute;
+      inset: -4.17% -6.25%;
+    }
+
+    /* Mail icon: group at 12.5%/20.83% inset, image bleeds by ~5% */
+    .btn__icon--mail .icon-inner {
+      position: absolute;
+      top: 20.83%; right: 12.5%; bottom: 20.83%; left: 12.5%;
+    }
+    .btn__icon--mail .icon-inner .icon-img-wrap {
+      position: absolute;
+      inset: -5.36% -4.17%;
+    }
+
+    .icon-img-wrap img {
+      display: block;
+      max-width: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Hero Content — node 600:761 ───────────────────────────── */
+    .hero__content {
+      position: absolute;
+      left: 80px;
+      top: 497px;
+      width: 1280px;
+      display: flex;
+      align-items: flex-end;
+      gap: 265px;
+    }
+
+    /* Left column: badge + heading */
+    .hero__left {
+      width: 628px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Partners badge chip — node 624:1328 */
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 10px;
+      background: rgba(12, 12, 12, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 24px;
+      flex-shrink: 0;
+      width: fit-content;
+    }
+
+    .hero__badge-icon {
+      width: 16px;
+      height: 16px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .hero__badge-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.54;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    /* H1 — node 600:767 */
+    .hero__heading {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 64px;
+      line-height: 1.1;
+      color: #fff;
+      text-transform: uppercase;
+      width: 100%;
+      min-width: 100%;
+    }
+
+    /* Right column: description — node 600:768 */
+    .hero__desc {
+      flex: 1 0 0;
+      min-height: 1px;
+      min-width: 1px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 24px;
+      color: #fff;
+      letter-spacing: 0.24px;
+    }
+
+    .hero__desc-regular {
+      font-weight: 400;
+      line-height: 1.3;
+      display: block;
+    }
+
+    .hero__desc-bold {
+      font-weight: 700;
+      line-height: 1.3;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero" data-node-id="600:750">
+
+  <!-- ── Background ─────────────────────────────────────────────── -->
+  <div class="hero__bg" aria-hidden="true">
+    <img class="hero__bg-img" src="assets/bg-hero.jpg" alt="">
+    <div class="hero__bg-gradient"></div>
+  </div>
+
+  <!-- ── Logo ───────────────────────────────────────────────────── -->
+  <!--
+    Three-part logo composition (node 83:142):
+      logo-v3.png  → bull + lightning bolt icon  (left 50% × full height)
+      logo-v2.png  → "ePlug" wordmark             (center-right region)
+      logo-v1.png  → "It's faster" tagline        (top-right small area)
+  -->
+  <div class="logo" data-node-id="83:142" aria-label="ePlug — It's faster">
+    <div class="logo__v3"><img src="assets/logo-v3.svg" alt="ePlug logo"></div>
+    <div class="logo__v2"><img src="assets/logo-v2.svg" alt=""></div>
+    <div class="logo__v1"><img src="assets/logo-v1.svg" alt=""></div>
+  </div>
+
+  <!-- ── Center Navigation ──────────────────────────────────────── -->
+  <nav class="nav" data-node-id="600:756" aria-label="Main navigation">
+    <a class="nav__item nav__item--about"   href="#">About</a>
+    <a class="nav__item nav__item--network" href="#">Network</a>
+    <div class="nav__item nav__item--partners" aria-current="page">
+      <span>Partners</span>
+      <!-- Active indicator: 6×6 px dot, bottom -12px -->
+      <img class="nav__dot" src="assets/dot-active.svg" alt="" aria-hidden="true" data-node-id="I600:759;476:515">
+    </div>
+    <a class="nav__item nav__item--contact" href="#">Contact</a>
+  </nav>
+
+  <!-- ── Button Switcher ────────────────────────────────────────── -->
+  <div class="btn-switcher" data-node-id="600:753">
+
+    <!-- App button -->
+    <button class="btn btn--app" data-node-id="600:754">
+      <span class="btn__icon btn__icon--app" data-node-id="I600:754;1:111">
+        <span class="icon-inner" data-node-id="I600:754;1:111;165:180">
+          <span class="icon-img-wrap"><img src="assets/icon-app.svg" alt=""></span>
+        </span>
+      </span>
+      App
+    </button>
+
+    <!-- Contact Us button -->
+    <button class="btn btn--contact" data-node-id="600:755">
+      <span class="btn__icon btn__icon--mail" data-node-id="I600:755;1:111">
+        <span class="icon-inner" data-node-id="I600:755;1:111;1:167">
+          <span class="icon-img-wrap"><img src="assets/icon-mail.svg" alt=""></span>
+        </span>
+      </span>
+      Contact Us
+    </button>
+
+  </div>
+
+  <!-- ── Hero Content ───────────────────────────────────────────── -->
+  <div class="hero__content" data-node-id="600:761">
+
+    <!-- Left: badge + heading (628px) -->
+    <div class="hero__left" data-node-id="600:762">
+
+      <!-- Partners badge — node 624:1328 -->
+      <div class="hero__badge" data-node-id="624:1328">
+        <img class="hero__badge-icon" src="assets/icon-badge.svg" alt="" data-node-id="624:1329">
+        <span class="hero__badge-text" data-node-id="624:1331">Partners</span>
+      </div>
+
+      <!-- H1 — node 600:767 -->
+      <h1 class="hero__heading" data-node-id="600:767">
+        We Don't Build Alone. We Build With Cities.
+      </h1>
+
+    </div>
+
+    <!-- Right: description text (flex: 1) -->
+    <p class="hero__desc" data-node-id="600:768">
+      <span class="hero__desc-regular">Property owners. Fleets. Retailers. Municipalities.<br></span>
+      <span class="hero__desc-bold">Let's move fast together.</span>
+    </p>
+
+  </div>
+
+</section>
+
+</body>
+</html>
