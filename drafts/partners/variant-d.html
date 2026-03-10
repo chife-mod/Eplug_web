@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eplug Partners — Variant D · Video Hero</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:    #0C0214;
+      --fuchsia: #FF00C5;
+      --purple:  #7B00CC;
+      --lav:     #C9B8E8;
+      --lav-dk:  #7B4FAF;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--dark); overflow-x: hidden; }
+
+    /* ── TOP NAV ─────────────────────────────────── */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px; height: 56px;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    .top-nav.dark {
+      background: rgba(12,2,20,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .nav-logo { color: white; font-size: 18px; font-weight: 900; letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--fuchsia); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: white; }
+    .nav-cta { padding: 8px 20px; background: var(--fuchsia); color: white; border: none; border-radius: 4px; font-size: 12px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; transition: opacity 0.2s; }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero { position: relative; height: 100vh; overflow: hidden; }
+
+    /* Animated gradient — simulates drone video */
+    .hero-vid {
+      position: absolute; inset: 0;
+      background: linear-gradient(145deg, #0C0214 0%, #1c0848 40%, #0a0228 70%, #0C0214 100%);
+      background-size: 300% 300%;
+      animation: gradDrift 14s ease infinite alternate;
+    }
+    .hero-vid::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.025) 3px, rgba(0,0,0,0.025) 4px);
+    }
+    .hero-vid::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        radial-gradient(ellipse 55% 45% at 75% 55%, rgba(255,0,197,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 25% 30%, rgba(123,0,204,0.1) 0%, transparent 60%);
+    }
+    @keyframes gradDrift {
+      0%   { background-position: 0% 0%; }
+      50%  { background-position: 100% 60%; }
+      100% { background-position: 40% 100%; }
+    }
+
+    /* Bottom dark vignette */
+    .hero-vignette {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 40%; z-index: 2;
+      background: linear-gradient(to top, rgba(12,2,20,0.7) 0%, transparent 100%);
+    }
+
+    /* Video hint label */
+    .hero-vid-hint {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      z-index: 2; font-size: 9px; font-weight: 700; letter-spacing: 0.3em;
+      text-transform: uppercase; color: rgba(255,255,255,0.04); white-space: nowrap;
+      user-select: none;
+    }
+
+    .hero-content {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 64px 120px;
+    }
+    .hero-overline {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--fuchsia); margin-bottom: 20px;
+    }
+    .hero-h1 {
+      font-size: clamp(44px, 6.5vw, 96px); font-weight: 900; color: white;
+      line-height: 0.96; letter-spacing: -0.045em; max-width: 820px;
+    }
+    .hero-h1 em { color: var(--fuchsia); font-style: normal; }
+    .hero-sub {
+      margin-top: 22px; font-size: 17px; color: rgba(255,255,255,0.38);
+      max-width: 400px; line-height: 1.65; font-weight: 400;
+    }
+
+    /* Play button */
+    .hero-play {
+      position: absolute; bottom: 120px; right: 64px; z-index: 3;
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 22px;
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 4px;
+      color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; cursor: pointer; font-family: 'Montserrat', sans-serif;
+      transition: background 0.2s;
+    }
+    .hero-play:hover { background: rgba(255,255,255,0.14); }
+
+    /* Scroll hint */
+    .hero-scroll-hint {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      z-index: 3; font-size: 9px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      animation: hintPulse 2.5s ease infinite;
+    }
+    .scroll-arrow { width: 1px; height: 24px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent); }
+    @keyframes hintPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+    /* ── 4 TILES ─────────────────────────────────── */
+    .tiles-section { background: #0d0d0d; }
+    .tiles-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      grid-template-rows: 50vh 50vh; gap: 2px;
+    }
+    .tile {
+      position: relative; overflow: hidden;
+      background: #191919; padding: 36px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      cursor: pointer; transition: background 0.3s;
+    }
+    .tile:hover { background: #212121; }
+    .tile:hover .tile-arrow { color: var(--fuchsia); transform: translate(4px,-4px); }
+
+    .tile-seg { position: absolute; top: 32px; left: 36px; font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+    .tile-visual { position: absolute; top: 28px; right: 28px; }
+
+    /* Big number visual */
+    .tile-big {
+      font-size: clamp(60px, 6vw, 90px); font-weight: 900; line-height: 1;
+      letter-spacing: -0.05em; user-select: none;
+    }
+    /* Dot pattern visual */
+    .tile-dots {
+      width: 110px; height: 110px;
+      background-image: radial-gradient(circle, currentColor 1.2px, transparent 1.2px);
+      background-size: 11px 11px; opacity: 0.22;
+    }
+    /* Grid art visual */
+    .tile-gridart {
+      width: 90px; height: 90px;
+      border: 1px solid currentColor; opacity: 0.15; position: relative;
+    }
+    .tile-gridart::before {
+      content: ''; position: absolute; inset: 12px;
+      border: 1px solid currentColor;
+    }
+    .tile-gridart::after {
+      content: ''; position: absolute; inset: 24px;
+      background: currentColor; opacity: 0.3;
+    }
+
+    .tile-title { font-size: clamp(17px, 1.8vw, 22px); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 9px; }
+    .tile-sub   { font-size: 13px; color: rgba(255,255,255,0.38); line-height: 1.55; max-width: 340px; }
+    .tile-arrow { position: absolute; bottom: 36px; right: 36px; font-size: 22px; color: rgba(255,255,255,0.2); transition: color 0.2s, transform 0.25s; }
+
+    /* Per-tile accents */
+    .tile-fleet    .tile-seg   { color: rgba(255,255,255,0.28); }
+    .tile-fleet    .tile-big   { color: rgba(255,255,255,0.07); }
+    .tile-property .tile-seg   { color: var(--lav); }
+    .tile-property .tile-dots  { color: var(--lav); }
+    .tile-retail   .tile-seg   { color: rgba(255,255,255,0.28); }
+    .tile-retail   .tile-big   { color: rgba(255,0,197,0.12); }
+    .tile-muni     .tile-seg   { color: var(--fuchsia); }
+    .tile-muni     .tile-gridart { color: var(--fuchsia); }
+    .tile-muni     .tile-big   { color: rgba(255,0,197,0.12); }
+
+    /* ── SCROLL STORY ────────────────────────────── */
+    .story-section {
+      position: relative; height: 100vh; overflow: hidden;
+      background: var(--dark);
+    }
+
+    /* Background overlay — changes color per segment */
+    .story-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: var(--dark);
+      transition: background 0.9s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .story-inner {
+      position: relative; z-index: 1;
+      display: flex; align-items: center;
+      height: 100%; padding: 72px 52px 108px; gap: 40px;
+    }
+
+    /* Left: 21:9 video frame */
+    .story-video-col { flex: 0 0 58%; position: relative; }
+    .story-frame {
+      width: 100%; aspect-ratio: 21/9;
+      border-radius: 10px; overflow: hidden; position: relative;
+    }
+    .story-frame-vid {
+      position: absolute; inset: 0;
+      background: linear-gradient(145deg, #0C0214, #1a0540);
+      background-size: 300% 300%;
+      animation: gradDrift 10s ease infinite alternate;
+      transition: background 0.8s ease;
+    }
+    .story-frame-vid::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.025) 3px, rgba(0,0,0,0.025) 4px);
+    }
+    /* Segment counter inside frame */
+    .frame-counter {
+      position: absolute; top: 14px; left: 18px; z-index: 2;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    /* Segment label inside frame — bottom-left faint */
+    .frame-seg-label {
+      position: absolute; bottom: 14px; left: 18px; z-index: 2;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    /* BIG watermark text below frame */
+    .story-big-label {
+      font-size: clamp(56px, 7.5vw, 108px); font-weight: 900; letter-spacing: -0.05em;
+      color: rgba(255,255,255,0.05); line-height: 1; text-transform: uppercase;
+      margin-top: -8px; padding-left: 4px; user-select: none;
+      transition: opacity 0.35s;
+    }
+
+    /* Progress dots */
+    .story-progress {
+      position: absolute; left: 28px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 10px; z-index: 2;
+    }
+    .prog-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); transition: all 0.3s;
+    }
+    .prog-dot.active {
+      background: var(--fuchsia); transform: scale(1.6);
+    }
+
+    /* Right: content card */
+    .story-content-col {
+      flex: 1; min-width: 0; height: 100%;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .panels-track {
+      position: absolute; top: 0; left: 0; right: 0;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .story-panel {
+      height: calc(100vh - 180px);
+      display: flex; align-items: center;
+    }
+    .glass-card {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px; padding: 30px 26px;
+      transition: border-color 0.5s;
+    }
+    .gc-seg   { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px; }
+    .gc-h2    { font-size: clamp(19px, 2vw, 28px); font-weight: 900; color: white; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 11px; }
+    .gc-intro { font-size: 13px; color: rgba(255,255,255,0.48); line-height: 1.65; margin-bottom: 18px; }
+    .gc-list  { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 22px; }
+    .gc-list li { display: flex; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.72); line-height: 1.45; }
+    .gc-ck    { flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+    .gc-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--fuchsia); color: white; border: none; cursor: pointer;
+      padding: 10px 20px; border-radius: 6px; font-size: 12px; font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .gc-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,0,197,0.35); }
+
+    /* ── PILL NAV ────────────────────────────────── */
+    .pill-wrap {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 1000; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+
+    /* Dropdown panel (flies up) */
+    .pill-dropdown {
+      background: rgba(8,1,16,0.97); backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+      padding: 8px 6px; display: none; flex-direction: column; gap: 3px;
+      min-width: 226px;
+    }
+    .pill-dropdown.open { display: flex; animation: riseUp 0.2s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes riseUp { from { opacity:0; transform:translateY(12px) scale(0.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+
+    .dd-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 8px; cursor: pointer;
+      color: rgba(255,255,255,0.42); font-size: 12px; font-weight: 700;
+      transition: all 0.15s;
+    }
+    .dd-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); }
+    .dd-item.active { color: white; background: rgba(255,255,255,0.07); }
+    .dd-icon { font-size: 15px; }
+    .dd-name { flex: 1; }
+    .dd-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; transition: transform 0.2s; }
+    .dd-item.active .dd-dot { transform: scale(1.5); }
+    .dd-item[data-seg="fleet"]    .dd-dot { background: rgba(255,255,255,0.5); }
+    .dd-item[data-seg="property"] .dd-dot { background: var(--lav); }
+    .dd-item[data-seg="retail"]   .dd-dot { background: #ccc; }
+    .dd-item[data-seg="muni"]     .dd-dot { background: var(--fuchsia); }
+    .dd-item.active[data-seg="muni"] .dd-dot { box-shadow: 0 0 8px var(--fuchsia); }
+
+    /* The pill trigger */
+    .pill-trigger {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(8,1,16,0.95); backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 100px;
+      padding: 11px 22px; cursor: pointer; min-width: 190px; justify-content: center;
+      transition: border-color 0.25s;
+    }
+    .pill-trigger:hover { border-color: rgba(255,255,255,0.22); }
+    .pill-trigger.open  { border-color: var(--fuchsia); }
+    .pill-t-icon   { font-size: 16px; }
+    .pill-t-name   { font-size: 12px; font-weight: 700; color: white; letter-spacing: 0.03em; white-space: nowrap; flex: 1; }
+    .pill-t-chev   { font-size: 10px; color: rgba(255,255,255,0.35); transition: transform 0.25s; margin-left: 2px; }
+    .pill-trigger.open .pill-t-chev { transform: rotate(180deg); }
+
+    /* ── MOBILE ──────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero-content { padding: 0 28px 110px; }
+      .hero-h1 { font-size: clamp(36px, 9vw, 60px); }
+      .hero-play { display: none; }
+      .top-nav { padding: 0 24px; }
+      .nav-links { display: none; }
+
+      .tiles-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(2, 46vw);
+      }
+      .tile { padding: 16px; }
+      .tile-title { font-size: 14px; }
+      .tile-sub   { display: none; }
+      .tile-visual { top: 12px; right: 12px; }
+      .tile-big   { font-size: 40px; }
+
+      .story-inner { flex-direction: column; padding: 72px 20px 100px; gap: 16px; align-items: stretch; }
+      .story-video-col { flex: none; width: 100%; }
+      .story-frame { aspect-ratio: 16/9; }
+      .story-big-label { font-size: 11vw; }
+      .story-content-col { flex: 1; }
+      .story-panel { height: auto; min-height: 240px; }
+      .glass-card { padding: 20px 16px; }
+      .gc-h2 { font-size: 18px; }
+      .story-progress { display: none; }
+
+      .pill-wrap { bottom: 20px; }
+      .pill-trigger { min-width: 170px; padding: 10px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── TOP NAV ──────────────────────────────────────── -->
+<nav class="top-nav" id="top-nav">
+  <div class="nav-logo">E<span>plug</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Network</a></li>
+    <li><a href="#" class="active">Partners</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <button class="nav-cta">Partner With Us</button>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div class="hero-vid"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-vid-hint">[ VIDEO PLACEHOLDER — DRONE FOOTAGE: UBER FLEET · ROOFTOP · CAFÉ · CITY HALL ]</div>
+  <div class="hero-content">
+    <div class="hero-overline">Partnership Program · Eplug</div>
+    <h1 class="hero-h1">We Don't Build <em>Alone.</em><br>We Build With Cities.</h1>
+    <p class="hero-sub">Property owners. Fleets. Retailers. Municipalities. Let's move fast together.</p>
+  </div>
+  <button class="hero-play">▶ &nbsp;Play</button>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ── 4 TILES ───────────────────────────────────────── -->
+<section class="tiles-section" id="tiles-section">
+  <div class="tiles-grid">
+
+    <div class="tile tile-fleet" onclick="goToSeg(0)">
+      <div class="tile-seg">Fleet Operators</div>
+      <div class="tile-visual">
+        <div class="tile-big">88+</div>
+      </div>
+      <div class="tile-title">Charging Infrastructure<br>That Pays for Itself</div>
+      <div class="tile-sub">DC Fast turnaround. Reserved stalls. Fleet-exclusive pricing. Lower TCO than ICE.</div>
+      <div class="tile-arrow">↗</div>
+    </div>
+
+    <div class="tile tile-property" onclick="goToSeg(1)">
+      <div class="tile-seg">Property Owners</div>
+      <div class="tile-visual">
+        <div class="tile-dots" style="width:120px;height:80px;"></div>
+      </div>
+      <div class="tile-title">Turn Parking Into Profit.<br>Zero Upfront Cost.</div>
+      <div class="tile-sub">We finance, install, and maintain. You earn recurring monthly revenue share.</div>
+      <div class="tile-arrow">↗</div>
+    </div>
+
+    <div class="tile tile-retail" onclick="goToSeg(2)">
+      <div class="tile-seg">Retail Businesses</div>
+      <div class="tile-visual">
+        <div class="tile-big">+40%</div>
+      </div>
+      <div class="tile-title">15–25 Minutes =<br>Captive Customers</div>
+      <div class="tile-sub">Drivers don't just charge — they spend. 88+ qualified customers daily per station.</div>
+      <div class="tile-arrow">↗</div>
+    </div>
+
+    <div class="tile tile-muni" onclick="goToSeg(3)">
+      <div class="tile-seg">Municipalities</div>
+      <div class="tile-visual">
+        <div class="tile-big" style="color:rgba(255,0,197,0.12);">99%</div>
+      </div>
+      <div class="tile-title">Fast Charging as<br>Public Infrastructure</div>
+      <div class="tile-sub">Turnkey deployment. Job creation. Equity-focused siting. Climate compliance.</div>
+      <div class="tile-arrow">↗</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── STORY NOTE BANNER ──────────────────────────────── -->
+<div style="background:#111;padding:12px 52px;display:flex;align-items:center;gap:12px;">
+  <span style="font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.12em;text-transform:uppercase;">
+    ↓ &nbsp;Scroll — video shrinks to 21:9 cinematic frame · cards scroll alongside
+    &nbsp;·&nbsp; <em style="color:rgba(255,0,197,0.4);">TODO: scroll-driven video morph transition from hero to story frame</em>
+  </span>
+</div>
+
+<!-- ── SCROLL STORY ───────────────────────────────────── -->
+<section class="story-section" id="story-section">
+  <div class="story-bg" id="story-bg"></div>
+
+  <!-- Side progress dots -->
+  <div class="story-progress">
+    <div class="prog-dot active" id="dot-0"></div>
+    <div class="prog-dot" id="dot-1"></div>
+    <div class="prog-dot" id="dot-2"></div>
+    <div class="prog-dot" id="dot-3"></div>
+  </div>
+
+  <div class="story-inner">
+
+    <!-- LEFT: video frame -->
+    <div class="story-video-col">
+      <div class="story-frame">
+        <div class="story-frame-vid" id="story-vid-bg"></div>
+        <div class="frame-counter" id="frame-counter">01 / 04</div>
+        <div class="frame-seg-label" id="frame-seg-name">Fleet Operators</div>
+      </div>
+      <div class="story-big-label" id="story-big-label">FLEET</div>
+    </div>
+
+    <!-- RIGHT: glassmorphic content cards -->
+    <div class="story-content-col">
+      <div class="panels-track" id="panels-track">
+
+        <!-- Panel 0: Fleet -->
+        <div class="story-panel">
+          <div class="glass-card">
+            <div class="gc-seg" style="color:rgba(255,255,255,0.28);">01 — Fleet Operators</div>
+            <h2 class="gc-h2">Charging Infrastructure<br>That Pays for Itself</h2>
+            <p class="gc-intro">If your drivers lose 2 hours a day to slow charging, you're losing money. Eplug fixes that.</p>
+            <ul class="gc-list">
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>DC Fast turnaround</strong> — 15–25 min, not 4 hours</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Fleet-exclusive pricing</strong> — lower rates than retail</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Reserved stall access</strong> — no waiting, no downtime</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Consolidated billing</strong> — one invoice, all vehicles</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>99%+ uptime guaranteed</strong></span></li>
+            </ul>
+            <button class="gc-cta">Fleet Partnership Inquiry →</button>
+          </div>
+        </div>
+
+        <!-- Panel 1: Property -->
+        <div class="story-panel">
+          <div class="glass-card" style="border-color:rgba(201,184,232,0.12);">
+            <div class="gc-seg" style="color:var(--lav);">02 — Property Owners</div>
+            <h2 class="gc-h2">Turn Parking Into Profit.<br>Zero Upfront Cost.</h2>
+            <p class="gc-intro">EV charging is no longer optional. It's a tenant amenity, a revenue stream, and a regulatory requirement.</p>
+            <ul class="gc-list">
+              <li><span class="gc-ck" style="color:var(--lav);">✓</span><span><strong>New recurring income</strong> — profit-sharing or lease</span></li>
+              <li><span class="gc-ck" style="color:var(--lav);">✓</span><span><strong>Zero CapEx</strong> — we finance, install, maintain</span></li>
+              <li><span class="gc-ck" style="color:var(--lav);">✓</span><span><strong>Increased property value</strong> — EV-ready = premium rents</span></li>
+              <li><span class="gc-ck" style="color:var(--lav);">✓</span><span><strong>Code compliance</strong> — meet EV-ready mandates</span></li>
+              <li><span class="gc-ck" style="color:var(--lav);">✓</span><span><strong>Fast installation</strong> — weeks, not months</span></li>
+            </ul>
+            <button class="gc-cta" style="background:var(--lav-dk);">Property Partnership Inquiry →</button>
+          </div>
+        </div>
+
+        <!-- Panel 2: Retail -->
+        <div class="story-panel">
+          <div class="glass-card">
+            <div class="gc-seg" style="color:rgba(255,255,255,0.28);">03 — Retail Businesses</div>
+            <h2 class="gc-h2">15–25 Minutes =<br>Captive Customers</h2>
+            <p class="gc-intro">Drivers don't just charge. They spend.</p>
+            <ul class="gc-list">
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>88+ drivers/day</strong> — guaranteed foot traffic</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>High dwell time</strong> — customers aren't rushing out</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>+20–40%</strong> transaction volume during charging hours</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Loyalty integration</strong> — Eplug app promotes your business</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Co-marketing</strong> — joint promotions, member deals</span></li>
+            </ul>
+            <button class="gc-cta">Retail Partnership Inquiry →</button>
+          </div>
+        </div>
+
+        <!-- Panel 3: Municipality -->
+        <div class="story-panel">
+          <div class="glass-card" style="border-color:rgba(255,0,197,0.12);">
+            <div class="gc-seg" style="color:var(--fuchsia);">04 — Municipalities</div>
+            <h2 class="gc-h2">Fast Charging as<br>Public Infrastructure</h2>
+            <p class="gc-intro">Cities that don't invest in EV infrastructure today will lose residents, businesses, and competitiveness tomorrow.</p>
+            <ul class="gc-list">
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Turnkey deployment</strong> — permitting, installation, operations</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Job creation</strong> — local construction & maintenance</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Equity-focused siting</strong> — underserved neighborhoods first</span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Revenue for public land</strong></span></li>
+              <li><span class="gc-ck" style="color:var(--fuchsia);">✓</span><span><strong>Climate action compliance</strong></span></li>
+            </ul>
+            <button class="gc-cta">Municipal Partnership Inquiry →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── END SPACER ─────────────────────────────────────── -->
+<div style="height:30vh;background:var(--dark);display:flex;align-items:center;justify-content:center;">
+  <p style="font-size:11px;color:rgba(255,255,255,0.12);letter-spacing:0.12em;text-transform:uppercase;">↑ &nbsp;Scroll up · Use pill nav to jump between segments</p>
+</div>
+
+<!-- ── PILL NAV ───────────────────────────────────────── -->
+<div class="pill-wrap" id="pill-wrap">
+  <!-- Dropdown (above pill) -->
+  <div class="pill-dropdown" id="pill-dropdown">
+    <div class="dd-item active" data-seg="fleet" data-idx="0">
+      <span class="dd-icon">🚚</span><span class="dd-name">Fleet Operators</span><span class="dd-dot"></span>
+    </div>
+    <div class="dd-item" data-seg="property" data-idx="1">
+      <span class="dd-icon">🏢</span><span class="dd-name">Property Owners</span><span class="dd-dot"></span>
+    </div>
+    <div class="dd-item" data-seg="retail" data-idx="2">
+      <span class="dd-icon">☕</span><span class="dd-name">Retail Businesses</span><span class="dd-dot"></span>
+    </div>
+    <div class="dd-item" data-seg="muni" data-idx="3">
+      <span class="dd-icon">🏛️</span><span class="dd-name">Municipalities</span><span class="dd-dot"></span>
+    </div>
+  </div>
+  <!-- Pill trigger -->
+  <div class="pill-trigger" id="pill-trigger" onclick="togglePill()">
+    <span class="pill-t-icon" id="pill-icon">🚚</span>
+    <span class="pill-t-name" id="pill-name">Fleet Operators</span>
+    <span class="pill-t-chev" id="pill-chev">↑</span>
+  </div>
+</div>
+
+<!-- ── SCRIPTS ────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── Segment data ───────────────────────────────── */
+const SEGS = [
+  {
+    id: 'fleet',    icon: '🚚', name: 'Fleet Operators',   label: 'FLEET',
+    bg: '#0a0118',
+    vidGrad: 'linear-gradient(145deg, #0C0214 0%, #1c0848 45%, #0a0228 100%)',
+  },
+  {
+    id: 'property', icon: '🏢', name: 'Property Owners',   label: 'PROPERTY',
+    bg: '#120830',
+    vidGrad: 'linear-gradient(145deg, #160640 0%, #2a1068 50%, #0C0214 100%)',
+  },
+  {
+    id: 'retail',   icon: '☕', name: 'Retail Businesses', label: 'RETAIL',
+    bg: '#0a0120',
+    vidGrad: 'linear-gradient(145deg, #0a0220 0%, #220045 50%, #100028 100%)',
+  },
+  {
+    id: 'muni',     icon: '🏛️', name: 'Municipalities',   label: 'CITY',
+    bg: '#060010',
+    vidGrad: 'linear-gradient(145deg, #060010 0%, #1a0038 45%, #200040 100%)',
+  },
+];
+
+let activeSeg = -1;
+let pillOpen  = false;
+
+/* ── Activate segment ───────────────────────────── */
+function activateSeg(idx) {
+  if(idx === activeSeg) return;
+  activeSeg = idx;
+  const seg = SEGS[idx];
+
+  // Story background
+  document.getElementById('story-bg').style.background = seg.bg;
+
+  // Video gradient
+  document.getElementById('story-vid-bg').style.background = seg.vidGrad;
+
+  // Labels
+  document.getElementById('story-big-label').textContent  = seg.label;
+  document.getElementById('frame-counter').textContent     = `0${idx+1} / 04`;
+  document.getElementById('frame-seg-name').textContent    = seg.name;
+
+  // Panels track
+  const panelH = document.querySelector('.story-content-col').offsetHeight;
+  document.getElementById('panels-track').style.transform  = `translateY(-${idx * panelH}px)`;
+
+  // Progress dots
+  document.querySelectorAll('.prog-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+
+  // Pill nav
+  document.getElementById('pill-icon').textContent = seg.icon;
+  document.getElementById('pill-name').textContent = seg.name;
+
+  // Dropdown active
+  document.querySelectorAll('.dd-item').forEach((d,i) => d.classList.toggle('active', i===idx));
+}
+
+/* ── GSAP pin story section ─────────────────────── */
+ScrollTrigger.create({
+  id:         'story-pin',
+  trigger:    '#story-section',
+  start:      'top top+=56',
+  end:        () => `+=${window.innerHeight * SEGS.length}`,
+  pin:        true,
+  pinSpacing: true,
+  onUpdate: (self) => {
+    const idx = Math.min(SEGS.length - 1, Math.floor(self.progress * SEGS.length));
+    activateSeg(idx);
+  },
+});
+
+/* ── Go to segment (from tiles / dropdown) ──────── */
+function goToSeg(idx) {
+  const trigger = ScrollTrigger.getById('story-pin');
+  if(!trigger) {
+    document.getElementById('story-section').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  const total = trigger.end - trigger.start;
+  const target = trigger.start + (total / SEGS.length) * idx + (total / SEGS.length / 2);
+  gsap.to(window, { scrollTo: target, duration: 1.1, ease: 'power2.inOut' });
+  if(pillOpen) togglePill();
+}
+
+/* ── Top nav dark on scroll ─────────────────────── */
+window.addEventListener('scroll', () => {
+  document.getElementById('top-nav').classList.toggle('dark', window.scrollY > 60);
+}, { passive: true });
+
+/* ── Pill nav toggle ────────────────────────────── */
+function togglePill() {
+  pillOpen = !pillOpen;
+  document.getElementById('pill-dropdown').classList.toggle('open', pillOpen);
+  document.getElementById('pill-trigger').classList.toggle('open', pillOpen);
+}
+
+// Close on outside click
+document.addEventListener('click', (e) => {
+  if(!document.getElementById('pill-wrap').contains(e.target) && pillOpen) togglePill();
+});
+
+// Dropdown items
+document.querySelectorAll('.dd-item').forEach((item) => {
+  item.addEventListener('click', () => {
+    const idx = parseInt(item.dataset.idx);
+    goToSeg(idx);
+  });
+});
+
+// Need ScrollToPlugin for gsap.to(window, {scrollTo:...})
+// Fallback: use native if plugin not loaded
+window.addEventListener('error', () => {});
+if(!gsap.plugins || !gsap.plugins.scrollTo) {
+  window.goToSeg = (idx) => {
+    const el = document.getElementById('story-section');
+    const rect = el.getBoundingClientRect();
+    const storyTop = window.scrollY + rect.top - 56;
+    const panelH = window.innerHeight;
+    window.scrollTo({ top: storyTop + panelH * idx, behavior: 'smooth' });
+    if(pillOpen) togglePill();
+  };
+}
+
+/* ── Init ───────────────────────────────────────── */
+activateSeg(0);
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+</body>
+</html>

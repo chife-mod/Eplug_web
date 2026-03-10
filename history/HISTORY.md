@@ -5,6 +5,64 @@ Eplug Web — корпоративный сайт для компании Eplug 
 
 ---
 
+## 2026-03-10 — Partners Page UX Research
+
+### UX-ресёрч — страница Partners
+
+**Процесс:** Brainstorming-сессия → 4 вопроса по аудитории, конверсии, навигации, визуальному языку → 4 UX-варианта → выбор Варианта D.
+
+**Ключевые решения:**
+- Аудитория: микс (самоидентификация + холодные визиторы)
+- Конверсия: форма/inquiry для каждого сегмента
+- Навигация: гибрид — pill nav для прыжков + scroll-главы
+- Цвета: каждый сегмент = свой мир (Fleet = dark, Property = lavender, Retail = white, Muni = fuchsia glow)
+
+### Варианты (все в `drafts/partners/index.html`, переключатель A/B/C/D)
+
+| Вариант | Концепция | Статус |
+|---|---|---|
+| A — Ecosystem Hub | Hero → 4 portal cards → sticky tabs → секции | Отклонён |
+| B — Chapter Scroll | Кинематографические главы по цветам | Отклонён |
+| C — Floating Switcher | Sticky sidebar слева, тёмный скролл | Отклонён |
+| D — Video Hero | Full-screen video → 4 tiles → 21:9 scroll story → pill nav | ⭐ Выбран |
+
+### Вариант D — детали архитектуры
+
+**Hero:** Full-screen drone video (placeholder: анимированный градиент), headline bottom-left, play button, scroll hint
+
+**4 плитки (2×2):**
+- Fleet: `88+` big number, тёмный тайл
+- Property: dotted pattern, lavender accent
+- Retail: `+40%` big number
+- Municipality: `99%`, fuchsia accent
+
+**Scroll Story (GSAP pin):**
+- `ScrollTrigger.create({ pin: true, end: +=400vh })`
+- Левая колонка: 21:9 cinematic frame (анимированный градиент-placeholder), big watermark label (FLEET / PROPERTY / RETAIL / CITY), counter `01/04`
+- Правая колонка: glassmorphic карточки (`backdrop-filter: blur(18px)`), 4 панели на track, transition `translateY`
+- Прогресс-точки слева
+
+**Bottom Pill Nav:**
+- `position: fixed; bottom: 28px`, glassmorphic pill
+- Показывает: иконка + название текущего сегмента + chevron
+- Click → dropdown вверх с 4 пунктами (иконка + название + цветная точка)
+- Синхронизирован с ScrollTrigger `onUpdate`
+
+**Мобайл (TBD):** 4 видео по 8 сек (loop), pill nav переключает видео + карточку, без ScrollTrigger/pin
+
+### Файлы
+
+- `drafts/partners/index.html` — все 4 варианта с toggle bar
+- `drafts/partners/variant-d.html` — standalone Variant D (архив)
+- `docs/components/partners-page-ux.md` — полная документация ресёрча
+
+### Dashboard
+
+- Карточка "Partners Page — UX Research" добавлена в секцию UX Exploration (`index.html`)
+- Счётчик секции: 1 draft → 2 drafts
+
+---
+
 ## 2026-03-05 — Инициализация структуры документации
 
 ### Документация — Architecture
